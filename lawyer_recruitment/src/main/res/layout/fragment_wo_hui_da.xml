@@ -1,0 +1,12 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="net.cpsec.zfwx.lawyer_recruitment.fragment.WoHuiDaFragment">
+    <net.cpsec.zfwx.lawyer_recruitment.ui.YRecycleview
+        android:id="@+id/yrv_wenda_wohuida"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"/>
+</LinearLayout>
