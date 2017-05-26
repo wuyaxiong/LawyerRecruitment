@@ -222,7 +222,7 @@ public class FaTieActivity extends BaseActivity implements MyItemClickListener {
 
             if (position == allSelectedPicture.size()) {
                 holder.image.setImageBitmap(BitmapFactory.decodeResource(
-                        context.getResources(), R.drawable.pic_jiazai1));
+                        context.getResources(), R.drawable.icon_jiahaoyou));
                 holder.btn.setVisibility(View.GONE);
 
                 holder.image.setOnClickListener(new View.OnClickListener() {

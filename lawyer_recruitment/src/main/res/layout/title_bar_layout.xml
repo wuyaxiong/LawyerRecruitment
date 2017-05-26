@@ -4,7 +4,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/relativeLayout"
     android:layout_width="match_parent"
-    android:layout_height="74dp"
+    android:layout_height="70dp"
     android:orientation="vertical"
     android:background="#FFFFFF"
     >
@@ -17,7 +17,7 @@
         android:layout_width="24dp"
         android:layout_height="24dp"
         android:layout_centerVertical="true"
-        android:layout_marginLeft="16dp"
+        android:layout_marginLeft="20dp"
         android:src="@mipmap/btn_normal_hulian" />
 
     <TextView
@@ -34,7 +34,7 @@
         android:layout_height="245dp"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
-        android:layout_marginRight="16dp"
+        android:layout_marginRight="20dp"
         android:src="@mipmap/btn_normal_hulian" />
 </RelativeLayout>
 <View

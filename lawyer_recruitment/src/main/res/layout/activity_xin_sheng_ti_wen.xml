@@ -63,15 +63,16 @@
         android:layout_marginRight="20dp"
         android:hint="正文"
         android:textSize="18sp"
-        android:maxLines="6"/>
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"/>
+        android:gravity="top"
+        android:lines="8"
+        android:maxLines="8"
+        android:padding="5dp"/>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_marginTop="8dp">
         <CheckBox
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -101,13 +102,16 @@
         android:layout_marginRight="20dp"
         android:layout_marginBottom="20dp">
         <GridView
+            android:id="@+id/gridview_tiwen"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="110dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="8dp"
+            android:horizontalSpacing="5dp"
+            android:listSelector="#00000000"
             android:numColumns="3"
-            android:horizontalSpacing="20dp"
-            android:verticalSpacing="8dp"
-            android:layout_gravity="center">
-
-        </GridView>
+            android:scrollbars="none"
+            android:verticalSpacing="5dp"></GridView>
     </FrameLayout>
 </LinearLayout>

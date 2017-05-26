@@ -37,7 +37,7 @@ public class XiuGaiXinXiActivity extends BaseActivity implements View.OnClickLis
     private void initView() {
         iv_back = (ImageView) findViewById(R.id.iv_back);
         iv_back.setOnClickListener(this);
-        tv_complete = (TextView) findViewById(R.id.tv_fatie_complete);
+        tv_complete = (TextView) findViewById(R.id.tv_xinxi_complete);
         tv_complete.setOnClickListener(this);
         riv_header = (RoundedImageView) findViewById(R.id.riv_header);
         rbt_man = (RadioButton) findViewById(R.id.rbt_man);

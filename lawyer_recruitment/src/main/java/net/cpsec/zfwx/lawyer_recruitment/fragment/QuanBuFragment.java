@@ -16,24 +16,39 @@ import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSON;
+import com.android.volley.manager.RequestMap;
+
 import net.cpsec.zfwx.lawyer_recruitment.R;
-import net.cpsec.zfwx.lawyer_recruitment.adapter.QingChunJiaoLiuAdapter;
+import net.cpsec.zfwx.lawyer_recruitment.adapter.JiaoLiuAdapter;
+import net.cpsec.zfwx.lawyer_recruitment.entity.QuanBuBean;
+import net.cpsec.zfwx.lawyer_recruitment.entity.QuanBuInfor;
 import net.cpsec.zfwx.lawyer_recruitment.ui.YRecycleview;
+import net.cpsec.zfwx.lawyer_recruitment.utils.Debugging;
+import net.cpsec.zfwx.lawyer_recruitment.utils.NetUrl;
 import net.cpsec.zfwx.lawyer_recruitment.utils.Toast;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class QuanBuFragment extends Fragment implements YRecycleview.OnRefreshAndLoadMoreListener, View.OnClickListener {
-    private TextView tv_quanbu, tv_paixu, tv_pop_quanbu, tv_pop_bencengji, tv_pop_bendanwei;
+public class QuanBuFragment extends BaseFragment implements YRecycleview.OnRefreshAndLoadMoreListener, View.OnClickListener {
+    private TextView tv_quanbu, tv_paixu, tv_pop_quanbu, tv_pop_bencengji, tv_pop_bendanwei,tv_pop_shijian,tv_pop_redu;
     private RelativeLayout rl_quanbu, rl_paixu;
     private View popView;
     private PopupWindow window;
     private LayoutInflater mInflater;
-    private LinearLayout ll_actionbar, pop_quanbu, pop_bencengji, pop_bendanwei;
+    private LinearLayout ll_actionbar, pop_quanbu, pop_bencengji, pop_bendanwei,pop_shijian,pop_redu;
     int restult = 0;
     private YRecycleview yRecycleview;
-    private QingChunJiaoLiuAdapter adapter;
+    private JiaoLiuAdapter adapter;
+
+    private boolean isRefreshState = true;//是否刷新
+    private List<QuanBuInfor> quanbuInfor;
+    private List<QuanBuInfor> morequanbuInfor;
+    private QuanBuBean quanbuBean;
 
 
     @Override
@@ -41,33 +56,70 @@ public class QuanBuFragment extends Fragment implements YRecycleview.OnRefreshAn
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_quan_bu, container, false);
         initView(v);
+        initData();
         return v;
     }
 
+    private void initData() {
+        RequestMap params = new RequestMap();
+        setParams(NetUrl.QINGNIAN_JIJIAOLIU_QUANBU, params, 0);
+    }
+    private void setAdapter() {
+        if (isRefreshState && null != quanbuInfor) {
+            adapter = new JiaoLiuAdapter(getActivity(), quanbuInfor);
+            yRecycleview.setLayoutManager(new LinearLayoutManager(getActivity()));
+            yRecycleview.setAdapter(adapter);
+        } else {
+            adapter.notifyDataSetChanged();
+        }
+    }
     private void initView(View v) {
         tv_quanbu = (TextView) v.findViewById(R.id.tv_qunbu);
+        tv_paixu= (TextView) v.findViewById(R.id.tv_paixu);
         rl_quanbu = (RelativeLayout) v.findViewById(R.id.rl_jiaoliu_quanbu);
         rl_paixu = (RelativeLayout) v.findViewById(R.id.rl_jiaoliupaixu);
         rl_quanbu.setOnClickListener(this);
         rl_paixu.setOnClickListener(this);
         ll_actionbar = (LinearLayout) v.findViewById(R.id.ll_quanbu_acationbar);
         yRecycleview = (YRecycleview) v.findViewById(R.id.yrv_jiaoliu_quanbu);
-        adapter = new QingChunJiaoLiuAdapter(getActivity());
-        yRecycleview.setRefreshAndLoadMoreListener(this);
         yRecycleview.setLayoutManager(new LinearLayoutManager(getActivity()));
-        yRecycleview.setAdapter(adapter);
+        yRecycleview.setRefreshAndLoadMoreListener(this);
+    }
+
+    @Override
+    public void onSuccess(String response, Map<String, String> headers, String url, int actionId) {
+        super.onSuccess(response, headers, url, actionId);
+        try {
+            quanbuBean = JSON.parseObject(response, QuanBuBean.class);
+            Debugging.debugging("position      =      " + (null == quanbuBean));
+            if (isRefreshState) {
+                yRecycleview.setReFreshComplete();
+                quanbuInfor = quanbuBean.getInfor();
+                Debugging.debugging("positionLists      =   " + (quanbuInfor.size()));
+            } else {
+                morequanbuInfor = quanbuBean.getInfor();
+                quanbuInfor.addAll(morequanbuInfor);
+            }
+            setAdapter();
+        } catch (Exception e) {
+            Toast.prompt(getActivity(), "数据异常");
+        }
     }
 
     @Override
     public void onRefresh() {
+        isRefreshState = true;
         yRecycleview.setReFreshComplete();
-        Toast.prompt(getActivity(), "刷新完成。测试阶段");
+        initData();
+    //    Toast.prompt(getActivity(), "刷新完成。测试阶段");
     }
 
     @Override
     public void onLoadMore() {
+        isRefreshState = false;
+        initData();
         yRecycleview.setNoMoreData(true);
-        Toast.prompt(getActivity(), "没有更多数据。测试阶段");
+        //Toast.prompt(getActivity(), "没有更多数据。测试阶段");
     }
 
     @Override
@@ -131,6 +183,41 @@ public class QuanBuFragment extends Fragment implements YRecycleview.OnRefreshAn
                 window.dismiss();
                 break;
             case R.id.rl_jiaoliupaixu:
+                popView = getActivity().getLayoutInflater().inflate(R.layout.pop_paixu, null);
+                pop_shijian = (LinearLayout) popView.findViewById(R.id.ll_popupwindow_shijian);
+                pop_redu = (LinearLayout) popView.findViewById(R.id.ll_popupwindow_redu);
+                tv_pop_shijian = (TextView) popView.findViewById(R.id.tv_popupwindow_shijian);
+                tv_pop_redu = (TextView) popView.findViewById(R.id.tv_popupwindow_redu);
+                vTouch=popView.findViewById(R.id.v_touch_paixu);
+                pop_shijian.setOnClickListener(this);
+                pop_redu.setOnClickListener(this);
+                vTouch.setOnClickListener(this);
+                if (tv_pop_shijian.getText().toString().equals(tv_paixu.getText().toString())) {
+                    pop_shijian.setSelected(true);
+                    pop_redu.setSelected(false);
+                }else{
+                    pop_shijian.setSelected(false);
+                    pop_redu.setSelected(true);
+                }
+                //mInflater = LayoutInflater.from(getContext());
+                setPopupWindow();
+                break;
+            case R.id.ll_popupwindow_shijian:
+                if (null != window)
+                    window.dismiss();
+                tv_paixu.setText(tv_pop_shijian.getText().toString());
+                pop_shijian.setSelected(true);
+                pop_redu.setSelected(false);
+                break;
+            case R.id.ll_popupwindow_redu:
+                if (null != window)
+                    window.dismiss();
+                tv_paixu.setText(tv_pop_redu.getText().toString());
+                pop_shijian.setSelected(false);
+                pop_redu.setSelected(true);
+                break;
+            case R.id.v_touch_paixu:
+                window.dismiss();
                 break;
         }
     }

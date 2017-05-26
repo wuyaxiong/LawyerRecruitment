@@ -9,20 +9,20 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import net.cpsec.zfwx.lawyer_recruitment.R;
-import net.cpsec.zfwx.lawyer_recruitment.entity.ZhengCeTongZhiInfor;
+import net.cpsec.zfwx.lawyer_recruitment.entity.AnLiMeiWenInfor;
 import net.cpsec.zfwx.lawyer_recruitment.utils.LocalDisplay;
 
 import java.util.List;
 
 /**
- * Created by szh on 2017/5/15.
+ * Created by szh on 2017/5/26.
  */
 
-public class QingChunFenXiangAdapter  extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
+public class AnLiMeiWenAdapter  extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
     private Context context;
-    private List<ZhengCeTongZhiInfor> quanBuInfors;
+    private List<AnLiMeiWenInfor> quanBuInfors;
 
-    public QingChunFenXiangAdapter(Context context, List<ZhengCeTongZhiInfor> quanBuInfors) {
+    public AnLiMeiWenAdapter(Context context, List<AnLiMeiWenInfor> quanBuInfors) {
         this.context = context;
         this.quanBuInfors = quanBuInfors;
     }
@@ -35,7 +35,7 @@ public class QingChunFenXiangAdapter  extends RecyclerView.Adapter<RecyclerView.
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        ((ViewHolder) holder).tv_companyname.setText(quanBuInfors.get(position).getCname());
+        ((ViewHolder) holder).tv_companyname.setText(quanBuInfors.get(position).getNum()+"条评论");
         ((ViewHolder) holder).tv_title.setText(quanBuInfors.get(position).getTitle());
         ((ViewHolder) holder).tv_shijian.setText(quanBuInfors.get(position).getTime()+"");
     }
@@ -47,7 +47,7 @@ public class QingChunFenXiangAdapter  extends RecyclerView.Adapter<RecyclerView.
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private ImageView iv_avadar;
-        private TextView  tv_title, tv_companyname, tv_shijian;
+        private TextView tv_title, tv_companyname, tv_shijian;
 
         public ViewHolder(View itemView) {
             super(itemView);

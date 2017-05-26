@@ -16,24 +16,26 @@
             android:orientation="horizontal">
 
             <com.makeramen.roundedimageview.RoundedImageView
-                android:id="@+id/riv_avater"
+                android:id="@+id/riv_jiaoliu_avater"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_marginLeft="20dp"
                 android:src="@mipmap/ic_launcher" />
 
             <TextView
+                android:id="@+id/tv_jiaoliu_name"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="8dp"
-                android:layout_toRightOf="@+id/riv_avater"
+                android:layout_toRightOf="@id/riv_jiaoliu_avater"
                 android:layout_weight="1"
                 android:text="啦啦啦"
                 android:textColor="#4b4b4b"
                 android:textSize="16sp" />
 
             <TextView
+                android:id="@+id/tv_jiaoliu_jieda"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
@@ -46,7 +48,7 @@
     </RelativeLayout>
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/tv_jiaoliu_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
@@ -57,15 +59,16 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
+        android:layout_marginTop="8dp"
         android:orientation="horizontal">
 
         <ImageView
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:src="@drawable/icon_jiahaoyou" />
+            android:src="@drawable/pic_jiazai1" />
 
         <View
             android:layout_width="0dp"
@@ -75,7 +78,7 @@
         <ImageView
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:src="@drawable/icon_jiahaoyou" />
+            android:src="@drawable/pic_jiazai1" />
 
         <View
             android:layout_width="0dp"
@@ -85,7 +88,7 @@
         <ImageView
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:src="@drawable/icon_jiahaoyou" />
+            android:src="@drawable/pic_jiazai1" />
     </LinearLayout>
 
     <LinearLayout
@@ -101,6 +104,7 @@
             android:src="@drawable/icon_tag" />
 
         <TextView
+            android:id="@+id/tv_jiaoliu_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
@@ -125,6 +129,7 @@
         android:orientation="horizontal">
 
         <TextView
+            android:id="@+id/tv_jiaoliu_time"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
@@ -140,6 +145,7 @@
             android:src="@drawable/icon_zan" />
 
         <TextView
+            android:id="@+id/tv_jiaoliu_dianzan"
             android:layout_width="14sp"
             android:layout_height="14sp"
             android:layout_gravity="center_vertical"
@@ -156,6 +162,7 @@
             android:src="@drawable/icon_tag2" />
 
         <TextView
+            android:id="@+id/tv_jiaoliu_huifu"
             android:layout_width="14sp"
             android:layout_height="14sp"
             android:layout_gravity="center_vertical"
