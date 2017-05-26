@@ -35,6 +35,7 @@ public class ShareFragment extends BaseFragment implements View.OnClickListener 
         v= inflater.inflate(R.layout.fragment_share, container, false);
         initView(v);
         return v;
+
     }
 
     private void initView(View v) {
