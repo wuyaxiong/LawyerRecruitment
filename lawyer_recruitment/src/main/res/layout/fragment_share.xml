@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="#FFFFFF"
     android:orientation="vertical"
-    tools:context=".fragment.ShareFragment">
+    tools:context="net.cpsec.zfwx.guodian.fragment.ShareFragment">
 
     <include layout="@layout/title_bar_layout" />
 

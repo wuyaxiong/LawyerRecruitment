@@ -4,12 +4,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".fragment.JiaoLiuFragment">
+    tools:context="net.cpsec.zfwx.guodian.fragment.JiaoLiuFragment">
     <include layout="@layout/title_bar_layout" />
     <android.support.design.widget.TabLayout
         android:id="@+id/tl_tab"
         android:layout_width="match_parent"
-        android:layout_height="36dp"
+        android:layout_height="40dp"
         android:background="@color/color_while"
         android:fillViewport="false"
         app:tabIndicatorColor="@color/color_1658ee" />
@@ -26,8 +26,8 @@
 
         <ImageView
             android:id="@+id/iv_jiaoliu_fatie"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:src="@drawable/icon_fatie_4"
             android:layout_gravity="bottom|right"
             android:layout_marginBottom="20dp"

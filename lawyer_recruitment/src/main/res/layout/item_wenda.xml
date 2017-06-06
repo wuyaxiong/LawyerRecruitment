@@ -18,14 +18,14 @@
             android:layout_weight="1"
             android:text="锅炉的作用是什么？"
             android:textColor="#4b4b4b"
-            android:textSize="20dp" />
+            android:textSize="18dp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="20dp"
             android:text="已解决"
-            android:textSize="20sp" />
+            android:textSize="18sp" />
     </LinearLayout>
 
     <View

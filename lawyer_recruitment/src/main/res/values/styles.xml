@@ -9,13 +9,9 @@
     </style>
 
     <style name="AppAction" parent="AppTheme">
-        <!--<item name="colorPrimary">@color/color_gray</item>-->
-        <!--<item name="colorPrimaryDark">@color/color_007fff</item>-->
-        <!--<item name="colorAccent">@color/color_gray</item>-->
         <item name="android:windowBackground">@color/color_while</item>
         <item name="android:windowFullscreen">true</item>
     </style>
-
     <style name="DialogStyle">
         <item name="android:windowFrame">@null</item>
         <!-- 边框 -->
@@ -64,5 +60,8 @@
         <item name="progress_text_color">#3498DB</item>
         <item name="progress_reached_bar_height">1.5dp</item>
         <item name="progress_unreached_bar_height">0.75dp</item>
+    </style>
+    <style name="ImageTranslucentTheme" parent="AppTheme">
+        <!--在Android 4.4之前的版本上运行，直接跟随系统主题-->
     </style>
 </resources>

@@ -4,14 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF"
     android:orientation="vertical"
-    tools:context="net.cpsec.zfwx.lawyer_recruitment.activity.SouSuoActivity">
+    android:background="@color/color_while"
+    android:fitsSystemWindows="true"
+    tools:context="activity.SouSuoActivity">
 
     <LinearLayout
         android:id="@+id/relativeLayout"
         android:layout_width="match_parent"
-        android:layout_height="74dp"
+        android:layout_height="60dp"
         android:background="#FFFFFF"
         android:orientation="horizontal">
 

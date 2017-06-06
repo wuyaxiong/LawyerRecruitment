@@ -9,8 +9,8 @@
     android:orientation="horizontal">
     <ImageView
         android:id="@+id/iv_tongzhi"
-        android:layout_width="150dp"
-        android:layout_height="100dp"
+        android:layout_width="100dp"
+        android:layout_height="70dp"
         android:layout_marginBottom="20dp"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="20dp"
@@ -33,7 +33,7 @@
             android:maxLines="2"
             android:text="呵呵哈哈哈或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或fffffffffffffffffffffffffffffffffffffffff"
             android:textColor="#4b4b4b"
-            android:textSize="20sp" />
+            android:textSize="18sp" />
 
         <View
             android:layout_width="match_parent"

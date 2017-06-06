@@ -14,7 +14,8 @@
     <color name="color_353535">#353535</color>
     <color name="color_eaeaea">#eaeaea</color>
     <color name="color_ff3000">#ff3000</color>
-    <color name="color_while_transparent">#00ffffff</color>
+    <color name="color_while_transparent">#ffffffff</color>
     <color name="color_66353535">#66353535</color>
-    <color name="color_c4c4c4">#c4c4c4</color>
+    <color name="color_51a0fc">#51a0fc</color>
+
 </resources>

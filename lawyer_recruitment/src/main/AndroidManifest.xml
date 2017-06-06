@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="net.cpsec.zfwx.lawyer_recruitment">
+    package="net.cpsec.zfwx.guodian">
 
     <!-- net.cpsec.zfwx.lawyer_recruitment -->
     <!-- 通用权限 -->
@@ -35,42 +35,78 @@
     <uses-permission android:name="android.permission.CALL_PHONE" />
 
     <application
-        android:name=".MyApplication"
+        android:name="net.cpsec.zfwx.guodian.MyApplication"
         android:allowBackup="true"
-        android:icon="@drawable/icon_tag"
+        android:icon="@mipmap/ic_launcher"
         android:label="国电论坛"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".activity.ActionActivity"
+            android:name="net.cpsec.zfwx.guodian.activity.ActionActivity"
             android:theme="@style/AppAction">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.MainActivity" />
-        <activity android:name=".activity.GeRenXinXiActivity" />
-        <activity android:name=".activity.LoginActivity" />
-        <activity android:name=".activity.MyCenterActivity" />
-        <activity android:name=".activity.FaTieActivity" />
-        <activity android:name=".activity.MyTieZiActivity" />
-        <activity android:name=".activity.MyTouPiaoActivity" />
-        <activity android:name=".activity.FanKuiActivity" />
-        <activity android:name=".activity.XiuGaiXinXiActivity" />
-        <activity android:name=".activity.SplashActivity" />
-        <activity android:name=".activity.XiangXiZiLiaoActivity" />
+        <activity
+            android:name="net.cpsec.zfwx.guodian.activity.MainActivity"
+            android:theme="@style/ImageTranslucentTheme" />
+        <activity
+            android:name="net.cpsec.zfwx.guodian.activity.GeRenXinXiActivity"
+            android:theme="@style/ImageTranslucentTheme" />
+        <activity
+            android:name="net.cpsec.zfwx.guodian.activity.LoginActivity"
+            android:theme="@style/ImageTranslucentTheme" />
+        <activity
+            android:name="net.cpsec.zfwx.guodian.activity.MyCenterActivity"
+            android:theme="@style/ImageTranslucentTheme" />
+        <activity
+            android:name="net.cpsec.zfwx.guodian.activity.FaTieActivity"
+            android:theme="@style/ImageTranslucentTheme" />
+        <activity
+            android:name="net.cpsec.zfwx.guodian.activity.MyTieZiActivity"
+            android:theme="@style/ImageTranslucentTheme" />
+        <activity
+            android:name="net.cpsec.zfwx.guodian.activity.MyTouPiaoActivity"
+            android:theme="@style/ImageTranslucentTheme" />
+        <activity
+            android:name="net.cpsec.zfwx.guodian.activity.FanKuiActivity"
+            android:theme="@style/ImageTranslucentTheme" />
+        <activity
+            android:name="net.cpsec.zfwx.guodian.activity.XiuGaiXinXiActivity"
+            android:theme="@style/ImageTranslucentTheme" />
+        <activity
+            android:name="net.cpsec.zfwx.guodian.activity.SplashActivity"
+            android:theme="@style/ImageTranslucentTheme" />
+        <activity
+            android:name="net.cpsec.zfwx.guodian.activity.XiangXiZiLiaoActivity"
+            android:theme="@style/ImageTranslucentTheme" />
 
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
-        <activity android:name=".activity.ShouCangActivity" />
-        <activity android:name=".activity.WenDaActivity" />
-        <activity android:name=".activity.XinShengTiWenActivity" />
-        <activity android:name=".activity.SouSuoActivity" />
-        <activity android:name=".activity.SelectPictureActivity"></activity>
+        <activity
+            android:name="net.cpsec.zfwx.guodian.activity.ShouCangActivity"
+            android:theme="@style/ImageTranslucentTheme" />
+        <activity
+            android:name="net.cpsec.zfwx.guodian.activity.WenDaActivity"
+            android:theme="@style/ImageTranslucentTheme" />
+        <activity
+            android:name="net.cpsec.zfwx.guodian.activity.XinShengTiWenActivity"
+            android:theme="@style/ImageTranslucentTheme" />
+        <activity
+            android:name="net.cpsec.zfwx.guodian.activity.SouSuoActivity"
+            android:theme="@style/ImageTranslucentTheme" />
+        <activity
+            android:name="net.cpsec.zfwx.guodian.activity.WenTiXiangQiActivity"
+            android:theme="@style/ImageTranslucentTheme" />
+        <activity
+            android:name="net.cpsec.zfwx.guodian.activity.SelectPictureActivity"
+            android:theme="@style/ImageTranslucentTheme"></activity>
     </application>
 
 </manifest>

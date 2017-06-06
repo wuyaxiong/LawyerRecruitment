@@ -5,10 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="net.cpsec.zfwx.lawyer_recruitment.activity.SelectPictureActivity">
+    android:background="@color/color_while"
+    android:fitsSystemWindows="true"
+    tools:context=".activity.SelectPictureActivity">
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="48dp"
+        android:layout_height="60dp"
         android:background="#c000" >
 
         <Button
@@ -17,7 +19,7 @@
             android:layout_height="24dp"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
-            android:layout_margin="8dp"
+            android:layout_marginLeft="20dp"
             android:background="@drawable/back_icon1"
             android:onClick="back" />
 
@@ -43,7 +45,7 @@
             android:onClick="ok"
             android:text="完成"
             android:textColor="#fff"
-            android:textSize="14sp" />
+            android:textSize="16sp" />
     </RelativeLayout>
 
     <RelativeLayout

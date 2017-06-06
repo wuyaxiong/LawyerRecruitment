@@ -5,11 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#f6f6f6"
-    tools:context=".activity.MyTieZiActivity">
+    android:background="@color/color_while"
+    android:fitsSystemWindows="true"
+    tools:context="net.cpsec.zfwx.guodian.activity.MyTieZiActivity">
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="74dp"
+        android:layout_height="60dp"
         android:background="#FFFFFF">
         <ImageView
             android:id="@+id/iv_back"

@@ -47,7 +47,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <net.cpsec.zfwx.lawyer_recruitment.widget.PickerScrollView
+        <net.cpsec.zfwx.guodian.widget.PickerScrollView
             android:id="@+id/pickerscrlllview"
             android:layout_width="0dp"
             android:layout_height="160dp"
@@ -64,7 +64,7 @@
             android:textSize="30sp"
             android:visibility="gone" />
 
-        <net.cpsec.zfwx.lawyer_recruitment.widget.PickerScrollView
+        <net.cpsec.zfwx.guodian.widget.PickerScrollView
             android:id="@+id/psv_end_time"
             android:layout_width="0dp"
             android:layout_height="160dp"

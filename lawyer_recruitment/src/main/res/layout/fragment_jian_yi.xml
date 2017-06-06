@@ -3,8 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".fragment.JianYiFragment">
-    <net.cpsec.zfwx.lawyer_recruitment.ui.YRecycleview
+    tools:context="net.cpsec.zfwx.guodian.fragment.JianYiFragment">
+    <net.cpsec.zfwx.guodian.ui.YRecycleview
         android:id="@+id/yrv_sheng_jianyi"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

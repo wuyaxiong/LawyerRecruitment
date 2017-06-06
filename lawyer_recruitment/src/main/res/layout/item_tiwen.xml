@@ -19,7 +19,7 @@
             android:id="@+id/riv_xinsheng_avadar"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:src="@mipmap/ic_launcher"
+            android:src="@mipmap/ic_launcher_round"
             android:layout_marginLeft="20dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -45,7 +45,7 @@
         android:layout_marginTop="8dp"
         android:text="锅炉的作用是什么？"
         android:textColor="#4b4b4b"
-        android:textSize="20dp" />
+        android:textSize="18dp" />
 
 
     <LinearLayout

@@ -5,29 +5,30 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="#FFFFFF"
-    tools:context=".fragment.TongXunLuFragment">
+    tools:context="net.cpsec.zfwx.guodian.fragment.TongXunLuFragment">
     <include layout="@layout/title_bar_layout" />
 
     <SearchView
         android:id="@+id/sc_search"
         android:layout_width="match_parent"
-        android:layout_height="54dp"
+        android:layout_height="40dp"
         android:background="@drawable/shape_search"
         android:iconifiedByDefault="false"
         android:queryHint="请输入搜索内容"
         android:layout_marginRight="16dp"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="7dp">
-<View
-    android:layout_width="match_parent"
-    android:layout_height="5dp"
-    android:layout_marginTop="100dp"
-    android:background="@color/color_e7eaf3"></View>
+<!--<View-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="5dp"-->
+    <!--android:layout_marginTop="100dp"-->
+    <!--android:background="@color/color_e7eaf3"></View>-->
     </SearchView>
       <ListView
           android:id="@+id/lv_tongxun"
           android:layout_width="match_parent"
-          android:layout_height="wrap_content"
+          android:layout_height="0dp"
+          android:layout_weight="1"
           android:layout_marginTop="7dp"></ListView>
 
 

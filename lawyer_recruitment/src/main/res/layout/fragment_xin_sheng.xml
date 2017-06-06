@@ -3,9 +3,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".fragment.XinShengFragment">
+    tools:context="net.cpsec.zfwx.guodian.fragment.XinShengFragment">
 
-    <net.cpsec.zfwx.lawyer_recruitment.ui.YRecycleview
+    <net.cpsec.zfwx.guodian.ui.YRecycleview
         android:id="@+id/yrv_sheng_xinsheng"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

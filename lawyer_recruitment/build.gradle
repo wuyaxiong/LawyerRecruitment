@@ -5,7 +5,7 @@ android {
     buildToolsVersion '25.0.0'
 
     defaultConfig {
-        applicationId "net.cpsec.zfwx.lawyer_recruitment"
+        applicationId "net.cpsec.zfwx.guodian"
         minSdkVersion 15
         targetSdkVersion 23
         versionCode 1
@@ -58,4 +58,7 @@ dependencies {
     compile 'com.makeramen:roundedimageview:2.3.0'
     testCompile 'junit:junit:4.12'
     compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
+    compile 'com.githang:status-bar-compat:0.3'
+    compile 'org.ow2.util.base64:base64:2.0.0'
+    compile 'com.owtelse.codec:base64:1.0.6'
 }

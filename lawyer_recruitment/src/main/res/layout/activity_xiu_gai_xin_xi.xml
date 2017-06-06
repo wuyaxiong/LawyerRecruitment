@@ -4,9 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF"
+    android:background="@color/color_while"
+    android:fitsSystemWindows="true"
     android:orientation="vertical"
-    tools:context=".activity.XiuGaiXinXiActivity">
+    tools:context="net.cpsec.zfwx.guodian.activity.XiuGaiXinXiActivity">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -19,7 +20,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="74dp"
+                android:layout_height="60dp"
                 android:background="#FFFFFF"
                 android:orientation="vertical">
 
@@ -30,8 +31,8 @@
 
                     <ImageView
                         android:id="@+id/iv_back"
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="16dp"
                         android:src="@mipmap/back_icon" />
@@ -43,7 +44,7 @@
                         android:layout_centerVertical="true"
                         android:text="编辑个人信息"
                         android:textColor="#575757"
-                        android:textSize="23sp" />
+                        android:textSize="20sp" />
 
                     <TextView
                         android:id="@+id/tv_xinxi_complete"
@@ -64,7 +65,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="100dp"
+                android:layout_height="90dp"
                 android:orientation="horizontal">
 
                 <TextView
@@ -74,7 +75,7 @@
                     android:layout_marginLeft="20dp"
                     android:text="头        像"
                     android:textColor="#929292"
-                    android:textSize="20sp" />
+                    android:textSize="18sp" />
 
                 <View
                     android:layout_width="0dp"
@@ -97,7 +98,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
+                android:layout_height="40dp"
                 android:orientation="horizontal">
 
                 <TextView
@@ -107,7 +108,7 @@
                     android:layout_marginLeft="20dp"
                     android:text="姓        名"
                     android:textColor="#929292"
-                    android:textSize="20sp" />
+                    android:textSize="18sp" />
 
                 <EditText
                     android:id="@+id/et_xinxi_name"
@@ -117,9 +118,8 @@
                     android:layout_marginLeft="14dp"
                     android:layout_marginRight="20dp"
                     android:background="#ffffff"
-                    android:hint="小小"
                     android:textColor="#575757"
-                    android:textSize="20sp" />
+                    android:textSize="18sp" />
             </LinearLayout>
 
             <View
@@ -129,7 +129,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
+                android:layout_height="40dp"
                 android:orientation="horizontal">
 
                 <TextView
@@ -139,27 +139,36 @@
                     android:layout_marginLeft="20dp"
                     android:text="性        别"
                     android:textColor="#929292"
-                    android:textSize="20sp" />
+                    android:textSize="18sp" />
 
-                <RadioButton
-                    android:id="@+id/rbt_man"
+                <RadioGroup
+                    android:id="@+id/rg_gender"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="14dp"
-                    android:text="男"
-                    android:textColor="#575757"
-                    android:textSize="20sp" />
+                    android:orientation="horizontal">
 
-                <RadioButton
-                    android:id="@+id/rbt_woman"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="14dp"
-                    android:text="女"
-                    android:textColor="#575757"
-                    android:textSize="20sp" />
+                    <RadioButton
+                        android:id="@+id/rbt_man"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="14dp"
+                        android:text="男"
+                        android:checked="true"
+                        android:textColor="#575757"
+                        android:textSize="18sp" />
+
+                    <RadioButton
+                        android:id="@+id/rbt_woman"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="14dp"
+                        android:text="女"
+                        android:textColor="#575757"
+                        android:textSize="18sp" />
+                </RadioGroup>
             </LinearLayout>
 
             <View
@@ -179,7 +188,7 @@
                     android:layout_marginTop="20dp"
                     android:text="简        介"
                     android:textColor="#929292"
-                    android:textSize="20sp" />
+                    android:textSize="18sp" />
 
                 <EditText
                     android:id="@+id/et_xinxi_jianjie"
@@ -189,7 +198,6 @@
                     android:layout_marginRight="20dp"
                     android:layout_marginTop="20dp"
                     android:background="#ffffff"
-                    android:hint="市委书记"
                     android:maxLines="3" />
                 <!--android:scrollbars="vertical"-->
                 <!--android:textColor="#575757"-->
@@ -206,7 +214,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
+                android:layout_height="40dp"
                 android:orientation="horizontal">
 
                 <TextView
@@ -216,7 +224,7 @@
                     android:layout_marginLeft="20dp"
                     android:text="出生日期"
                     android:textColor="#929292"
-                    android:textSize="20sp" />
+                    android:textSize="18sp" />
 
                 <EditText
                     android:id="@+id/et_birth"
@@ -226,9 +234,8 @@
                     android:layout_marginLeft="14dp"
                     android:layout_marginRight="20dp"
                     android:background="#ffffff"
-                    android:hint="2017-5-10"
                     android:textColor="#575757"
-                    android:textSize="20sp" />
+                    android:textSize="18sp" />
             </LinearLayout>
 
             <View
@@ -238,7 +245,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
+                android:layout_height="40dp"
                 android:orientation="horizontal">
 
                 <TextView
@@ -248,7 +255,7 @@
                     android:layout_marginLeft="20dp"
                     android:text="政治面貌"
                     android:textColor="#929292"
-                    android:textSize="20sp" />
+                    android:textSize="18sp" />
 
                 <EditText
                     android:id="@+id/et_xinxi_mianmao"
@@ -258,9 +265,8 @@
                     android:layout_marginLeft="14dp"
                     android:layout_marginRight="20dp"
                     android:background="#ffffff"
-                    android:hint="党员"
                     android:textColor="#575757"
-                    android:textSize="20sp" />
+                    android:textSize="18sp" />
             </LinearLayout>
 
             <View
@@ -270,7 +276,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
+                android:layout_height="40dp"
                 android:orientation="horizontal">
 
                 <TextView
@@ -280,7 +286,7 @@
                     android:layout_marginLeft="20dp"
                     android:text="所属单位"
                     android:textColor="#929292"
-                    android:textSize="20sp" />
+                    android:textSize="18sp" />
 
                 <EditText
                     android:id="@+id/et_xinxi_danwei"
@@ -290,9 +296,8 @@
                     android:layout_marginLeft="14dp"
                     android:layout_marginRight="20dp"
                     android:background="#ffffff"
-                    android:hint="党委"
                     android:textColor="#575757"
-                    android:textSize="20sp" />
+                    android:textSize="18sp" />
             </LinearLayout>
 
             <View
@@ -302,7 +307,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
+                android:layout_height="40dp"
                 android:orientation="horizontal">
 
                 <TextView
@@ -312,7 +317,7 @@
                     android:layout_marginLeft="20dp"
                     android:text="单位地址"
                     android:textColor="#929292"
-                    android:textSize="20sp" />
+                    android:textSize="18sp" />
 
                 <EditText
                     android:id="@+id/et_xinxi_address"
@@ -322,9 +327,8 @@
                     android:layout_marginLeft="14dp"
                     android:layout_marginRight="20dp"
                     android:background="#ffffff"
-                    android:hint="故宫博物院"
                     android:textColor="#575757"
-                    android:textSize="20sp" />
+                    android:textSize="18sp" />
             </LinearLayout>
 
             <View
