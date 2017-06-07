@@ -247,7 +247,6 @@ public class QuanBuFragment extends BaseFragment implements YRecycleview.OnRefre
     private void setPopupWindow() {
         // TODO: 2016/5/17 创建PopupWindow对象，指定宽度和高度
         window = new PopupWindow(popView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-
         // TODO: 2016/5/17 设置动画
         window.setAnimationStyle(R.style.popup_window_anim);
         // TODO: 2016/5/17 设置背景颜色

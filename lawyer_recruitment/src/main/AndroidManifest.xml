@@ -105,8 +105,15 @@
             android:name="net.cpsec.zfwx.guodian.activity.WenTiXiangQiActivity"
             android:theme="@style/ImageTranslucentTheme" />
         <activity
-            android:name="net.cpsec.zfwx.guodian.activity.SelectPictureActivity"
+            android:name="net.cpsec.zfwx.guodian.activity.PhotoActivity"
             android:theme="@style/ImageTranslucentTheme"></activity>
+        <activity
+            android:name="net.cpsec.zfwx.guodian.activity.ImageGridActivity"
+            android:theme="@style/ImageTranslucentTheme"></activity>
+        <activity
+            android:name="net.cpsec.zfwx.guodian.activity.TestPicActivity"
+            android:theme="@style/ImageTranslucentTheme"></activity>
+
     </application>
 
 </manifest>
