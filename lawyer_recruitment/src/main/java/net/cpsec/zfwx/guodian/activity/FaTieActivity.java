@@ -10,6 +10,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -165,6 +166,14 @@ public class FaTieActivity extends BaseActivity implements MyItemClickListener {
                 finish();
                 break;
             case R.id.tv_fatie_complete:
+                if (TextUtils.isEmpty(et_zhengwen.getText().toString().trim())) {
+                android.widget.Toast.makeText(FaTieActivity.this,"请输入内容！", android.widget.Toast.LENGTH_SHORT).show();
+                return;
+            }
+                if (TextUtils.isEmpty(et_zhuti.getText().toString().trim())) {
+                    android.widget.Toast.makeText(FaTieActivity.this,"请输入主题！", android.widget.Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 stringList=new ArrayList<String>();
                 StringBuffer sb = new StringBuffer();
                 for (int i = 0; i < Bimp.bmp.size(); i++) {

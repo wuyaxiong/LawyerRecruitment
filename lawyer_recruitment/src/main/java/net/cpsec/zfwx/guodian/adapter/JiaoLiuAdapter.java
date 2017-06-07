@@ -2,7 +2,6 @@ package net.cpsec.zfwx.guodian.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +27,7 @@ public class JiaoLiuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     private Context context;
     private List<QuanBuInfor> quanBuInfors;
     private OnItemClickListener mOnItemClickListener = null;
+    List<String> list;
 
     public JiaoLiuAdapter(Context context, List<QuanBuInfor> quanBuInfors) {
         this.context = context;
@@ -42,17 +42,24 @@ public class JiaoLiuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     @Override
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
-        List<String> list = new ArrayList<String>();
+        ((ViewHolder) holder).img_01.setVisibility(View.GONE);
+        //把javabean中的图片地址转化成list集合
+        list = new ArrayList<String>();
+        list.clear();
         String tupian=quanBuInfors.get(position).getImage();
         String[] tupians=tupian.split(",");
         for(String substr:tupians){
             list.add(substr);
         }
-        Log.d("图片地址", "quanBuInfors.get(position).getImage(): "+quanBuInfors.get(position).getImage());
-        if(list.get(0)==null){
-            ((ViewHolder) holder).layout_tupian.setVisibility(View.GONE);
+
+        if(!list.get(0).isEmpty()){
+            ((ViewHolder) holder).img_01.setVisibility(View.VISIBLE);
+            ImageLoader.getInstance().displayImage("http://"+list.get(0),((ViewHolder) holder).img_01);
         }
-        ImageLoader.getInstance().displayImage("http://"+list.get(0),((ViewHolder) holder).img_01);
+
+
+
+        ImageLoader.getInstance().displayImage("http://"+quanBuInfors.get(position).getUserpic(),((ViewHolder) holder).riv_avadar);
         ((ViewHolder) holder).tv_name.setText(quanBuInfors.get(position).getUsername());
         ((ViewHolder) holder).tv_title.setText(quanBuInfors.get(position).getContent());
         // ((ViewHolder) holder).tv_answer.setText(null);
@@ -88,7 +95,6 @@ public class JiaoLiuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             LocalDisplay.init(itemView.getContext());
 
             itemView.setOnClickListener(this);
-
             riv_avadar = (RoundedImageView) itemView.findViewById(R.id.riv_jiaoliu_avater);
             tv_name = (TextView) itemView.findViewById(R.id.tv_jiaoliu_name);
             tv_title = (TextView) itemView.findViewById(R.id.tv_jiaoliu_title);
@@ -97,7 +103,6 @@ public class JiaoLiuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             tv_dianzan = (TextView) itemView.findViewById(R.id.tv_jiaoliu_dianzan);
             tv_huifu = (TextView) itemView.findViewById(R.id.tv_jiaoliu_huifu);
             img_01 = (ImageView) itemView.findViewById(R.id.img_jialiu_01);
-            layout_tupian = (LinearLayout) itemView.findViewById(R.id.tiezi_tupian);
         }
 
         @Override

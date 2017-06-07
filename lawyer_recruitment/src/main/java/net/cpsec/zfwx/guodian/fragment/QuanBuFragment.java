@@ -89,6 +89,7 @@ public class QuanBuFragment extends BaseFragment implements YRecycleview.OnRefre
                 bundle.putString("time",infor.getTime()+"");
                 bundle.putString("title",infor.getTitle());
                 bundle.putString("image",infor.getImage());
+                bundle.putString("userpic",infor.getUserpic());
                 intent.putExtras(bundle);
                 startActivity(intent);
                 Log.d("闯过去的图片地址", "getImage: "+infor.getImage());

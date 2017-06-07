@@ -67,9 +67,11 @@
 
         <ImageView
             android:id="@+id/img_jialiu_01"
-            android:layout_width="150dp"
-            android:layout_height="100dp"
-            android:src="@drawable/pic_jiazai1" />
+            android:layout_width="250dp"
+            android:layout_height="150dp"
+            android:src="@drawable/pic_jiazai1"
+            android:visibility="gone"
+            />
 
 
     </LinearLayout>
@@ -101,7 +103,7 @@
         android:layout_height="1dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        android:background="#bebebe"></View>
+        android:background="#DDDDDD"></View>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -158,5 +160,5 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="#bebebe"></View>
+        android:background="#DDDDDD"></View>
 </LinearLayout>

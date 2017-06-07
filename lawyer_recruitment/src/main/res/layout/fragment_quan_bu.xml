@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="net.cpsec.zfwx.lawyer_recruitment.net.cpsec.zfwx.guodian.fragment.QuanBuFragment">
+    tools:context=".fragment.QuanBuFragment">
 <LinearLayout
     android:id="@+id/ll_quanbu_acationbar"
     android:layout_width="match_parent"
