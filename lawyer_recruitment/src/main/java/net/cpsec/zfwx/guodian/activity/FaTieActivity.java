@@ -166,15 +166,26 @@ public class FaTieActivity extends BaseActivity implements MyItemClickListener {
                 finish();
                 break;
             case R.id.tv_fatie_complete:
+                if (TextUtils.isEmpty(et_zhuti.getText().toString().trim())) {
+                    android.widget.Toast.makeText(FaTieActivity.this,"请输入标题！", android.widget.Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 if (TextUtils.isEmpty(et_zhengwen.getText().toString().trim())) {
                 android.widget.Toast.makeText(FaTieActivity.this,"请输入内容！", android.widget.Toast.LENGTH_SHORT).show();
                 return;
             }
-                if (TextUtils.isEmpty(et_zhuti.getText().toString().trim())) {
-                    android.widget.Toast.makeText(FaTieActivity.this,"请输入主题！", android.widget.Toast.LENGTH_SHORT).show();
-                    return;
-                }
+            String[] strings=new String[Bimp.bmp.size()];
                 stringList=new ArrayList<String>();
+//                for (int i = 0; i < Bimp.bmp.size(); i++) {
+//                    Bitmap bt = Bimp.bmp.get(i);
+//                    //stringList.add(BitmapToBase64.bitmapToBase64(bt));
+//                    strings[i]=BitmapToBase64.bitmapToBase64(bt);
+//                   // Debugging.debugging("AAAA---"+strings[i]);
+//                }
+                for (int i = 0; i < Bimp.bmp.size(); i++) {
+                    Bitmap bt = Bimp.bmp.get(i);
+                    stringList.add(BitmapToBase64.bitmapToBase64(bt));
+                }
                 StringBuffer sb = new StringBuffer();
                 for (int i = 0; i < Bimp.bmp.size(); i++) {
                     Bitmap bt = Bimp.bmp.get(i);
@@ -184,24 +195,42 @@ public class FaTieActivity extends BaseActivity implements MyItemClickListener {
                 if (sb.length() > 0) {
                     sb.delete(sb.length() - 1, sb.length());
                 }
-                Debugging.debugging("sb============"+sb.toString());
-                //stringList.add(sb.toString());
+                if (sb.length()>4000){
+                    for(int i=0;i<sb.length();i+=4000) {
+                        if(i+4000<sb.length()){
+                            Debugging.debugging(sb.substring(i, i+4000));
+                        }else {
+                            Debugging.debugging(sb.substring(i, sb.length()));
+                        }
+                    }
+                    }
+//                Debugging.debugging("stringList==="+stringList);
+//                Debugging.debugging("strings==="+strings.toString());
+//               JSONArray jsonArray=new org.json.JSONArray();
 //                for (int i = 0; i < Bimp.bmp.size(); i++) {
 //                    Bitmap bt = Bimp.bmp.get(i);
 //                    String s=BitmapToBase64.bitmapToBase64(bt);
-//                    stringList.add(s);
-//                    Debugging.debugging("sssssss====+++++++++"+s);
+//                    JSONObject jsonObject = new JSONObject();
+//                    try {
+//                        jsonObject.put("image",s);
+//                        jsonArray.put(i,jsonObject);
+//                    } catch (JSONException e) {
+//                        e.printStackTrace();
+//                    }
+//
+////                    stringList.add(s);
+//                    Debugging.debugging("jsonArray====+++++++++"+jsonArray.toString());
 //                }
-                Debugging.debugging("stringlist=================="+stringList.size());
-              Debugging.debugging("stringlist====+++++++++"+Bimp.bmp.size());
-               Debugging.debugging("stringlist+++++++++"+stringList.toString());
+               // Debugging.debugging("stringlist=================="+stringList.size());
+//              Debugging.debugging("stringlist====+++++++++"+Bimp.bmp.size());
+//             //  Debugging.debugging("stringlist+++++++++"+stringList.toString());
                 RequestMap params = new RequestMap();
                 params.put("uid", "3");
                 params.put("label_id", "1");
                 params.put("cid", "1");
                 params.put("title", et_zhuti.getText().toString());
                 params.put("content", et_zhengwen.getText().toString());
-                params.put("images",sb.toString());
+                params.put("images",stringList.toString());
                 setParams(NetUrl.FABIAO_TIEZI, params, 0);
                 break;
             //添加标签

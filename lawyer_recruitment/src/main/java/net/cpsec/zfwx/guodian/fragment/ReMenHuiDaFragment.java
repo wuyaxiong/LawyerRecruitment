@@ -70,10 +70,12 @@ public class ReMenHuiDaFragment extends BaseFragment implements YRecycleview.OnR
                 QuanBuInfor infor=quanbuInfor.get(position-1);
                 Bundle bundle=new Bundle();
                 bundle.putString("from","4");
-                bundle.putString("username",infor.getUsername().toString());
-                bundle.putString("content",infor.getContent());
-                bundle.putString("time",infor.getTime()+"");
-                bundle.putString("title",infor.getTitle());
+                bundle.putString("username4",infor.getUsername().toString());
+                bundle.putString("content4",infor.getContent());
+                bundle.putString("time4",infor.getTime()+"");
+                bundle.putString("title4",infor.getTitle());
+                bundle.putString("image4",infor.getImage());
+                bundle.putString("userpic4",infor.getUserpic());
                 intent.putExtras(bundle);
                 startActivity(intent);
             }

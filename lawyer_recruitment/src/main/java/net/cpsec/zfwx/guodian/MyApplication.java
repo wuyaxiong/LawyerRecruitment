@@ -20,8 +20,8 @@ public class MyApplication extends Application {
     public void onCreate() {
         super.onCreate();
         DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder()
-                .showImageForEmptyUri(R.mipmap.ic_launcher)
-                .showImageOnFail(R.mipmap.ic_launcher)
+                .showImageForEmptyUri(R.drawable.pic_jiazai1)
+                .showImageOnFail(R.drawable.pic_jiazai1)
                 .cacheInMemory(true)
                 .cacheOnDisk(true).build();
         ImageLoaderConfiguration config=new ImageLoaderConfiguration.Builder(getApplicationContext())

@@ -62,41 +62,48 @@ public class WenTiXiangQiActivity extends Activity implements View.OnClickListen
         Bundle b = getIntent().getExtras();
         Intent intent=getIntent();
         String str = intent.getExtras().getString("from");
-        String tupian = intent.getExtras().getString("image");
-        String userpic=intent.getExtras().getString("userpic");
-        ImageLoader.getInstance().displayImage("http://"+userpic,riv_head);
-        Log.d("取到的图片", "tupian: "+tupian);
+        String tupian = null;
+        String userpic;
         if ("1".equals(str)) {
-            String username = b.getString("username");
-            String content = b.getString("content");
-            String asktime = b.getString("asktime");
+            String username = b.getString("username3");
+            String content = b.getString("content3");
+            String asktime = b.getString("asktime3");
             tv_name.setText(username);
             tv_time.setText(asktime);
             tv_content.setText(content);
         }else if ("2".equals(str)){
-            String username = b.getString("username");
-            String content = b.getString("content");
-            String asktime = b.getString("time");
+            String username = b.getString("username3");
+            String content = b.getString("content3");
+            String asktime = b.getString("time3");
             tv_name.setText(username);
             tv_time.setText(asktime);
             tv_content.setText(content);
         }else if ("3".equals(str)){
-            tv_name.setText( b.getString("username"));
-            tv_time.setText( b.getString("time"));
-            tv_content.setText("正文:"+b.getString("content"));
-            tv_title.setText( "标题:"+b.getString("title"));
+            userpic=intent.getExtras().getString("userpic3");
+            tupian = intent.getExtras().getString("image3");
+            ImageLoader.getInstance().displayImage("http://"+userpic,riv_head);
+            tv_name.setText( b.getString("username3"));
+            tv_time.setText( b.getString("time3"));
+            tv_content.setText("正文:"+b.getString("content3"));
+            tv_title.setText( "标题:"+b.getString("title3"));
         }
         else if ("4".equals(str)){
-            tv_name.setText( b.getString("username"));
-            tv_time.setText( b.getString("time"));
-            tv_content.setText(b.getString("content"));
-            tv_title.setText( b.getString("title"));
+            userpic=intent.getExtras().getString("userpic4");
+            tupian = intent.getExtras().getString("image4");
+            ImageLoader.getInstance().displayImage("http://"+userpic,riv_head);
+            tv_name.setText( b.getString("username4"));
+            tv_time.setText( b.getString("time4"));
+            tv_content.setText(b.getString("content4"));
+            tv_title.setText( b.getString("title4"));
         }
         else if ("5".equals(str)){
-            tv_name.setText( b.getString("username"));
-            tv_time.setText( b.getString("time"));
-            tv_content.setText(b.getString("content"));
-            tv_title.setText( b.getString("title"));
+            userpic=intent.getExtras().getString("userpic5");
+            tupian = intent.getExtras().getString("image5");
+            ImageLoader.getInstance().displayImage("http://"+userpic,riv_head);
+            tv_name.setText( b.getString("username5"));
+            tv_time.setText( b.getString("time5"));
+            tv_content.setText(b.getString("content5"));
+            tv_title.setText( b.getString("title5"));
         }
 
 

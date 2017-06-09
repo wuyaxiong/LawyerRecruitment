@@ -8,39 +8,44 @@
     android:background="@color/color_while"
     android:fitsSystemWindows="true"
     tools:context=".activity.XinShengTiWenActivity">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:orientation="horizontal">
+
         <TextView
             android:id="@+id/tv_tiwen_back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="20sp"
-            android:text="取消"
+            android:layout_gravity="center_vertical"
             android:layout_marginLeft="20dp"
+            android:text="取消"
             android:textColor="#575757"
-            android:layout_gravity="center_vertical"/>
+            android:textSize="20sp" />
+
         <TextView
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:text="青年心声提问"
-            android:textSize="22sp"
-            android:textColor="#575757"
             android:layout_gravity="center_vertical"
-            android:gravity="center"/>
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="青年心声提问"
+            android:textColor="#575757"
+            android:textSize="22sp" />
+
         <TextView
-            android:id="@+id/tv_fatie_complete"
+            android:id="@+id/tv_tiwen_complete"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="发布"
-            android:textSize="20sp"
+            android:layout_gravity="center_vertical"
             android:layout_marginRight="20dp"
+            android:text="发布"
             android:textColor="#1c7cea"
-            android:layout_gravity="center_vertical"/>
+            android:textSize="20sp" />
 
     </LinearLayout>
+
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
@@ -52,7 +57,7 @@
         android:layout_marginRight="20dp"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="10dp"
-        android:hint="标题"
+        android:hint="标题(可选)"
         android:textSize="20sp"/>
     <EditText
         android:id="@+id/et_tiwen_zhengwen"
@@ -72,29 +77,33 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="8dp">
+        android:layout_marginTop="8dp"
+        android:orientation="horizontal">
+
         <CheckBox
+            android:id="@+id/cb_tiwen"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
             android:text="公开"
-            android:textSize="20sp"
             android:textColor="#575757"
-            android:layout_marginLeft="20dp"/>
+            android:textSize="20sp" />
+
         <View
             android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="25dp"/>
+            android:layout_height="25dp"
+            android:layout_weight="1" />
 
         <ImageView
             android:id="@+id/iv_tiwen_addtupian"
             android:layout_width="25dp"
             android:layout_height="25dp"
-            android:src="@drawable/icon_shangchuan"
+            android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
-            android:layout_marginLeft="20dp"/>
+            android:src="@drawable/icon_shangchuan" />
     </LinearLayout>
-<View
+
+    <View
     android:layout_width="match_parent"
     android:layout_height="1dp"
     android:layout_marginLeft="20dp"
@@ -110,7 +119,7 @@
         <GridView
             android:id="@+id/gridview_tiwen"
             android:layout_width="match_parent"
-            android:layout_height="110dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:horizontalSpacing="5dp"
             android:listSelector="#00000000"

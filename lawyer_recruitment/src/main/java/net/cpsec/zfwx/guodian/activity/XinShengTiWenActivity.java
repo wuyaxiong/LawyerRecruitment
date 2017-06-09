@@ -1,48 +1,63 @@
 package net.cpsec.zfwx.guodian.activity;
 
+import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSON;
+import com.android.volley.manager.RequestMap;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 
 import net.cpsec.zfwx.guodian.R;
+import net.cpsec.zfwx.guodian.utils.Bimp;
+import net.cpsec.zfwx.guodian.utils.BitmapToBase64;
+import net.cpsec.zfwx.guodian.utils.Debugging;
+import net.cpsec.zfwx.guodian.utils.FileUtils;
+import net.cpsec.zfwx.guodian.utils.ImageUtil;
+import net.cpsec.zfwx.guodian.utils.NetUrl;
+import net.cpsec.zfwx.guodian.utils.PictureUtil;
+import net.cpsec.zfwx.guodian.utils.SelectPicPopupWindow;
+import net.cpsec.zfwx.guodian.utils.Toast;
 
 import java.util.ArrayList;
-
-import static net.cpsec.zfwx.guodian.R.id.gridview_tiwen;
+import java.util.List;
+import java.util.Map;
 
 public class XinShengTiWenActivity extends BaseActivity {
     private TextView tv_back, tv_complete;
     private EditText et_zhuti, et_zhengwen;
     private ImageView iv_addpic;
     private GridView gridView_pics;
-
     private GridAdapter gridAdapter;
-
     private Context context;
-
-    private static final int REQUEST_PICK = 0;
-
-    //存放所有选择的照片
-    private ArrayList<String> allSelectedPicture = new ArrayList<String>();
-
-    //存放从选择界面选择的照片
-    private ArrayList<String> selectedPicture = new ArrayList<String>();
-
+    private SelectPicPopupWindow window;// 弹出图片选择框；
+    private String path = "";// 拍照返回的图片路径；
+    List<String> stringList;
+private CheckBox cb_tiwen;
+    int pub;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,7 +65,6 @@ public class XinShengTiWenActivity extends BaseActivity {
         context = this;
         //设置在activity启动的时候输入法默认是不开启的
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-
         ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(this)
                 .threadPriority(Thread.NORM_PRIORITY - 2)//设置当前线程的优先级
                 .denyCacheImageMultipleSizesInMemory()
@@ -65,16 +79,41 @@ public class XinShengTiWenActivity extends BaseActivity {
     }
 
     private void initView() {
+        cb_tiwen= (CheckBox) findViewById(R.id.cb_tiwen);
         iv_addpic = (ImageView) findViewById(R.id.iv_tiwen_addtupian);
         iv_addpic.setOnClickListener(this);
         tv_back = (TextView) findViewById(R.id.tv_tiwen_back);
         et_zhuti = (EditText) findViewById(R.id.et_tiwen_zhuti);
         et_zhengwen = (EditText) findViewById(R.id.et_tiwen_zhengwen);
         tv_back.setOnClickListener(this);
-
-        gridView_pics = (GridView) findViewById(gridview_tiwen);
-        gridAdapter = new GridAdapter();
+        tv_complete= (TextView) findViewById(R.id.tv_tiwen_complete);
+        tv_complete.setOnClickListener(this);
+        gridView_pics = (GridView) findViewById(R.id.gridview_tiwen);
+        gridView_pics.setSelector(new ColorDrawable(Color.TRANSPARENT));
+        gridAdapter = new GridAdapter(this);
+        gridAdapter.update();
         gridView_pics.setAdapter(gridAdapter);
+        gridView_pics.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
+                                    long arg3) {
+                if (arg2 == Bimp.bmp.size()) {
+                    // 弹出选择图片：
+                    //隐藏键盘
+                    ((InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE)).
+                            hideSoftInputFromWindow(XinShengTiWenActivity.this.getCurrentFocus().getWindowToken(),
+                                    InputMethodManager.HIDE_NOT_ALWAYS);
+
+                    window = PictureUtil.toastChoicePic(XinShengTiWenActivity.this,
+                            XinShengTiWenActivity.this, gridView_pics);
+                } else {
+                    Intent intent = new Intent(XinShengTiWenActivity.this,
+                            PhotoActivity.class);
+                    intent.putExtra("ID", arg2);
+                    startActivity(intent);
+                }
+            }
+        });
     }
 
     @Override
@@ -85,115 +124,221 @@ public class XinShengTiWenActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.iv_tiwen_addtupian:
-                selectClick();
+                ((InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE)).
+                        hideSoftInputFromWindow(XinShengTiWenActivity.this.getCurrentFocus().getWindowToken(),
+                                InputMethodManager.HIDE_NOT_ALWAYS);
+                window = PictureUtil.toastChoicePic(XinShengTiWenActivity.this,
+                        XinShengTiWenActivity.this, gridView_pics);
+                break;
+            case R.id.tv_tiwen_complete:
+                if (TextUtils.isEmpty(et_zhengwen.getText().toString().trim())) {
+                    android.widget.Toast.makeText(XinShengTiWenActivity.this,"请输入内容！", android.widget.Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if (cb_tiwen.isChecked()){
+                    pub=1;
+                }else {
+                    pub=0;
+                }
+                stringList=new ArrayList<String>();
+                StringBuffer sb = new StringBuffer();
+                for (int i = 0; i < Bimp.bmp.size(); i++) {
+                    Bitmap bt = Bimp.bmp.get(i);
+                    sb.append(BitmapToBase64.bitmapToBase64(bt));
+                    sb.append(",");
+                }
+                if (sb.length() > 0) {
+                    sb.delete(sb.length() - 1, sb.length());
+                }
+                Debugging.debugging("sb============"+sb.toString());
+                //stringList.add(sb.toString());
+//                for (int i = 0; i < Bimp.bmp.size(); i++) {
+//                    Bitmap bt = Bimp.bmp.get(i);
+//                    String s=BitmapToBase64.bitmapToBase64(bt);
+//                    stringList.add(s);
+//                    Debugging.debugging("sssssss====+++++++++"+s);
+//                }
+                Debugging.debugging("stringlist=================="+stringList.size());
+                Debugging.debugging("stringlist====+++++++++"+Bimp.bmp.size());
+                Debugging.debugging("stringlist+++++++++"+stringList.toString());
+                RequestMap params = new RequestMap();
+                params.put("uid", "3");
+                params.put("is_open",pub+"");
+                params.put("title", et_zhuti.getText().toString());
+                params.put("content", et_zhengwen.getText().toString());
+//                params.put("images",sb.toString());
+                setParams(NetUrl.QINGNIAN_ZHISHENG_TIWEN, params, 0);
+                break;
+            // 拍照；
+            case R.id.view_camero_rl_takephoto:
+                window.dismiss();
+                path = PictureUtil.paiZhao(window, this);
+                break;
+            // 从相册选择：
+            case R.id.view_camero_rl_selectphoto:
+                window.dismiss();
+                Intent intent = new Intent(XinShengTiWenActivity.this,
+                        TestPicActivity.class);
+                startActivity(intent);
                 break;
         }
     }
 
-    /**
-     * 展示图片的GridView的适配器
-     */
-    class GridAdapter extends BaseAdapter {
 
-        public LayoutInflater layoutInflater = LayoutInflater.from(context);
+    @Override
+    public void onSuccess(String response, Map<String, String> headers, String url, int actionId) {
+        super.onSuccess(response, headers, url, actionId);
+        try {
+            if (!"青年新声提问成功".equals(JSON.parseObject(response).getString("msg"))) {
+                Toast.prompt(this, JSON.parseObject(response).getString("infor"));
+                return;
+            } else {
+                Intent intent = new Intent(this, MainActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        } catch (Exception e) {
+            Toast.prompt(this, "数据异常");
+        }
+    }
 
-        @Override
+    protected void onRestart() {
+        gridAdapter.update();
+        super.onRestart();
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode) {
+            case 2:
+                if (resultCode == Activity.RESULT_OK) {
+                    Bitmap bitmap = ImageUtil.getimage(path);
+                    if (Bimp.drr.size() < 9) {
+                        Bimp.drr.add(path);
+                    }
+                }
+                break;
+        }
+    }
+    @SuppressLint("HandlerLeak")
+    public class GridAdapter extends BaseAdapter {
+        private LayoutInflater inflater; //
+        private int selectedPosition = -1;//
+        private boolean shape;
+
+        public boolean isShape() {
+            return shape;
+        }
+
+        public void setShape(boolean shape) {
+            this.shape = shape;
+        }
+
+        public GridAdapter(Context context) {
+            inflater = LayoutInflater.from(context);
+        }
+
+        public void update() {
+            loading();
+        }
+
         public int getCount() {
-            return allSelectedPicture.size() + 1;
+            return (Bimp.bmp.size() + 1);
         }
 
-        @Override
-        public Object getItem(int position) {
-            return position;
+        public Object getItem(int arg0) {
+            return null;
         }
 
-        @Override
-        public long getItemId(int position) {
-            return position;
+        public long getItemId(int arg0) {
+            return 0;
         }
 
-        @Override
-        public View getView(final int position, View convertView, ViewGroup parent) {
+        public void setSelectedPosition(int position) {
+            selectedPosition = position;
+        }
 
+        public int getSelectedPosition() {
+            return selectedPosition;
+        }
+
+        /**
+         * ListView Item
+         */
+        public View getView(int position, View convertView, ViewGroup parent) {
+            final int coord = position;
             ViewHolder holder = null;
             if (convertView == null) {
+                convertView = inflater.inflate(R.layout.item_published_grida,
+                        parent, false);
                 holder = new ViewHolder();
-                convertView = layoutInflater.inflate(R.layout.childgrid_item, null);
-
-                holder.image = (ImageView) convertView.findViewById(R.id.child_iv);
-                holder.btn = (Button) convertView.findViewById(R.id.child_delete);
-
-                holder.image.setScaleType(ImageView.ScaleType.CENTER_CROP);
-
+                holder.image = (ImageView) convertView
+                        .findViewById(R.id.item_grida_image);
                 convertView.setTag(holder);
             } else {
                 holder = (ViewHolder) convertView.getTag();
             }
-
-            if (position == allSelectedPicture.size()) {
+            if (position == Bimp.bmp.size()) {
+//                holder.image.setImageBitmap(BitmapFactory.decodeResource(
+//                        getResources(), R.drawable.photo_close));
                 holder.image.setVisibility(View.GONE);
-                holder.btn.setVisibility(View.GONE);
-
-                holder.image.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        selectClick();
-                    }
-                });
-                if (position == 3) {
-                    // holder.image.setImageBitmap(null);
+                if (position == 9) {
                     holder.image.setVisibility(View.GONE);
                 }
             } else {
-                ImageLoader.getInstance().displayImage("file://" + allSelectedPicture.get(position),
-                        holder.image);
-
-                holder.btn.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        //点击后移除图片
-                        allSelectedPicture.remove(position);
-
-                        //更新UI
-                        gridView_pics.setAdapter(gridAdapter);
-                    }
-                });
-
+                try {
+                    holder.image.setImageBitmap(Bimp.bmp.get(position));
+                } catch (Exception e) {
+                    Log.e("TAg", e.getMessage());
+                }
             }
             return convertView;
         }
-    }
 
+        public class ViewHolder {
+            public ImageView image;
+        }
+
+        public void loading() {
+            new Thread(new Runnable() {
+                public void run() {
+                    try {
+                        for (int i = Bimp.bmp.size(); i < Bimp.drr.size(); i++) {
+                            String path = Bimp.drr.get(i);
+                            // Bitmap bm = Bimp.revitionImageSize(path);
+                            // 注意：必须得压缩，否则极有可能报oom;上传服务器也比较慢；
+                            Bitmap bm = ImageUtil.getimage(path);
+                            Bimp.bmp.add(bm);
+                            Bimp.max += 1;
+                        }
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                gridAdapter.notifyDataSetChanged();
+                            }
+                        });
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }).start();
+        }
+    }
     public class ViewHolder {
         public ImageView image;
         public Button btn;
     }
-
-    private void selectClick() {
-        Intent intent = new Intent();
-        intent.setClass(XinShengTiWenActivity.this, SelectPictureActivity.class);
-        Bundle bundle = new Bundle();
-        bundle.putStringArrayList("allSelectedPicture", allSelectedPicture);
-        intent.putExtras(bundle);
-
-        if (allSelectedPicture.size() < 3) {
-            startActivityForResult(intent, REQUEST_PICK);
-        }
+    @Override
+    protected void onDestroy() {
+        initBimp();
+        Log.e("TAG", "清除！！！！");
+        super.onDestroy();
     }
 
-    //  @SuppressWarnings("unchecked")
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-
-        if (resultCode == RESULT_OK) {
-            selectedPicture = (ArrayList) data.getSerializableExtra(SelectPictureActivity.INTENT_SELECTED_PICTURE);
-            for (String str : selectedPicture) {
-                if (!allSelectedPicture.contains(str)) {
-                    allSelectedPicture.add(str);
-
-                    gridView_pics.setAdapter(gridAdapter);
-                }
-            }
-        }
+    private void initBimp() {
+        FileUtils.deleteDir();
+        Bimp.drr.clear();
+        Bimp.bmp.removeAll(Bimp.bmp);
+        Bimp.act_bool = true;
+        Bimp.max = 0;
     }
 }

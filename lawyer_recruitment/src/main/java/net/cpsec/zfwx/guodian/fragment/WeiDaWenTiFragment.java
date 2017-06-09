@@ -68,11 +68,13 @@ public class WeiDaWenTiFragment extends BaseFragment implements YRecycleview.OnR
                 Intent intent=new Intent(getActivity(), WenTiXiangQiActivity.class);
                 QuanBuInfor infor=quanbuInfor.get(position-1);
                 Bundle bundle=new Bundle();
-                bundle.putString("from","4");
-           //     bundle.putString("username",infor.getUsername().toString());
-                bundle.putString("content",infor.getContent());
-                bundle.putString("time",infor.getTime()+"");
-                bundle.putString("title",infor.getTitle());
+                bundle.putString("from","5");
+                bundle.putString("username5",infor.getUsername());
+                bundle.putString("content5",infor.getContent());
+                bundle.putString("time5",infor.getTime()+"");
+                bundle.putString("title5",infor.getTitle());
+                bundle.putString("image5",infor.getImage());
+                bundle.putString("userpic5",infor.getUserpic());
                 intent.putExtras(bundle);
                 startActivity(intent);
             }

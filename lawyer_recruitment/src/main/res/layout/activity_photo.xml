@@ -1,6 +1,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     android:orientation="vertical">
 
     <android.support.v4.view.ViewPager
@@ -17,26 +18,28 @@
 
         <Button
             android:id="@+id/photo_bt_exit"  
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
-            android:background="@mipmap/ic_launcher" />
+            android:layout_marginLeft="20dp"
+            android:background="@drawable/back_icon1" />
 
         <Button
             android:id="@+id/photo_bt_del"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:layout_centerInParent="true"
-            android:background="@mipmap/ic_launcher" />
+            android:background="@drawable/ic_delete" />
 
         <Button
             android:id="@+id/photo_bt_enter"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginRight="20dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:background="@mipmap/ic_launcher" />
+            android:background="@drawable/icon_xuanzhong" />
     </RelativeLayout>
 
 </RelativeLayout>

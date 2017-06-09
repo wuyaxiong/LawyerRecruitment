@@ -31,7 +31,6 @@ public class ShengFragment extends Fragment implements View.OnClickListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
          v=inflater.inflate(R.layout.fragment_sheng, container, false);
-      //  return inflater.inflate(R.layout.fragment_sheng, container, false);
         initView(v);
         return v;
 

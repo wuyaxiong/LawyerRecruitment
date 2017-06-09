@@ -105,7 +105,7 @@ public class ImageGridAdapter extends BaseAdapter {
 		cache.displayBmp(holder.iv, item.thumbnailPath, item.imagePath,
 				callback);
 		if (item.isSelected) {
-			holder.selected.setImageResource(R.mipmap.ic_launcher);
+			holder.selected.setImageResource(R.drawable.icon_xuanzhong);
 			holder.text.setBackgroundResource(R.drawable.photo_close);
 		} else {
 			holder.selected.setImageResource(-1);
@@ -121,7 +121,7 @@ public class ImageGridAdapter extends BaseAdapter {
 					item.isSelected = !item.isSelected;
 					if (item.isSelected) {
 						holder.selected
-								.setImageResource(R.mipmap.ic_launcher);
+								.setImageResource(R.drawable.icon_xuanzhong);
 						holder.text.setBackgroundResource(R.drawable.photo_close);
 						selectTotal++;
 						if (textcallback != null)

@@ -113,20 +113,7 @@ public class ImageGridActivity extends Activity {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
-				/**
-				 * 閺嶈宓乸osition閸欏倹鏆熼敍灞藉讲娴犮儴骞忓妤勭GridView閻ㄥ嫬鐡橵iew閻╁摜绮︾�规氨娈戠�
-				 * 圭偘缍嬬猾浼欑礉閻掕泛鎮楅弽瑙勫祦鐎瑰啰娈慽sSelected閻樿埖 锟介敍锟�
-				 * 閺夈儱鍨介弬顓熸Ц閸氾附妯夌粈娲拷娑擃厽鏅ラ弸婧匡拷
-				 * 閼峰厖绨柅澶夎厬閺佸牊鐏夐惃鍕瀮閸掓瑱绱濇稉瀣桨闁倿鍘ら崳銊ф畱娴狅絿鐖滄稉顓濈窗閺堝顕╅弰锟�
-				 */
-				// if(dataList.get(position).isSelected()){
-				// dataList.get(position).setSelected(false);
-				// }else{
-				// dataList.get(position).setSelected(true);
-				// }
-				/**
-				 * 闁氨鐓￠柅鍌炲帳閸ｎ煉绱濈紒鎴濈暰閻ㄥ嫭鏆熼幑顔煎絺閻㈢喍绨￠弨鐟板綁閿涘苯绨茶ぐ鎾冲煕閺傛媽顬呴崶锟�
-				 */
+
 				adapter.notifyDataSetChanged();
 			}
 
