@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import net.cpsec.zfwx.guodian.R;
 import net.cpsec.zfwx.guodian.activity.MyCenterActivity;
+import net.cpsec.zfwx.guodian.activity.ZhuzhijiagouActivity;
 
 
 /**
@@ -81,6 +82,7 @@ public class TongXunLuFragment extends Fragment implements View.OnClickListener 
                 startActivity(intent);
                 break;
             case R.id.iv_more:
+                startActivity(new Intent(getActivity(),ZhuzhijiagouActivity.class));
                 break;
         }
     }

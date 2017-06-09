@@ -56,9 +56,9 @@ dependencies {
     compile 'cz.msebera.android:httpclient:4.3.6'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'com.makeramen:roundedimageview:2.3.0'
-    testCompile 'junit:junit:4.12'
     compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
     compile 'com.githang:status-bar-compat:0.3'
     compile 'org.ow2.util.base64:base64:2.0.0'
     compile 'com.owtelse.codec:base64:1.0.6'
+    testCompile 'junit:junit:4.12'
 }

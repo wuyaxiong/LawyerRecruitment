@@ -13,4 +13,5 @@
 
     <string name="picture">图片</string>
     <string name="all_picture">所有图片</string>
+    <string name="title_activity_zhuzhijiagou">ZhuzhijiagouActivity</string>
 </resources>
