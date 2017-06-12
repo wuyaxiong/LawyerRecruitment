@@ -3,12 +3,8 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/LawyerRecruitment.iml" filepath="$PROJECT_DIR$/LawyerRecruitment.iml" />
-      <module fileurl="file://$PROJECT_DIR$/LawyerRecruitment.iml" filepath="$PROJECT_DIR$/LawyerRecruitment.iml" />
-      <module fileurl="file://$PROJECT_DIR$/lawyer_recruitment/lawyer_recruitment.iml" filepath="$PROJECT_DIR$/lawyer_recruitment/lawyer_recruitment.iml" />
       <module fileurl="file://$PROJECT_DIR$/lawyer_recruitment/lawyer_recruitment.iml" filepath="$PROJECT_DIR$/lawyer_recruitment/lawyer_recruitment.iml" />
       <module fileurl="file://$PROJECT_DIR$/library/library.iml" filepath="$PROJECT_DIR$/library/library.iml" />
-      <module fileurl="file://$PROJECT_DIR$/library/library.iml" filepath="$PROJECT_DIR$/library/library.iml" />
-      <module fileurl="file://$PROJECT_DIR$/menulibrary/menulibrary.iml" filepath="$PROJECT_DIR$/menulibrary/menulibrary.iml" />
       <module fileurl="file://$PROJECT_DIR$/menulibrary/menulibrary.iml" filepath="$PROJECT_DIR$/menulibrary/menulibrary.iml" />
     </modules>
   </component>
