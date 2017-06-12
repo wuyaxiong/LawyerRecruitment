@@ -1,9 +1,13 @@
 package net.cpsec.zfwx.guodian;
 
 import android.app.Application;
+import android.content.Context;
 import android.os.Build;
 import android.os.StrictMode;
+import android.support.multidex.MultiDex;
 
+import com.alibaba.mobileim.YWAPI;
+import com.alibaba.wxlib.util.SysUtil;
 import com.android.volley.manager.RequestManager;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -36,5 +40,24 @@ public class MyApplication extends Application {
             StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
             StrictMode.setVmPolicy(builder.build());
         }
+
+        //阿里百川实例化
+        final String APP_KEY = "23893323";
+        //必须首先执行这部分代码, 如果在":TCMSSevice"进程中，无需进行云旺（OpenIM）和app业务的初始化，以节省内存;
+        SysUtil.setApplication(this);
+        if(SysUtil.isTCMSServiceProcess(this)){
+            return;
+        }
+        //第一个参数是Application Context
+        //这里的APP_KEY即应用创建时申请的APP_KEY，同时初始化必须是在主进程中
+        if(SysUtil.isMainProcess()){
+            YWAPI.init(this, APP_KEY);
+        }
+    }
+
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+        MultiDex.install(this) ;
     }
 }
