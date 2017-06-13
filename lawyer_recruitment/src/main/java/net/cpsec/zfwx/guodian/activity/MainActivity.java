@@ -2,7 +2,6 @@ package net.cpsec.zfwx.guodian.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -33,8 +32,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private ShengFragment shengFragment;
     private ShareFragment shareFragment;
     private TongXunLuFragment tongXunLuFragment;
-    private Fragment xianshanghulianFragment;
-    private Fragment lianxirenFragment;
+    //private Fragment xianshanghulianFragment;
+    //private Fragment lianxirenFragment;
 //    private ImageView iv_left, iv_right;
 //    private TextView tv_title;
 
@@ -94,13 +93,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         });
         //获取最近回话列表
-        xianshanghulianFragment = mIMKit.getConversationFragment();
+        //xianshanghulianFragment = mIMKit.getConversationFragment();
         //获取联系人界面
-        lianxirenFragment= mIMKit.getContactsFragment();
+        //lianxirenFragment= mIMKit.getContactsFragment();
     }
 
     private void initFragment() {
-        //huLianFragment = new HuLilanFragment();
+        huLianFragment = new HuLilanFragment();
         jiaoLiuFragment = new JiaoLiuFragment();
         shengFragment = new ShengFragment();
         shareFragment = new ShareFragment();
@@ -135,22 +134,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.tv_hulian:
                 tvHuLian.setSelected(true);
-                if (!xianshanghulianFragment.isAdded()) {
-                    fm.beginTransaction().add(R.id.fl_container, xianshanghulianFragment).commit();
-                    fm.beginTransaction().show(xianshanghulianFragment).commit();
+                if (!huLianFragment.isAdded()) {
+                    fm.beginTransaction().add(R.id.fl_container, huLianFragment).commit();
+                    fm.beginTransaction().show(huLianFragment).commit();
                 } else {
-                    fm.beginTransaction().show(xianshanghulianFragment).commit();
+                    fm.beginTransaction().show(huLianFragment).commit();
                 }
 //                tv_title.setText("线上互联");
 //                iv_right.setImageResource(R.drawable.icon_jiar);
                 break;
             case R.id.tv_tongxun:
                 tvTongXun.setSelected(true);
-                if (!lianxirenFragment.isAdded()) {
-                    fm.beginTransaction().add(R.id.fl_container, lianxirenFragment).commit();
-                    fm.beginTransaction().show(lianxirenFragment).commit();
+                if (!tongXunLuFragment.isAdded()) {
+                    fm.beginTransaction().add(R.id.fl_container, tongXunLuFragment).commit();
+                    fm.beginTransaction().show(tongXunLuFragment).commit();
                 } else {
-                    fm.beginTransaction().show(lianxirenFragment).commit();
+                    fm.beginTransaction().show(tongXunLuFragment).commit();
                 }
 //                tv_title.setText("通讯录");
 //                iv_right.setImageResource(R.drawable.icon_zuzhi);
@@ -193,9 +192,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void hideAllFragment() {
-        fm.beginTransaction().hide(xianshanghulianFragment).commit();
+        fm.beginTransaction().hide(huLianFragment).commit();
         fm.beginTransaction().hide(jiaoLiuFragment).commit();
-        fm.beginTransaction().hide(lianxirenFragment).commit();
+        fm.beginTransaction().hide(tongXunLuFragment).commit();
         fm.beginTransaction().hide(shareFragment).commit();
         fm.beginTransaction().hide(shengFragment).commit();
 
@@ -205,5 +204,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         tvJiaoLiu.setSelected(false);
         tvShare.setSelected(false);
     }
+
 
 }

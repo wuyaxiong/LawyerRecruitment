@@ -48,11 +48,12 @@ public class MyApplication extends Application {
         if(SysUtil.isTCMSServiceProcess(this)){
             return;
         }
-        //第一个参数是Application Context
+        //第一个参数是Application Constant
         //这里的APP_KEY即应用创建时申请的APP_KEY，同时初始化必须是在主进程中
         if(SysUtil.isMainProcess()){
             YWAPI.init(this, APP_KEY);
         }
+
     }
 
     @Override

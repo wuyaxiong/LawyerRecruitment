@@ -76,4 +76,7 @@ public class Constant {
     //职位描述
     public static final int POSITION_DESCRIBE_CODE=3;
 
+    // 登录阿里百川成功后发出的广播：
+    public static final String ON_LOGIN_ALI_SUCCESS = "com.feirui.feiyunbangong.login.ali.success";
+
 }
