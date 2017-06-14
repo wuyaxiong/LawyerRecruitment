@@ -114,15 +114,19 @@ public class MyCenterActivity extends BaseActivity implements View.OnClickListen
                 intent.putExtra("pic",myCenterInfor.getUserpic());
                 startActivity(intent);
                 break;
+            //投票页面
             case R.id.rl_mycenter_toupiao:
                 startActivity(new Intent(MyCenterActivity.this, MyTouPiaoActivity.class));
                 break;
+            //反馈页面
             case R.id.rl_mycenter_fankui:
                 startActivity(new Intent(MyCenterActivity.this, FanKuiActivity.class));
                 break;
+            //收藏页面
             case R.id.rl_mycenter_shoucang:
                 startActivity(new Intent(MyCenterActivity.this, ShouCangActivity.class));
                 break;
+            //问答页面
             case R.id.rl_mycenter_wenda:
                 startActivity(new Intent(MyCenterActivity.this, WenDaActivity.class));
                 break;

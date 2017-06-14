@@ -19,7 +19,7 @@ public class MyApplication extends Application {
     public static final Boolean isDebuggingState = true;
     // 对activity栈的处理
     public static Boolean FINISH_INDEX = false;
-    public static final int UID = 329;
+    public static final int UID = 1;
     @Override
     public void onCreate() {
         super.onCreate();

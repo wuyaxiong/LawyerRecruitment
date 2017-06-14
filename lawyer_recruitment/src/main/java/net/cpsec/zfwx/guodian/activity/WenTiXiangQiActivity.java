@@ -105,6 +105,15 @@ public class WenTiXiangQiActivity extends Activity implements View.OnClickListen
             tv_content.setText(b.getString("content5"));
             tv_title.setText( b.getString("title5"));
         }
+        else if ("6".equals(str)){
+            userpic=intent.getExtras().getString("userpic6");
+            tupian = intent.getExtras().getString("image6");
+            ImageLoader.getInstance().displayImage("http://"+userpic,riv_head);
+            tv_name.setText( b.getString("username6"));
+            tv_time.setText( b.getString("time6"));
+            tv_content.setText(b.getString("content6"));
+            tv_title.setText( b.getString("title6"));
+        }
 
 
         //初始化（模拟）数据

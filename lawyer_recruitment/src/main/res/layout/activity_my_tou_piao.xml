@@ -33,4 +33,18 @@
         android:layout_height="1dp"
         android:background="#b2b2b2"/>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <net.cpsec.zfwx.guodian.ui.YRecycleview
+            android:id="@+id/my_toupiao_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical" />
+
+    </LinearLayout>
+
+
 </LinearLayout>

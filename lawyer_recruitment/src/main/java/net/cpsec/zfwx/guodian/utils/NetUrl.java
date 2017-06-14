@@ -33,4 +33,6 @@ public static final String REGIST ="http://115.28.77.187/tp5/bbss/public/index.p
     public static final String CENTER_GUANZHU_TIEZI="http://115.28.77.187/tp5/bbss/public/index.php/index/center/myFocus";
     //个人中心-----我回复的帖子
     public static final String CENTER_HUIFU_TIEZI="http://115.28.77.187/tp5/bbss/public/index.php/index/center/allmycomment";
+    //个人中心------我的投票
+    public static final String CENTER_TOUPIAO="http://115.28.77.187/tp5/bbss/public/index.php/index/center/myvote";
 }
