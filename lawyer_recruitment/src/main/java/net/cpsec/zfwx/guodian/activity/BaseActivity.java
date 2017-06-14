@@ -164,12 +164,12 @@ public class  BaseActivity extends AppCompatActivity implements View.OnClickList
     @Override
     public void onSuccess(String response, Map<String, String> headers, String url, int actionId) {
         Debugging.debugging("response" + "=" + response + "\nurl" + "=" + url + "\nactionId" + "=" + actionId);
-        try {
-            if ("msg".equals(JSON.parseObject(response).getString("成功")))
-                Toast.prompt(this, JSON.parseObject(response).getString("infor"));
-        } catch (Exception e) {
-            Toast.prompt(this, "数据异常");
-        }
+//        try {
+//            if ("msg".equals(JSON.parseObject(response).getString("成功")))
+//                Toast.prompt(this, JSON.parseObject(response).getString("infor"));
+//        } catch (Exception e) {
+//            Toast.prompt(this, "数据异常");
+//        }
     }
 
     @Override

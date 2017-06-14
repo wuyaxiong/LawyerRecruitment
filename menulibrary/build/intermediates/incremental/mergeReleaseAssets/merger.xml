@@ -1,2 +1,2 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merger version="3"><dataSet config="main"><source path="G:\LawyerRecruitment\menulibrary\assets"/><source path="G:\LawyerRecruitment\menulibrary\build\generated\assets\shaders\release"/></dataSet><dataSet config="release"><source path="G:\LawyerRecruitment\menulibrary\src\release\assets"/></dataSet></merger>
+<merger version="3"><dataSet config="main"><source path="D:\myproject\LawyerRecruitment\menulibrary\assets"/><source path="D:\myproject\LawyerRecruitment\menulibrary\build\generated\assets\shaders\release"/></dataSet><dataSet config="release"><source path="D:\myproject\LawyerRecruitment\menulibrary\src\release\assets"/></dataSet></merger>

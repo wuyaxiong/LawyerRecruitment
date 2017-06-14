@@ -99,12 +99,12 @@ public class BaseFragment extends Fragment implements RequestManager.RequestList
     @Override
     public void onSuccess(String response, Map<String, String> headers, String url, int actionId) {
         Debugging.debugging("response" + "=" + response + "\nurl" + "=" + url + "\nactionId" + "=" + actionId);
-        try {
-            if ("SUCCESS".equals(JSON.parseObject(response).getString("flag")))
-                Toast.prompt(getActivity(), JSON.parseObject(response).getString("description"));
-        } catch (Exception e) {
-            Toast.prompt(getActivity(), "数据异常");
-        }
+//        try {
+//            if ("SUCCESS".equals(JSON.parseObject(response).getString("flag")))
+//                Toast.prompt(getActivity(), JSON.parseObject(response).getString("description"));
+//        } catch (Exception e) {
+//            Toast.prompt(getActivity(), "数据异常");
+//        }
     }
 
     @Override

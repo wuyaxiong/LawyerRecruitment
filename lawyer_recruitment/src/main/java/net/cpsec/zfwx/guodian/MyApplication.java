@@ -7,12 +7,16 @@ import android.os.StrictMode;
 import android.support.multidex.MultiDex;
 
 import com.alibaba.mobileim.YWAPI;
+import com.alibaba.mobileim.aop.AdviceBinder;
+import com.alibaba.mobileim.aop.PointCutEnum;
 import com.alibaba.wxlib.util.SysUtil;
 import com.android.volley.manager.RequestManager;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+
+import net.cpsec.zfwx.guodian.view.ConversationListUICustomSample;
 
 public class MyApplication extends Application {
     // 是否是调试状态
@@ -53,6 +57,8 @@ public class MyApplication extends Application {
         if(SysUtil.isMainProcess()){
             YWAPI.init(this, APP_KEY);
         }
+        //其中yourclass_1是继承自IMConversationListUI的自定义类
+        AdviceBinder.bindAdvice(PointCutEnum.CONVERSATION_FRAGMENT_UI_POINTCUT, ConversationListUICustomSample.class);
     }
 
     @Override

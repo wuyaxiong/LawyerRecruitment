@@ -115,7 +115,8 @@
         <activity
             android:name=".activity.ZhuzhijiagouActivity"
             android:label="@string/title_activity_zhuzhijiagou"
-            android:theme="@style/AppTheme"></activity>
+            android:theme="@style/AppTheme" />
+        <activity android:name=".activity.AddFriendActivity"></activity>
     </application>
 
 </manifest>

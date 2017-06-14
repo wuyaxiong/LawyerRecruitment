@@ -29,4 +29,14 @@ public static final String REGIST ="http://115.28.77.187/tp5/bbss/public/index.p
     public static final String QINCHUN_MEIWEN ="http://115.28.77.187/tp5/bbss/public/index.php/index/share/goodsarticle";
     //青年之声----发起提问页面
     public static final String QINGNIAN_ZHISHENG_TIWEN="http://115.28.77.187/tp5/bbss/public/index.php/index/voice/postAsk";
+    //查询好友
+    public static final String ADD_FRIEND="http://115.28.77.187/tp5/bbss/public/index.php/index/user/phone_info";
+ //发起添加好友申请
+    public static final String ADD_FRIEND_APPLY="http://115.28.77.187/tp5/bbss/public/index.php/index/user/addfriendapp1";
+ //接受好友添加申请
+ public static final String GET_FRIEND_APPLY="http://115.28.77.187/tp5/bbss/public/index.php/index/user/accept1";
+ //获取好友申请列表
+    public static final String GET_FRIEND_QUEUE="http://115.28.77.187/tp5/bbss/public/index.php/index/user/showlist1";
+    // 获取好友列表
+    public static final String GET_FRIEND="http://115.28.77.187/tp5/bbss/public/index.php/index/user/getgroup11";
 }

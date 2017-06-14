@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private ShareFragment shareFragment;
     private TongXunLuFragment tongXunLuFragment;
     private Fragment xianshanghulianFragment;
-    private Fragment lianxirenFragment;
+//    private Fragment lianxirenFragment;
 //    private ImageView iv_left, iv_right;
 //    private TextView tv_title;
 
@@ -66,11 +66,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
     private void initAl(){
         //此实现不一定要放在Application onCreate中
-        final String userid = "17600382402";//用户手机号
+        final String userid = "18811103740" +
+                "";//用户手机号
         String password = "1234";//手机收到的验证码
         //此对象获取到后，保存为全局对象，供APP使用
         //此对象跟用户相关，如果切换了用户，需要重新获取
-        YWIMKit mIMKit = YWAPI.getIMKitInstance(userid, APP_KEY);
+        YWIMKit mIMKit = YWAPI.getIMKitInstance(userid, "23893323");
 
         //开始登录
 
@@ -95,8 +96,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         });
         //获取最近回话列表
         xianshanghulianFragment = mIMKit.getConversationFragment();
-        //获取联系人界面
-        lianxirenFragment= mIMKit.getContactsFragment();
+
     }
 
     private void initFragment() {
@@ -146,11 +146,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.tv_tongxun:
                 tvTongXun.setSelected(true);
-                if (!lianxirenFragment.isAdded()) {
-                    fm.beginTransaction().add(R.id.fl_container, lianxirenFragment).commit();
-                    fm.beginTransaction().show(lianxirenFragment).commit();
+                if (!tongXunLuFragment.isAdded()) {
+                    fm.beginTransaction().add(R.id.fl_container, tongXunLuFragment).commit();
+                    fm.beginTransaction().show(tongXunLuFragment).commit();
                 } else {
-                    fm.beginTransaction().show(lianxirenFragment).commit();
+                    fm.beginTransaction().show(tongXunLuFragment).commit();
                 }
 //                tv_title.setText("通讯录");
 //                iv_right.setImageResource(R.drawable.icon_zuzhi);
@@ -195,7 +195,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void hideAllFragment() {
         fm.beginTransaction().hide(xianshanghulianFragment).commit();
         fm.beginTransaction().hide(jiaoLiuFragment).commit();
-        fm.beginTransaction().hide(lianxirenFragment).commit();
+        fm.beginTransaction().hide(tongXunLuFragment).commit();
         fm.beginTransaction().hide(shareFragment).commit();
         fm.beginTransaction().hide(shengFragment).commit();
 
