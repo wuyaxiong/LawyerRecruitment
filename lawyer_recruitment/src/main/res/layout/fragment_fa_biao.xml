@@ -4,10 +4,10 @@
     android:layout_height="match_parent"
     tools:context="net.cpsec.zfwx.guodian.fragment.FaBiaoFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <net.cpsec.zfwx.guodian.ui.YRecycleview
+        android:id="@+id/fb_tiezilist"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="我发表的" />
+        android:orientation="vertical"/>
 
 </FrameLayout>

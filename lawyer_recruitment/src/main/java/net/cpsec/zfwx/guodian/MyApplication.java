@@ -19,7 +19,7 @@ public class MyApplication extends Application {
     public static final Boolean isDebuggingState = true;
     // 对activity栈的处理
     public static Boolean FINISH_INDEX = false;
-
+    public static final int UID = 329;
     @Override
     public void onCreate() {
         super.onCreate();
@@ -53,6 +53,7 @@ public class MyApplication extends Application {
         if(SysUtil.isMainProcess()){
             YWAPI.init(this, APP_KEY);
         }
+
 
     }
 

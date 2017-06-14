@@ -39,6 +39,7 @@ public class MyCenterActivity extends BaseActivity implements View.OnClickListen
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
         initView();
         initDatas();
+
     }
 
     private void initDatas() {

@@ -29,4 +29,8 @@ public static final String REGIST ="http://115.28.77.187/tp5/bbss/public/index.p
     public static final String QINCHUN_MEIWEN ="http://115.28.77.187/tp5/bbss/public/index.php/index/share/goodsarticle";
     //青年之声----发起提问页面
     public static final String QINGNIAN_ZHISHENG_TIWEN="http://115.28.77.187/tp5/bbss/public/index.php/index/voice/postAsk";
+    //个人中心-----我关注的帖子
+    public static final String CENTER_GUANZHU_TIEZI="http://115.28.77.187/tp5/bbss/public/index.php/index/center/myFocus";
+    //个人中心-----我回复的帖子
+    public static final String CENTER_HUIFU_TIEZI="http://115.28.77.187/tp5/bbss/public/index.php/index/center/allmycomment";
 }

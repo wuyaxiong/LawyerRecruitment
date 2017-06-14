@@ -21,7 +21,6 @@ import net.cpsec.zfwx.guodian.fragment.ShareFragment;
 import net.cpsec.zfwx.guodian.fragment.ShengFragment;
 import net.cpsec.zfwx.guodian.fragment.TongXunLuFragment;
 
-import static com.alibaba.tcms.client.ClientRegInfo.APP_KEY;
 import static net.cpsec.zfwx.guodian.R.id.tv_jiaoliu;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
@@ -60,7 +59,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
       //  tv_title.setText("线上互联");
         fm.beginTransaction().add(R.id.fl_container, jiaoLiuFragment).commit();
 
-
         initAl();
     }
     private void initAl(){
@@ -69,7 +67,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         String password = "1234";//手机收到的验证码
         //此对象获取到后，保存为全局对象，供APP使用
         //此对象跟用户相关，如果切换了用户，需要重新获取
-        YWIMKit mIMKit = YWAPI.getIMKitInstance(userid, APP_KEY);
+        YWIMKit mIMKit = YWAPI.getIMKitInstance(userid, "23893323");
 
         //开始登录
 

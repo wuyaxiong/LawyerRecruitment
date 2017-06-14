@@ -19,6 +19,7 @@ private ImageView iv_back;
     private void initView() {
         iv_back= (ImageView) findViewById(R.id.iv_back);
         iv_back.setOnClickListener(this);
+
     }
 
     @Override

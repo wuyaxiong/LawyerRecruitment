@@ -9,8 +9,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ExpandableListView;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.TextView;
 
@@ -21,12 +21,12 @@ import net.cpsec.zfwx.guodian.activity.MyCenterActivity;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class TongXunLuFragment extends Fragment implements View.OnClickListener {
+public class TongXunLuFragment extends BaseFragment implements View.OnClickListener {
     private ImageView iv_action_left,iv_actionbar_right;
     private TextView tv_title;
     private String[] mStrs = {"aaa", "bbb", "ccc", "airsaid"};
     private SearchView mSearchView;
-    private ListView mListView;
+    private ExpandableListView expandableListView;
     private View v;
 
     @Override
@@ -35,9 +35,9 @@ public class TongXunLuFragment extends Fragment implements View.OnClickListener 
        // getActivity().requestWindowFeature(Window.FEATURE_NO_TITLE);
         v = inflater.inflate(R.layout.fragment_tong_xun_lu, container, false);
         mSearchView = (SearchView) v.findViewById(R.id.sc_search);
-        mListView = (ListView) v.findViewById(R.id.lv_tongxun);
-        mListView.setAdapter(new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, mStrs));
-        mListView.setTextFilterEnabled(true);
+        expandableListView = (ExpandableListView) v.findViewById(R.id.tongxunlu_expandlist);
+        expandableListView.setAdapter(new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, mStrs));
+        expandableListView.setTextFilterEnabled(true);
 
         // 设置搜索文本监听
         mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -51,9 +51,9 @@ public class TongXunLuFragment extends Fragment implements View.OnClickListener 
             @Override
             public boolean onQueryTextChange(String newText) {
                 if (!TextUtils.isEmpty(newText)) {
-                    mListView.setFilterText(newText);
+                    expandableListView.setFilterText(newText);
                 } else {
-                    mListView.clearTextFilter();
+                    expandableListView.clearTextFilter();
                 }
                 return false;
             }
@@ -61,6 +61,8 @@ public class TongXunLuFragment extends Fragment implements View.OnClickListener 
         initView(v);
         return v;
     }
+
+
 
     private void initView(View v) {
         iv_action_left= (ImageView) v.findViewById(R.id.iv_back);

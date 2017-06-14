@@ -4,10 +4,10 @@
     android:layout_height="match_parent"
     tools:context="net.cpsec.zfwx.guodian.fragment.HuiFuFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <net.cpsec.zfwx.guodian.ui.YRecycleview
+        android:id="@+id/hf_tiezilist"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="我回复的" />
+        android:orientation="vertical"/>
 
 </FrameLayout>
