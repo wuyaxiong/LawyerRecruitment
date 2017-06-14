@@ -56,6 +56,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
             case R.id.btn_login:
                 Intent intent = new Intent(this, MainActivity.class);
                 startActivity(intent);
+
                 phoneNums = etPhoneNumber.getText().toString().trim();
                 // 1. 通过规则判断手机号
                 if (!judgePhoneNums(phoneNums)) {

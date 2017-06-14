@@ -2,11 +2,18 @@ package net.cpsec.zfwx.guodian.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
+
+import com.alibaba.mobileim.IYWLoginService;
+import com.alibaba.mobileim.YWAPI;
+import com.alibaba.mobileim.YWIMKit;
+import com.alibaba.mobileim.YWLoginParam;
+import com.alibaba.mobileim.channel.event.IWxCallback;
 
 import net.cpsec.zfwx.guodian.R;
 import net.cpsec.zfwx.guodian.fragment.HuLilanFragment;
@@ -14,6 +21,9 @@ import net.cpsec.zfwx.guodian.fragment.JiaoLiuFragment;
 import net.cpsec.zfwx.guodian.fragment.ShareFragment;
 import net.cpsec.zfwx.guodian.fragment.ShengFragment;
 import net.cpsec.zfwx.guodian.fragment.TongXunLuFragment;
+
+import static com.alibaba.tcms.client.ClientRegInfo.APP_KEY;
+import static net.cpsec.zfwx.guodian.R.id.tv_jiaoliu;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private TextView tvHuLian, tvTongXun, tvJiaoLiu, tvSheng, tvShare;
@@ -23,6 +33,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private ShengFragment shengFragment;
     private ShareFragment shareFragment;
     private TongXunLuFragment tongXunLuFragment;
+    private Fragment xianshanghulianFragment;
+    private Fragment lianxirenFragment;
 //    private ImageView iv_left, iv_right;
 //    private TextView tv_title;
 
@@ -45,13 +57,50 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         fm = getSupportFragmentManager();
         initView();
         initFragment();
-        tvHuLian.setSelected(true);
+        tvJiaoLiu.setSelected(true);
       //  tv_title.setText("线上互联");
-        fm.beginTransaction().add(R.id.fl_container, huLianFragment).commit();
+        fm.beginTransaction().add(R.id.fl_container, jiaoLiuFragment).commit();
+
+
+        initAl();
+    }
+    private void initAl(){
+        //此实现不一定要放在Application onCreate中
+        final String userid = "17600382402";//用户手机号
+        String password = "1234";//手机收到的验证码
+        //此对象获取到后，保存为全局对象，供APP使用
+        //此对象跟用户相关，如果切换了用户，需要重新获取
+        YWIMKit mIMKit = YWAPI.getIMKitInstance(userid, APP_KEY);
+
+        //开始登录
+
+
+        IYWLoginService loginService = mIMKit.getLoginService();
+        YWLoginParam loginParam = YWLoginParam.createLoginParam(userid, password);
+        loginService.login(loginParam, new IWxCallback() {
+
+            @Override
+            public void onSuccess(Object... arg0) {
+            }
+
+            @Override
+            public void onProgress(int arg0) {
+                // TODO Auto-generated method stub
+            }
+
+            @Override
+            public void onError(int errCode, String description) {
+                //如果登录失败，errCode为错误码,description是错误的具体描述信息
+            }
+        });
+        //获取最近回话列表
+        xianshanghulianFragment = mIMKit.getConversationFragment();
+        //获取联系人界面
+        lianxirenFragment= mIMKit.getContactsFragment();
     }
 
     private void initFragment() {
-        huLianFragment = new HuLilanFragment();
+        //huLianFragment = new HuLilanFragment();
         jiaoLiuFragment = new JiaoLiuFragment();
         shengFragment = new ShengFragment();
         shareFragment = new ShareFragment();
@@ -64,7 +113,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //        iv_left.setImageResource(R.drawable.icon_people);
 //        tv_title = (TextView) findViewById(R.id.tv_title);
         tvHuLian = (TextView) findViewById(R.id.tv_hulian);
-        tvJiaoLiu = (TextView) findViewById(R.id.tv_jiaoliu);
+        tvJiaoLiu = (TextView) findViewById(tv_jiaoliu);
         tvSheng = (TextView) findViewById(R.id.tv_sheng);
         tvShare = (TextView) findViewById(R.id.tv_fenxiang);
         tvTongXun = (TextView) findViewById(R.id.tv_tongxun);
@@ -86,27 +135,27 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.tv_hulian:
                 tvHuLian.setSelected(true);
-                if (!huLianFragment.isAdded()) {
-                    fm.beginTransaction().add(R.id.fl_container, huLianFragment).commit();
-                    fm.beginTransaction().show(huLianFragment).commit();
+                if (!xianshanghulianFragment.isAdded()) {
+                    fm.beginTransaction().add(R.id.fl_container, xianshanghulianFragment).commit();
+                    fm.beginTransaction().show(xianshanghulianFragment).commit();
                 } else {
-                    fm.beginTransaction().show(huLianFragment).commit();
+                    fm.beginTransaction().show(xianshanghulianFragment).commit();
                 }
 //                tv_title.setText("线上互联");
 //                iv_right.setImageResource(R.drawable.icon_jiar);
                 break;
             case R.id.tv_tongxun:
                 tvTongXun.setSelected(true);
-                if (!tongXunLuFragment.isAdded()) {
-                    fm.beginTransaction().add(R.id.fl_container, tongXunLuFragment).commit();
-                    fm.beginTransaction().show(tongXunLuFragment).commit();
+                if (!lianxirenFragment.isAdded()) {
+                    fm.beginTransaction().add(R.id.fl_container, lianxirenFragment).commit();
+                    fm.beginTransaction().show(lianxirenFragment).commit();
                 } else {
-                    fm.beginTransaction().show(tongXunLuFragment).commit();
+                    fm.beginTransaction().show(lianxirenFragment).commit();
                 }
 //                tv_title.setText("通讯录");
 //                iv_right.setImageResource(R.drawable.icon_zuzhi);
                 break;
-            case R.id.tv_jiaoliu:
+            case tv_jiaoliu:
                 tvJiaoLiu.setSelected(true);
                 if (!jiaoLiuFragment.isAdded()) {
                     fm.beginTransaction().add(R.id.fl_container, jiaoLiuFragment).commit();
@@ -144,9 +193,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void hideAllFragment() {
-        fm.beginTransaction().hide(huLianFragment).commit();
+        fm.beginTransaction().hide(xianshanghulianFragment).commit();
         fm.beginTransaction().hide(jiaoLiuFragment).commit();
-        fm.beginTransaction().hide(tongXunLuFragment).commit();
+        fm.beginTransaction().hide(lianxirenFragment).commit();
         fm.beginTransaction().hide(shareFragment).commit();
         fm.beginTransaction().hide(shengFragment).commit();
 
@@ -156,33 +205,5 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         tvJiaoLiu.setSelected(false);
         tvShare.setSelected(false);
     }
-//
-//    @Override
-//    protected void onResume() {
-//        super.onResume();
-//        String s=tv_title.getText().toString();
-//        switch (s){
-//            case "线上互联":
-//                tvHuLian.setSelected(true);
-//                fm.beginTransaction().show(huLianFragment).commit();
-//                break;
-//            case "通讯录":
-//                tvTongXun.setSelected(true);
-//                fm.beginTransaction().show(tongXunLuFragment).commit();
-//                break;
-//            case "青年交流":
-//                tvJiaoLiu.setSelected(true);
-//                fm.beginTransaction().show(jiaoLiuFragment).commit();
-//
-//                break;
-//            case "青年之声":
-//                tvSheng.setSelected(true);
-//                fm.beginTransaction().show(shengFragment).commit();
-//                break;
-//            case "青春分享":
-//                tvShare.setSelected(true);
-//                fm.beginTransaction().show(shareFragment).commit();
-//                break;
-//        }
-//    }
+
 }
