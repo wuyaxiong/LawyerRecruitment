@@ -95,12 +95,15 @@ public class MyCenterActivity extends BaseActivity implements View.OnClickListen
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
+            //返回箭头
             case R.id.iv_mycenter_back:
                 finish();
                 break;
+            //发帖页面
             case R.id.rl_mycenter_fatie:
                 startActivity(new Intent(MyCenterActivity.this, MyTieZiActivity.class));
                 break;
+            //编辑资料
             case R.id.iv_myventer_bianjiziliao:
                 Intent intent = new Intent(MyCenterActivity.this, XiuGaiXinXiActivity.class);
                 intent.putExtra("username",myCenterInfor.getUsername());
@@ -125,6 +128,7 @@ public class MyCenterActivity extends BaseActivity implements View.OnClickListen
             case R.id.rl_mycenter_shoucang:
                 startActivity(new Intent(MyCenterActivity.this, ShouCangActivity.class));
                 break;
+            //问答页面
             case R.id.rl_mycenter_wenda:
                 startActivity(new Intent(MyCenterActivity.this, WenDaActivity.class));
                 break;

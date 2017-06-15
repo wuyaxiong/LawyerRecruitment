@@ -107,14 +107,12 @@ public class ReMenHuiDaFragment extends BaseFragment implements YRecycleview.OnR
         isRefreshState = true;
         yRecycleview.setReFreshComplete();
         initData();
-        //    Toast.prompt(getActivity(), "刷新完成。测试阶段");
     }
 
     @Override
     public void onLoadMore() {
         isRefreshState = false;
         initData();
-        //Toast.prompt(getActivity(), "没有更多数据。测试阶段");
     }
 
 }
