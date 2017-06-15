@@ -9,9 +9,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.makeramen.roundedimageview.RoundedImageView;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 import net.cpsec.zfwx.guodian.R;
 import net.cpsec.zfwx.guodian.entity.JianYiInfor;
+import net.cpsec.zfwx.guodian.utils.DateUtil;
 import net.cpsec.zfwx.guodian.utils.LocalDisplay;
 
 import java.util.List;
@@ -24,6 +26,7 @@ public class JianYiAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     private Context context;
     private List<JianYiInfor> jianYiInfors;
     private OnItemClickListener mOnItemClickListener = null;
+    List<String> list;
     public JianYiAdapter(Context context, List<JianYiInfor> jianYiInfors) {
         this.context = context;
         this.jianYiInfors = jianYiInfors;
@@ -37,10 +40,18 @@ public class JianYiAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
     @Override
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
+//        list = new ArrayList<String>();
+//        list.clear();
+//        String tupian=jianYiInfors.get(position).getImage();
+//        String[] tupians=tupian.split(",");
+//        for(String substr:tupians){
+//            list.add(substr);
+//        }
+        ImageLoader.getInstance().displayImage("http://"+jianYiInfors.get(position).getUserpic(),((ViewHolder) holder).riv_avadar);
         ((ViewHolder) holder).tv_name.setText(jianYiInfors.get(position).getUsername());
         ((ViewHolder) holder).tv_question.setText(jianYiInfors.get(position).getContent());
         ((ViewHolder) holder).tv_answer.setText(null);
-        ((ViewHolder) holder).tv_shijian.setText(jianYiInfors.get(position).getTime() + "");
+        ((ViewHolder) holder).tv_shijian.setText(DateUtil.converTime(jianYiInfors.get(position).getTime()));
         // ((ViewHolder) holder).tv_shijian.setText(shengList.get(position).getAsktime());
         // ((ViewHolder) holder).tv_dianzan.setText(jianYiInfors.get(position).getPraise()+"");
 

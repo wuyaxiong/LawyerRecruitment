@@ -93,6 +93,7 @@ public class ImageGridActivity extends Activity {
 			public void onClick(View v) {
 				startActivity(new Intent(ImageGridActivity.this,
 						TestPicActivity.class));
+				finish();
 			}
 		});
 

@@ -8,11 +8,14 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.makeramen.roundedimageview.RoundedImageView;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 import net.cpsec.zfwx.guodian.R;
 import net.cpsec.zfwx.guodian.entity.ShengDetail;
+import net.cpsec.zfwx.guodian.utils.DateUtil;
 import net.cpsec.zfwx.guodian.utils.LocalDisplay;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -23,6 +26,7 @@ public class XinShengTiWenAdapter extends RecyclerView.Adapter<RecyclerView.View
     private Context context;
     private List<ShengDetail> shengList;
     private OnItemClickListener mOnItemClickListener = null;
+    List<String> list;
 
     //define interface
 
@@ -41,10 +45,19 @@ public class XinShengTiWenAdapter extends RecyclerView.Adapter<RecyclerView.View
 
     @Override
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
+        //把javabean中的图片地址转化成list集合
+        list = new ArrayList<String>();
+        list.clear();
+        String tupian=shengList.get(position).getImage();
+        String[] tupians=tupian.split(",");
+        for(String substr:tupians){
+            list.add(substr);
+        }
+        ImageLoader.getInstance().displayImage("http://"+shengList.get(position).getUserpic(),((ViewHolder) holder).riv_avadar);
         ((ViewHolder) holder).tv_name.setText(shengList.get(position).getUsername());
         ((ViewHolder) holder).tv_question.setText(shengList.get(position).getContent());
         ((ViewHolder) holder).tv_answer.setText(null);
-        ((ViewHolder) holder).tv_shijian.setText(shengList.get(position).getAsktime() + "");
+        ((ViewHolder) holder).tv_shijian.setText(DateUtil.converTime(shengList.get(position).getAsktime()));
         // ((ViewHolder) holder).tv_shijian.setText(shengList.get(position).getAsktime());
         ((ViewHolder) holder).tv_dianzan.setText(shengList.get(position).getPraise() + "");
         if (mOnItemClickListener != null) {
@@ -85,13 +98,10 @@ public class XinShengTiWenAdapter extends RecyclerView.Adapter<RecyclerView.View
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private RoundedImageView riv_avadar;
         private TextView tv_name, tv_question, tv_answer, tv_shijian, tv_dianzan;
-
         public ViewHolder(View itemView) {
             super(itemView);
             LocalDisplay.init(itemView.getContext());
-
             itemView.setOnClickListener(this);
-
             riv_avadar = (RoundedImageView) itemView.findViewById(R.id.riv_xinsheng_avadar);
             tv_name = (TextView) itemView.findViewById(R.id.tv_xinsheng_name);
             tv_question = (TextView) itemView.findViewById(R.id.tv_xinsheng_question);

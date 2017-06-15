@@ -69,9 +69,11 @@ public class JianYiFragment extends BaseFragment implements YRecycleview.OnRefre
                 JianYiInfor infor=jianyiLists.get(position-1  );
                 Bundle bundle=new Bundle();
                 bundle.putString("from","2");
-                bundle.putString("username",infor.getUsername().toString());
-                bundle.putString("content",infor.getContent());
-                bundle.putString("time",infor.getTime()+"");
+                bundle.putString("username2",infor.getUsername().toString());
+                bundle.putString("content2",infor.getContent());
+                bundle.putString("time2",infor.getTime()+"");
+               // bundle.putString("image2",infor.getImage());
+                bundle.putString("userpic2",infor.getUserpic());
                 intent.putExtras(bundle);
                 startActivity(intent);
             }

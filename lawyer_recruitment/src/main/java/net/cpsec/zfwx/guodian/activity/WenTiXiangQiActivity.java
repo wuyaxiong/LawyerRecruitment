@@ -16,6 +16,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import net.cpsec.zfwx.guodian.R;
 import net.cpsec.zfwx.guodian.adapter.WenTiXiangQingAdapter;
 import net.cpsec.zfwx.guodian.entity.QuanBuInfor;
+import net.cpsec.zfwx.guodian.utils.DateUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +33,9 @@ public class WenTiXiangQiActivity extends Activity implements View.OnClickListen
     private ImageView iv_back;
     private TextView tv_title,tv_name,tv_time,tv_content;
     private RoundedImageView riv_head;
-
+    //初始化（模拟）数据
+    final ArrayList imageUrls  = new ArrayList<String>();
+    long time;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,8 +48,6 @@ public class WenTiXiangQiActivity extends Activity implements View.OnClickListen
         Log.d("传到问题详情页面的图片地址", "image: "+tupian);
 
         setListViewHeightBasedOnChildren(listView);
-
-
     }
 
     private void initView() {
@@ -65,25 +66,34 @@ public class WenTiXiangQiActivity extends Activity implements View.OnClickListen
         String tupian = null;
         String userpic;
         if ("1".equals(str)) {
-            String username = b.getString("username3");
-            String content = b.getString("content3");
-            String asktime = b.getString("asktime3");
+            userpic=intent.getExtras().getString("userpic1");
+            tupian = intent.getExtras().getString("image1");
+            ImageLoader.getInstance().displayImage("http://"+userpic,riv_head);
+            String username = b.getString("username1");
+            String content = b.getString("content1");
+            String asktime = b.getString("asktime1");
+            time= Long.parseLong(asktime);
             tv_name.setText(username);
-            tv_time.setText(asktime);
+            tv_time.setText(DateUtil.converTime(time));
             tv_content.setText(content);
         }else if ("2".equals(str)){
-            String username = b.getString("username3");
-            String content = b.getString("content3");
-            String asktime = b.getString("time3");
+            userpic=intent.getExtras().getString("userpic2");
+            tupian = null;
+            ImageLoader.getInstance().displayImage("http://"+userpic,riv_head);
+            String username = b.getString("username2");
+            String content = b.getString("content2");
+            String asktime = b.getString("time2");
+            time= Long.parseLong(asktime);
             tv_name.setText(username);
-            tv_time.setText(asktime);
+            tv_time.setText(DateUtil.converTime(time));
             tv_content.setText(content);
         }else if ("3".equals(str)){
             userpic=intent.getExtras().getString("userpic3");
             tupian = intent.getExtras().getString("image3");
             ImageLoader.getInstance().displayImage("http://"+userpic,riv_head);
             tv_name.setText( b.getString("username3"));
-            tv_time.setText( b.getString("time3"));
+            time= Long.parseLong(b.getString("time3"));
+            tv_time.setText(  DateUtil.converTime(time));
             tv_content.setText("正文:"+b.getString("content3"));
             tv_title.setText( "标题:"+b.getString("title3"));
         }
@@ -92,7 +102,8 @@ public class WenTiXiangQiActivity extends Activity implements View.OnClickListen
             tupian = intent.getExtras().getString("image4");
             ImageLoader.getInstance().displayImage("http://"+userpic,riv_head);
             tv_name.setText( b.getString("username4"));
-            tv_time.setText( b.getString("time4"));
+            time= Long.parseLong(b.getString("time4"));
+            tv_time.setText(  DateUtil.converTime(time));
             tv_content.setText(b.getString("content4"));
             tv_title.setText( b.getString("title4"));
         }
@@ -118,14 +129,15 @@ public class WenTiXiangQiActivity extends Activity implements View.OnClickListen
 
         //初始化（模拟）数据
         final ArrayList imageUrls  = new ArrayList<String>();
-        String[] tupians=tupian.split(",");
-        for(String substr:tupians){
-            imageUrls.add("http://"+substr);
+        if (tupian!=null) {
+            String[] tupians = tupian.split(",");
+            for (String substr : tupians) {
+                imageUrls.add("http://" + substr);
+            }
         }
-
         //得到控件
         listView = (ListView) findViewById(R.id.list_tupian);
-        if(tupian.isEmpty()){
+        if(tupian==null){
             listView.setVisibility(View.GONE);
         }
 
@@ -134,8 +146,6 @@ public class WenTiXiangQiActivity extends Activity implements View.OnClickListen
         WenTiXiangQingAdapter adapter = new WenTiXiangQingAdapter(this, imageUrls);
         listView.setFocusable(false);
         listView.setAdapter(adapter);
-
-
     }
 
     /**
@@ -158,7 +168,6 @@ public class WenTiXiangQiActivity extends Activity implements View.OnClickListen
             // 统计所有子项的总高度
             totalHeight += listItem.getMeasuredHeight();
         }
-
         ViewGroup.LayoutParams params = listView.getLayoutParams();
         params.height = totalHeight+ (listView.getDividerHeight() * (listAdapter.getCount() - 1));
         // listView.getDividerHeight()获取子项间分隔符占用的高度

@@ -9,7 +9,6 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -35,12 +34,11 @@ import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 
 import net.cpsec.zfwx.guodian.R;
 import net.cpsec.zfwx.guodian.adapter.LabelAdapter;
+import net.cpsec.zfwx.guodian.adapter.LabelGridAdapter;
 import net.cpsec.zfwx.guodian.entity.Label;
-import net.cpsec.zfwx.guodian.entity.MyDecoration;
-import net.cpsec.zfwx.guodian.entity.MyItemClickListener;
+import net.cpsec.zfwx.guodian.entity.LabelBean;
 import net.cpsec.zfwx.guodian.utils.Bimp;
 import net.cpsec.zfwx.guodian.utils.BitmapToBase64;
-import net.cpsec.zfwx.guodian.utils.Debugging;
 import net.cpsec.zfwx.guodian.utils.FileUtils;
 import net.cpsec.zfwx.guodian.utils.ImageUtil;
 import net.cpsec.zfwx.guodian.utils.NetUrl;
@@ -48,16 +46,15 @@ import net.cpsec.zfwx.guodian.utils.PictureUtil;
 import net.cpsec.zfwx.guodian.utils.SelectPicPopupWindow;
 import net.cpsec.zfwx.guodian.utils.Toast;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class FaTieActivity extends BaseActivity implements MyItemClickListener {
+public class FaTieActivity extends BaseActivity {
     private TextView tv_back, tv_complete, tv_label;
     private EditText et_zhuti, et_zhengwen;
     private LinearLayout ll_label;
-    private RecyclerView recyclerView;
-    List<Label> labelList;
+    //private RecyclerView recyclerView;
+   // List<Label> labelList;
     private LabelAdapter labelAdapter;
     private ImageView iv_add_tupian;
     private GridView gridView_pics;
@@ -66,6 +63,11 @@ public class FaTieActivity extends BaseActivity implements MyItemClickListener {
     private SelectPicPopupWindow window;// 弹出图片选择框；
     private String path = "";// 拍照返回的图片路径；
     List<String> stringList;
+    private GridView gridView_label;
+    private List<Label> labelList;
+    private LabelBean labelBean;
+    private LabelGridAdapter labelGridAdapter;
+    int label_id=1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -86,7 +88,6 @@ public class FaTieActivity extends BaseActivity implements MyItemClickListener {
         ImageLoader.getInstance().init(config);
 
         initView();
-        initData();
     }
 
 
@@ -97,14 +98,14 @@ public class FaTieActivity extends BaseActivity implements MyItemClickListener {
         et_zhuti = (EditText) findViewById(R.id.et_fatie_biaoti);
         et_zhengwen = (EditText) findViewById(R.id.et_fatie_zhengwen);
         ll_label = (LinearLayout) findViewById(R.id.ll_fatie_choose_label);
-        recyclerView = (RecyclerView) findViewById(R.id.rv_fatie_label);
+        //recyclerView = (RecyclerView) findViewById(R.id.rv_fatie_label);
         ll_label.setOnClickListener(this);
         tv_back.setOnClickListener(this);
         tv_complete.setOnClickListener(this);
         et_zhuti.setOnClickListener(this);
         et_zhengwen.setOnClickListener(this);
         GridLayoutManager labelManager = new GridLayoutManager(this, 3, GridLayoutManager.VERTICAL, false);
-        recyclerView.setLayoutManager(labelManager);
+        //recyclerView.setLayoutManager(labelManager);
 
         iv_add_tupian = (ImageView) findViewById(R.id.iv_fatie_addtupian);
         iv_add_tupian.setOnClickListener(this);
@@ -136,28 +137,32 @@ public class FaTieActivity extends BaseActivity implements MyItemClickListener {
                 }
             }
         });
+        initData();
     }
     private void initData() {
-        this.labelList = new ArrayList<Label>();
-        for (int i = 0; i < 8; i++) {
-            Label bean = new Label();
-            bean.setName("青春" + i);
-            labelList.add(bean);
-        }
-        this.labelAdapter = new LabelAdapter(labelList);
-        this.recyclerView.setAdapter(labelAdapter);
-        RecyclerView.ItemDecoration decoration = new MyDecoration(this);
-        this.recyclerView.addItemDecoration(decoration);
-        this.labelAdapter.setOnItemClickListener(this);
+        gridView_label= (GridView) findViewById(R.id.gv_fatie_label1);
+        RequestMap params = new RequestMap();
+        setParams(NetUrl.LABEL, params, 1);
+//        this.labelList = new ArrayList<Label>();
+//        for (int i = 0; i < 8; i++) {
+//            Label bean = new Label();
+//            bean.setName("青春" + i);
+//            labelList.add(bean);
+//        }
+//        this.labelAdapter = new LabelAdapter(labelList);
+//        this.recyclerView.setAdapter(labelAdapter);
+//        RecyclerView.ItemDecoration decoration = new MyDecoration(this);
+//        this.recyclerView.addItemDecoration(decoration);
+//        this.labelAdapter.setOnItemClickListener(this);
     }
-    @Override
-    public void onItemClick(View view, int postion) {
-        Label bean = labelList.get(postion);
-        if (bean != null) {
-            tv_label.setText(bean.getName());
-            recyclerView.setVisibility(View.GONE);
-        }
-    }
+//    @Override
+//    public void onItemClick(View view, int postion) {
+//        Label bean = labelList.get(postion);
+//        if (bean != null) {
+//            tv_label.setText(bean.getName());
+//            recyclerView.setVisibility(View.GONE);
+//        }
+//    }
     @Override
     public void onClick(View v) {
         super.onClick(v);
@@ -174,71 +179,32 @@ public class FaTieActivity extends BaseActivity implements MyItemClickListener {
                 android.widget.Toast.makeText(FaTieActivity.this,"请输入内容！", android.widget.Toast.LENGTH_SHORT).show();
                 return;
             }
-            String[] strings=new String[Bimp.bmp.size()];
-                stringList=new ArrayList<String>();
+//            stringList=new ArrayList<String>();
 //                for (int i = 0; i < Bimp.bmp.size(); i++) {
 //                    Bitmap bt = Bimp.bmp.get(i);
-//                    //stringList.add(BitmapToBase64.bitmapToBase64(bt));
-//                    strings[i]=BitmapToBase64.bitmapToBase64(bt);
-//                   // Debugging.debugging("AAAA---"+strings[i]);
+//                    stringList.add(BitmapToBase64.bitmapToBase64(bt));
 //                }
-                for (int i = 0; i < Bimp.bmp.size(); i++) {
-                    Bitmap bt = Bimp.bmp.get(i);
-                    stringList.add(BitmapToBase64.bitmapToBase64(bt));
-                }
                 StringBuffer sb = new StringBuffer();
                 for (int i = 0; i < Bimp.bmp.size(); i++) {
                     Bitmap bt = Bimp.bmp.get(i);
                     sb.append(BitmapToBase64.bitmapToBase64(bt));
                     sb.append(",");
                 }
-                if (sb.length() > 0) {
-                    sb.delete(sb.length() - 1, sb.length());
-                }
-                if (sb.length()>4000){
-                    for(int i=0;i<sb.length();i+=4000) {
-                        if(i+4000<sb.length()){
-                            Debugging.debugging(sb.substring(i, i+4000));
-                        }else {
-                            Debugging.debugging(sb.substring(i, sb.length()));
-                        }
-                    }
-                    }
-//                Debugging.debugging("stringList==="+stringList);
-//                Debugging.debugging("strings==="+strings.toString());
-//               JSONArray jsonArray=new org.json.JSONArray();
-//                for (int i = 0; i < Bimp.bmp.size(); i++) {
-//                    Bitmap bt = Bimp.bmp.get(i);
-//                    String s=BitmapToBase64.bitmapToBase64(bt);
-//                    JSONObject jsonObject = new JSONObject();
-//                    try {
-//                        jsonObject.put("image",s);
-//                        jsonArray.put(i,jsonObject);
-//                    } catch (JSONException e) {
-//                        e.printStackTrace();
-//                    }
-//
-////                    stringList.add(s);
-//                    Debugging.debugging("jsonArray====+++++++++"+jsonArray.toString());
-//                }
-               // Debugging.debugging("stringlist=================="+stringList.size());
-//              Debugging.debugging("stringlist====+++++++++"+Bimp.bmp.size());
-//             //  Debugging.debugging("stringlist+++++++++"+stringList.toString());
                 RequestMap params = new RequestMap();
-                params.put("uid", "3");
-                params.put("label_id", "1");
+                params.put("uid", "329");
+                params.put("label_id", label_id+"");
                 params.put("cid", "1");
                 params.put("title", et_zhuti.getText().toString());
                 params.put("content", et_zhengwen.getText().toString());
-                params.put("images",stringList.toString());
+                params.put("images",sb.toString()  );
                 setParams(NetUrl.FABIAO_TIEZI, params, 0);
                 break;
             //添加标签
             case R.id.ll_fatie_choose_label:
-                if (recyclerView.getVisibility() == View.GONE) {
-                    recyclerView.setVisibility(View.VISIBLE);
-                } else {
-                    recyclerView.setVisibility(View.GONE);
+                if (gridView_label.getVisibility()== View.GONE){
+                    gridView_label.setVisibility(View.VISIBLE);
+                }else {
+                    gridView_label.setVisibility(View.GONE);
                 }
                 break;
             //添加图片按钮
@@ -418,18 +384,38 @@ public class FaTieActivity extends BaseActivity implements MyItemClickListener {
     @Override
     public void onSuccess(String response, Map<String, String> headers, String url, int actionId) {
         super.onSuccess(response, headers, url, actionId);
-        try {
-            if (!"发帖成功".equals(JSON.parseObject(response).getString("msg"))) {
-                Toast.prompt(this, JSON.parseObject(response).getString("infor"));
-                return;
-            } else {
-                Intent intent = new Intent(this, MainActivity.class);
-                startActivity(intent);
-                finish();
-            }
-        } catch (Exception e) {
-            Toast.prompt(this, "数据异常");
+        switch (actionId){
+            case 0:
+                try {
+                    if (!"发帖成功".equals(JSON.parseObject(response).getString("msg"))) {
+                        Toast.prompt(this, JSON.parseObject(response).getString("infor"));
+                        return;
+                    } else {
+                        Intent intent = new Intent(this, MainActivity.class);
+                        startActivity(intent);
+                        finish();
+                    }
+                } catch (Exception e) {
+                    Toast.prompt(this, "数据异常");
+                }
+                break;
+            case 1:
+                labelBean= JSON.parseObject(response, LabelBean.class);
+                labelList=labelBean.getInfor();
+                labelGridAdapter=new LabelGridAdapter(this,labelList);
+                gridView_label.setAdapter(labelGridAdapter);
+                gridView_label.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                       tv_label.setText(labelList.get(position).getName());
+                        label_id=labelList.get(position).getLabel_id();
+                        gridView_label.setSelector(R.color.color_51a0fc);
+                        gridView_label.setVisibility(View.GONE);
+                    }
+                });
+                break;
         }
+
     }
 }
 

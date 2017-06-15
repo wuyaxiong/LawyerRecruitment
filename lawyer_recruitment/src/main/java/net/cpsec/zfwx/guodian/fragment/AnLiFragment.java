@@ -1,6 +1,7 @@
 package net.cpsec.zfwx.guodian.fragment;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,6 +13,7 @@ import com.alibaba.fastjson.JSON;
 import com.android.volley.manager.RequestMap;
 
 import net.cpsec.zfwx.guodian.R;
+import net.cpsec.zfwx.guodian.activity.QingChunFenXiangDetailActivity;
 import net.cpsec.zfwx.guodian.adapter.AnLiMeiWenAdapter;
 import net.cpsec.zfwx.guodian.entity.AnLiMeiWenBean;
 import net.cpsec.zfwx.guodian.entity.AnLiMeiWenInfor;
@@ -57,6 +59,25 @@ public class AnLiFragment extends BaseFragment implements YRecycleview.OnRefresh
         } else {
             adapter.notifyDataSetChanged();
         }
+        adapter.setOnItemClickListener(new AnLiMeiWenAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                Intent intent=new Intent(getActivity(), QingChunFenXiangDetailActivity.class);
+                AnLiMeiWenInfor infor=anLiMeiWenInfors.get(position-1);
+                Bundle bundle=new Bundle();
+                bundle.putString("from","1");
+               bundle.putString("gid",position+"");
+//                bundle.putString("content3",infor.getContent());
+//                bundle.putString("time3",infor.getTime()+"");
+//                bundle.putString("title3",infor.getTitle());
+//                bundle.putString("image3",infor.getImage());
+//                bundle.putString("userpic3",infor.getUserpic());
+                intent.putExtras(bundle);
+                startActivity(intent);
+            //    Log.d("闯过去的图片地址", "getImage: "+infor.getImage());
+            }
+        });
+
     }
 
     private void initView(View v) {
@@ -76,8 +97,9 @@ public class AnLiFragment extends BaseFragment implements YRecycleview.OnRefresh
                 anLiMeiWenInfors = anLiMeiWenBean.getInfor();
                 Debugging.debugging("positionLists      =   " + (anLiMeiWenInfors.size()));
             } else {
-                moreanLiMeiWenInfors = anLiMeiWenBean.getInfor();
-                anLiMeiWenInfors.addAll(moreanLiMeiWenInfors);
+                anLiMeiWenInfors=anLiMeiWenBean.getInfor();
+//                moreanLiMeiWenInfors = anLiMeiWenBean.getInfor();
+//                anLiMeiWenInfors.addAll(moreanLiMeiWenInfors);
             }
             setAdapter();
         } catch (Exception e) {

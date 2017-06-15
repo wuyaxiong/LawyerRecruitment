@@ -31,10 +31,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private ShengFragment shengFragment;
     private ShareFragment shareFragment;
     private TongXunLuFragment tongXunLuFragment;
-    //private Fragment xianshanghulianFragment;
-    //private Fragment lianxirenFragment;
-//    private ImageView iv_left, iv_right;
-//    private TextView tv_title;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,9 +52,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         initView();
         initFragment();
         tvJiaoLiu.setSelected(true);
-      //  tv_title.setText("线上互联");
         fm.beginTransaction().add(R.id.fl_container, jiaoLiuFragment).commit();
-
         initAl();
     }
     private void initAl(){
@@ -70,12 +64,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         YWIMKit mIMKit = YWAPI.getIMKitInstance(userid, "23893323");
 
         //开始登录
-
-
         IYWLoginService loginService = mIMKit.getLoginService();
         YWLoginParam loginParam = YWLoginParam.createLoginParam(userid, password);
         loginService.login(loginParam, new IWxCallback() {
-
             @Override
             public void onSuccess(Object... arg0) {
             }
@@ -94,6 +85,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //xianshanghulianFragment = mIMKit.getConversationFragment();
         //获取联系人界面
         //lianxirenFragment= mIMKit.getContactsFragment();
+      //  fm.beginTransaction().add(R.id.fl_container, jiaoLiuFragment).commit();
     }
 
     private void initFragment() {
@@ -110,7 +102,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //        iv_left.setImageResource(R.drawable.icon_people);
 //        tv_title = (TextView) findViewById(R.id.tv_title);
         tvHuLian = (TextView) findViewById(R.id.tv_hulian);
-        tvJiaoLiu = (TextView) findViewById(tv_jiaoliu);
+        tvJiaoLiu = (TextView) findViewById(R.id.tv_jiaoliu);
         tvSheng = (TextView) findViewById(R.id.tv_sheng);
         tvShare = (TextView) findViewById(R.id.tv_fenxiang);
         tvTongXun = (TextView) findViewById(R.id.tv_tongxun);
@@ -202,6 +194,4 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         tvJiaoLiu.setSelected(false);
         tvShare.setSelected(false);
     }
-
-
 }

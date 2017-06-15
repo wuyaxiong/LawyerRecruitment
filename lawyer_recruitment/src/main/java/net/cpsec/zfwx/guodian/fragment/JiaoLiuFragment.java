@@ -17,7 +17,7 @@ import android.widget.TextView;
 import net.cpsec.zfwx.guodian.R;
 import net.cpsec.zfwx.guodian.activity.FaTieActivity;
 import net.cpsec.zfwx.guodian.activity.MyCenterActivity;
-import net.cpsec.zfwx.guodian.activity.SouSuoActivity;
+import net.cpsec.zfwx.guodian.activity.SouSuoTieZiActivity;
 
 
 /**
@@ -63,7 +63,7 @@ public class JiaoLiuFragment extends Fragment implements View.OnClickListener {
                 startActivity(intent);
                 break;
             case R.id.iv_more:
-                startActivity(new Intent(getActivity(), SouSuoActivity.class));
+                startActivity(new Intent(getActivity(), SouSuoTieZiActivity.class));
                 break;
             case R.id.iv_jiaoliu_fatie:
                 startActivity(new Intent(getActivity(), FaTieActivity.class));

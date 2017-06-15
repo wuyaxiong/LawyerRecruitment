@@ -68,11 +68,13 @@ public class XinShengFragment extends BaseFragment implements YRecycleview.OnRef
                 ShengDetail infor=shengLists.get(position-1);
                 Bundle bundle=new Bundle();
                 bundle.putString("from","1");
-                bundle.putString("username",infor.getUsername().toString());
-                bundle.putString("content",infor.getContent());
-                bundle.putString("asktime",infor.getAsktime()+"");
+                bundle.putString("username1",infor.getUsername().toString());
+                bundle.putString("content1",infor.getContent());
+                bundle.putString("asktime1",infor.getAsktime()+"");
+                bundle.putString("image1",infor.getImage());
+                bundle.putString("userpic1",infor.getUserpic());
                 intent.putExtras(bundle);
-                startActivityForResult(intent,1);
+                startActivity(intent);
             }
         });
     }

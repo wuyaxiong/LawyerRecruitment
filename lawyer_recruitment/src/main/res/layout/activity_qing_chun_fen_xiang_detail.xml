@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_while"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical"
+    tools:context="net.cpsec.zfwx.guodian.activity.QingChunFenXiangDetailActivity">
+
+    <include layout="@layout/toolbar" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/color_bbbbbb" />
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:layout_weight="1">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+
+    <TextView
+        android:id="@+id/tv_meiwendetail_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="8dp"
+        android:textSize="18sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="8dp"
+        android:orientation="horizontal">
+
+        <TextView
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="发布人:"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/tv_meiwendetail_username"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_weight="1"
+             />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="发布时间:"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/tv_meiwendetail_time"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_weight="1"
+             />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_meiwendetail_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="8dp"
+        />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:layout_marginTop="8dp"
+        android:background="#f5f5f5" />
+    <!--<ScrollView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="0dp"></ScrollView>-->
+<!--<FrameLayout-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="0dp"-->
+    <!--android:layout_weight="1">-->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+    <net.cpsec.zfwx.guodian.ui.YRecycleview
+        android:id="@+id/yrv_pinglun_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"></net.cpsec.zfwx.guodian.ui.YRecycleview>
+        </RelativeLayout>
+    </LinearLayout>
+</ScrollView>
+
+<!--</FrameLayout>-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:orientation="horizontal"
+        android:layout_marginBottom="8dp">
+        <EditText
+            android:id="@+id/et_meiwen_pinglun"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="40dp"
+            android:layout_marginLeft="16dp"
+            android:maxLines="4"
+            android:paddingLeft="5dp"
+            android:background="@drawable/shape_search"/>
+        <Button
+            android:id="@+id/btn_meiwen_pinglun"
+            android:layout_width="60dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center_vertical"
+            android:text="发送"
+            android:layout_marginRight="16dp"
+            android:layout_marginLeft="8dp"
+            android:textSize="16sp"/>
+    </LinearLayout>
+</LinearLayout>
