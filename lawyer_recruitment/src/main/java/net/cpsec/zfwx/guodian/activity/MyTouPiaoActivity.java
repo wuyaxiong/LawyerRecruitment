@@ -3,6 +3,7 @@ package net.cpsec.zfwx.guodian.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -81,14 +82,22 @@ public class MyTouPiaoActivity extends BaseActivity implements View.OnClickListe
             adapter.notifyDataSetChanged();
         }
 
+        //touPiaoInfor  =  [InforBean{vote_id=1, admin_id=1, title='最美国电人', time=1496735800, description='各分（子）公司、研究院、基层企业员工：
+        //目前，由国资委宣传局开展的“最美国电人”征集活动已进入公众投票阶段。在本次评选活动中，以下员工成功入选。为宣传具有国电特色的先进典型，
+        // 以典型宣传讲好“国电故事”，请按照有关要求，积极参与投票。'},
+        // InforBean{vote_id=2, admin_id=1, title='发表意见', time=1496735800, description='各部门积极发表意见'}]
+
         adapter.setOnItemClickListener(new TouPiaoAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
+                Log.e("投票点击事件", "onItemClick: "+"投票点击事件" );
                 Intent intent=new Intent(MyTouPiaoActivity.this, TouPiaoXiangQingActivity.class);
                 TouPiaoBean.InforBean infor= touPiaoInfor.get(position-1);
                 Bundle bundle=new Bundle();
-                bundle.putString("time3",infor.getTime()+"");
-                bundle.putString("title3",infor.getTitle());
+                bundle.putString("time",infor.getTime()+"");
+                bundle.putString("title",infor.getTitle());
+                bundle.putString("description",infor.getDescription());
+                bundle.putInt("voter_id",infor.getVote_id());
                 intent.putExtras(bundle);
                 startActivity(intent);
             }

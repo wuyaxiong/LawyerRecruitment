@@ -41,21 +41,21 @@ public class TouPiaoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
         ((ViewHolder) holder).tv_time.setText(touPiaoInforBeen.get(position).getTime()+"");
         ((ViewHolder) holder).tv_title.setText(touPiaoInforBeen.get(position).getTitle());
+        //这个是有多少人参与的,接口目前没有这个数据，
+        //((ViewHolder) holder).tv_num.setText(touPiaoInforBeen.get(position). + "");
 
 
-        //这个是有多少人参与的
-       // ((ViewHolder) holder).tv_num.setText(touPiaoInforBeen.get(position) + "");
-//        if (mOnItemClickListener != null) {
-//            //为ItemView设置监听器
-//            holder.itemView.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    int position = holder.getLayoutPosition();
-//                    mOnItemClickListener.onItemClick(holder.itemView, position);
-//                }
-//            });
-//
-//        }
+        if (mOnItemClickListener != null) {
+            //为ItemView设置监听器
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int position = holder.getLayoutPosition();
+                    mOnItemClickListener.onItemClick(holder.itemView, position);
+                }
+            });
+
+        }
     }
 
     @Override
