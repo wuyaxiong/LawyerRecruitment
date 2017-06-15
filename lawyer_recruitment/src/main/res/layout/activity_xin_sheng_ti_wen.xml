@@ -50,15 +50,15 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="#b2b2b2"/>
-    <EditText
-        android:id="@+id/et_tiwen_zhuti"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="20dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="10dp"
-        android:hint="标题(可选)"
-        android:textSize="20sp"/>
+    <!--<EditText-->
+        <!--android:id="@+id/et_tiwen_zhuti"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginRight="20dp"-->
+        <!--android:layout_marginLeft="20dp"-->
+        <!--android:layout_marginTop="10dp"-->
+        <!--android:hint="标题(可选)"-->
+        <!--android:textSize="20sp"/>-->
     <EditText
         android:id="@+id/et_tiwen_zhengwen"
         android:layout_width="match_parent"
@@ -67,11 +67,11 @@
         android:layout_marginTop="8dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        android:hint="正文"
+        android:hint="提问内容"
         android:textSize="18sp"
         android:gravity="top"
-        android:lines="8"
-        android:maxLines="8"
+        android:lines="10"
+        android:maxLines="10"
         android:padding="5dp"/>
 
     <LinearLayout

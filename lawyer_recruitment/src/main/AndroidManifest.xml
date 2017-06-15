@@ -78,12 +78,8 @@
             android:name=".activity.XiuGaiXinXiActivity"
             android:theme="@style/ImageTranslucentTheme" />
         <activity
-            android:name=".activity.SplashActivity"
-            android:theme="@style/ImageTranslucentTheme" />
-        <activity
             android:name=".activity.XiangXiZiLiaoActivity"
             android:theme="@style/ImageTranslucentTheme" />
-
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
@@ -98,7 +94,7 @@
             android:name=".activity.XinShengTiWenActivity"
             android:theme="@style/ImageTranslucentTheme" />
         <activity
-            android:name=".activity.SouSuoActivity"
+            android:name=".activity.SouSuoTieZiActivity"
             android:theme="@style/ImageTranslucentTheme" />
         <activity
             android:name=".activity.WenTiXiangQiActivity"
@@ -112,7 +108,11 @@
         <activity
             android:name=".activity.TestPicActivity"
             android:theme="@style/ImageTranslucentTheme" />
+        <activity android:name=".activity.FaBuJianYIActivity" />
+        <activity android:name=".activity.QingChunFenXiangDetailActivity" />
+        <activity android:name=".activity.TieZiDetailActivity"></activity>
         <activity android:name=".activity.TouPiaoXiangQingActivity"></activity>
+        <activity android:name=".activity.ZhuzhijiagouActivity"></activity>
     </application>
 
 </manifest>

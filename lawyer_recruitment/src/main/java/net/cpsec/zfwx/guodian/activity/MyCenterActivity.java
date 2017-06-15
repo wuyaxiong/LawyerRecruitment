@@ -33,13 +33,14 @@ public class MyCenterActivity extends BaseActivity implements View.OnClickListen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_center);
+        //设置在activity启动的时候输入法默认是不开启的
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         //透明状态栏
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         //透明导航栏
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
         initView();
         initDatas();
-
     }
 
     private void initDatas() {
@@ -73,12 +74,10 @@ public class MyCenterActivity extends BaseActivity implements View.OnClickListen
         rl_fatie = (RelativeLayout) findViewById(R.id.rl_mycenter_fatie);
         iv_bianjiziliao = (ImageView) findViewById(R.id.iv_myventer_bianjiziliao);
         rl_toupiao = (RelativeLayout) findViewById(R.id.rl_mycenter_toupiao);
-        rl_fankui = (RelativeLayout) findViewById(R.id.rl_mycenter_fankui);
         rl_shoucang = (RelativeLayout) findViewById(R.id.rl_mycenter_shoucang);
         rl_wenda = (RelativeLayout) findViewById(R.id.rl_mycenter_wenda);
         rl_wenda.setOnClickListener(this);
         rl_shoucang.setOnClickListener(this);
-        rl_fankui.setOnClickListener(this);
         rl_toupiao.setOnClickListener(this);
         iv_bianjiziliao.setOnClickListener(this);
         iv_back.setOnClickListener(this);
@@ -118,15 +117,14 @@ public class MyCenterActivity extends BaseActivity implements View.OnClickListen
             case R.id.rl_mycenter_toupiao:
                 startActivity(new Intent(MyCenterActivity.this, MyTouPiaoActivity.class));
                 break;
-            //反馈页面
-            case R.id.rl_mycenter_fankui:
-                startActivity(new Intent(MyCenterActivity.this, FanKuiActivity.class));
-                break;
+//            //反馈页面
+//            case R.id.rl_mycenter_fankui:
+//                startActivity(new Intent(MyCenterActivity.this, FanKuiActivity.class));
+//                break;
             //收藏页面
             case R.id.rl_mycenter_shoucang:
                 startActivity(new Intent(MyCenterActivity.this, ShouCangActivity.class));
                 break;
-            //问答页面
             case R.id.rl_mycenter_wenda:
                 startActivity(new Intent(MyCenterActivity.this, WenDaActivity.class));
                 break;

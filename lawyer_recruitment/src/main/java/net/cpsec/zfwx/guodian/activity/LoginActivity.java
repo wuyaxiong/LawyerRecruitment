@@ -56,7 +56,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
             case R.id.btn_login:
                 Intent intent = new Intent(this, MainActivity.class);
                 startActivity(intent);
-
                 phoneNums = etPhoneNumber.getText().toString().trim();
                 // 1. 通过规则判断手机号
                 if (!judgePhoneNums(phoneNums)) {
@@ -91,9 +90,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                         return;
                     } else {
                         android.widget.Toast.makeText(this, "获取验证码成功", android.widget.Toast.LENGTH_SHORT).show();
-                        //editor.putString(PreferencesStorageKey.USER_PHONENUMBER, JSON.parseObject(response).getString("userphone")).commit();
-//                Intent intent = new Intent(this, MainActivity.class);
-//                startActivity(intent);
                     }
                 } catch (Exception e) {
                     Toast.prompt(this, "数据异常");
@@ -113,9 +109,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                     Toast.prompt(this, "数据异常");
                 }
         }
-
     }
-
     /**
      * 判断手机号码是否合理
      *

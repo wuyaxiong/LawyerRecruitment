@@ -15,8 +15,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import net.cpsec.zfwx.guodian.R;
+import net.cpsec.zfwx.guodian.activity.FaBuJianYIActivity;
 import net.cpsec.zfwx.guodian.activity.MyCenterActivity;
-import net.cpsec.zfwx.guodian.activity.SouSuoActivity;
+import net.cpsec.zfwx.guodian.activity.SouSuoTieZiActivity;
 import net.cpsec.zfwx.guodian.activity.XinShengTiWenActivity;
 
 
@@ -63,10 +64,14 @@ public class ShengFragment extends Fragment implements View.OnClickListener {
                 startActivity(intent);
                 break;
             case R.id.iv_more:
-                startActivity(new Intent(getActivity(), SouSuoActivity.class));
+                startActivity(new Intent(getActivity(), SouSuoTieZiActivity.class));
                 break;
             case R.id.iv_sheng_tiwen:
+                if (viewPager.getCurrentItem()==0||viewPager.getCurrentItem()==2){
                 startActivity(new Intent(getActivity(), XinShengTiWenActivity.class));
+                }else{
+                    startActivity(new Intent(getActivity(), FaBuJianYIActivity.class));
+                }
                 break;
         }
     }

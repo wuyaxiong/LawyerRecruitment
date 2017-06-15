@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import net.cpsec.zfwx.guodian.R;
 import net.cpsec.zfwx.guodian.entity.ZhengCeTongZhiInfor;
+import net.cpsec.zfwx.guodian.utils.DateUtil;
 import net.cpsec.zfwx.guodian.utils.LocalDisplay;
 
 import java.util.List;
@@ -37,7 +38,7 @@ public class QingChunFenXiangAdapter  extends RecyclerView.Adapter<RecyclerView.
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         ((ViewHolder) holder).tv_companyname.setText(quanBuInfors.get(position).getCname());
         ((ViewHolder) holder).tv_title.setText(quanBuInfors.get(position).getTitle());
-        ((ViewHolder) holder).tv_shijian.setText(quanBuInfors.get(position).getTime()+"");
+        ((ViewHolder) holder).tv_shijian.setText(DateUtil.converTime(quanBuInfors.get(position).getTime()));
     }
 
     @Override

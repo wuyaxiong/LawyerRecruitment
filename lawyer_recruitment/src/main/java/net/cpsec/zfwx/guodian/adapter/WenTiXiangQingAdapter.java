@@ -28,15 +28,17 @@ public class WenTiXiangQingAdapter extends BaseAdapter {
         ViewHolder holder = null;
         if (convertView == null) {
             holder = new ViewHolder();
-
             convertView = mInflater.inflate(R.layout.item_wentixiangqing,null);
             holder.imageView = (ImageView) convertView.findViewById(R.id.id_index_gallery_item_image);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
-
-        ImageLoader.getInstance().displayImage( imageUrls.get(position), holder.imageView);
+        if (imageUrls.size()==0){
+            holder.imageView.setVisibility(View.GONE);
+        }else {
+            ImageLoader.getInstance().displayImage(imageUrls.get(position), holder.imageView);
+        }
         return convertView;
     }
 

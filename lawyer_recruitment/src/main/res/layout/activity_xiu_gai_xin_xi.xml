@@ -87,8 +87,15 @@
                     android:layout_width="80dp"
                     android:layout_height="80dp"
                     android:layout_gravity="center_vertical"
+                    android:scaleType="center"
+                    android:src="@drawable/bantouming"
+                    app:riv_border_color="#bbbbbb"
+                    app:riv_border_width="1dp"
+                    app:riv_corner_radius="15dp"
                     android:layout_marginRight="20dp"
-                    android:src="@mipmap/ic_launcher_round" />
+                    app:riv_mutate_background="true"
+                    app:riv_oval="true"
+                    app:riv_tile_mode="repeat" />
             </LinearLayout>
 
             <View

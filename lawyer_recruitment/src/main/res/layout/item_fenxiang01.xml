@@ -18,8 +18,17 @@
                 android:id="@+id/riv_jiaoliu_avater"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
+                android:scaleType="center"
+                android:src="@drawable/bantouming"
+                app:riv_border_color="#bbbbbb"
+                app:riv_border_width="1dp"
+                app:riv_corner_radius="15dp"
+                app:riv_mutate_background="true"
+                app:riv_oval="true"
+                android:layout_gravity="center_vertical"
                 android:layout_marginLeft="20dp"
-                android:src="@mipmap/ic_launcher_round" />
+                app:riv_tile_mode="repeat"
+                android:clickable="true"/>
 
             <TextView
                 android:id="@+id/tv_jiaoliu_name"
@@ -45,26 +54,29 @@
                 android:textSize="16dp" />
         </LinearLayout>
     </RelativeLayout>
-
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#f4f4f4f4">
     <TextView
         android:id="@+id/tv_jiaoliu_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:clickable="true"
+        android:background="@drawable/selector_label"
         android:text="锅炉的作用是什么？"
         android:textColor="#4b4b4b"
-        android:textSize="20dp" />
 
+        android:textSize="16dp" />
+
+    </LinearLayout>
     <LinearLayout
-        android:id="@+id/tiezi_tupian"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
         android:layout_marginTop="8dp"
         android:orientation="vertical">
-
         <ImageView
             android:id="@+id/img_jialiu_01"
             android:layout_width="250dp"
@@ -72,10 +84,7 @@
             android:src="@drawable/pic_jiazai1"
             android:layout_gravity="center_horizontal"
             />
-
-
     </LinearLayout>
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

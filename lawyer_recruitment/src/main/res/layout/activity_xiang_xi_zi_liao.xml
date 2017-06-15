@@ -55,11 +55,15 @@
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:src="@mipmap/ic_launcher"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="1.0"
-            tools:layout_editor_absoluteY="54dp" />
+            android:scaleType="center"
+            app:riv_border_color="#bbbbbb"
+            app:riv_border_width="1dp"
+            app:riv_corner_radius="40dp"
+            app:riv_mutate_background="true"
+            app:riv_oval="true"
+            android:layout_gravity="center_vertical"
+            app:riv_tile_mode="repeat"
+            android:clickable="true" />
 
         <LinearLayout
             android:layout_width="0dp"

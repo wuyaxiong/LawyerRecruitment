@@ -16,7 +16,7 @@ import android.widget.TextView;
 
 import net.cpsec.zfwx.guodian.R;
 import net.cpsec.zfwx.guodian.activity.MyCenterActivity;
-import net.cpsec.zfwx.guodian.activity.SouSuoActivity;
+import net.cpsec.zfwx.guodian.activity.SouSuoTieZiActivity;
 
 
 /**
@@ -62,7 +62,7 @@ public class ShareFragment extends BaseFragment implements View.OnClickListener 
                 startActivity(intent);
                 break;
             case R.id.iv_more:
-                startActivity(new Intent(getActivity(), SouSuoActivity.class));
+                startActivity(new Intent(getActivity(), SouSuoTieZiActivity.class));
                 break;
         }
     }

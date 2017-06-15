@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+    <com.makeramen.roundedimageview.RoundedImageView
+        android:id="@+id/iv_pinglun_head"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:scaleType="center"
+        android:src="@drawable/bantouming"
+        app:riv_border_color="#bbbbbb"
+        app:riv_border_width="1dp"
+        app:riv_corner_radius="15dp"
+        app:riv_mutate_background="true"
+        app:riv_oval="true"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="20dp"
+        app:riv_tile_mode="repeat" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="16dp">
+        <TextView
+            android:id="@+id/tv_pinglun_username"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="username"
+            android:layout_marginTop="5dp"
+            android:textSize="14sp"/>
+        <TextView
+            android:id="@+id/tv_pinglun_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="time"
+            android:textSize="14sp"
+            android:layout_marginTop="5dp"/>
+    </LinearLayout>
+</LinearLayout>
+    <TextView
+        android:id="@+id/tv_pinglun_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:text="1561561661120..0"
+        android:layout_marginTop="8dp"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#bbbbbb"
+        android:layout_marginTop="5dp"/>
+</LinearLayout>

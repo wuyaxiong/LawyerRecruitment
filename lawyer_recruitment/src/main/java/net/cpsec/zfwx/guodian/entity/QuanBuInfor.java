@@ -18,6 +18,25 @@ public class QuanBuInfor {
     private int labelId;
     private int time;
     private String name;
+    private int id;
+private String phone;
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public void setUsername(String username) {
          this.username = username;
      }

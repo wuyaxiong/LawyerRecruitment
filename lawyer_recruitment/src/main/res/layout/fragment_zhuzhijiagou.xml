@@ -1,0 +1,44 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="net.cpsec.zfwx.guodian.fragment.ZhuzhijiagouFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+    <include layout="@layout/moubumenlayout"
+        android:id="@+id/TabLayout"
+        />
+
+    <ListView
+        android:id="@+id/lianxirenList"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/TabLayout"
+        android:background="@color/color_while"
+        >
+
+    </ListView>
+
+    <ListView
+        android:id="@+id/gongsiListView"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/TabLayout"
+        android:visibility="gone"
+        >
+    </ListView>
+
+    <ListView
+        android:id="@+id/bumenListView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/gongsiListView"
+        android:layout_below="@id/TabLayout"
+        android:visibility="gone"
+        android:background="#ffffff"
+        >
+
+
+    </ListView>
+</RelativeLayout>

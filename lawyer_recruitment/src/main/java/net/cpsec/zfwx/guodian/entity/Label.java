@@ -6,13 +6,14 @@ package net.cpsec.zfwx.guodian.entity;
 
 public class Label {
 
-        private int lableId;
+
+        private int label_id;
         private String name;
-        public void setLableId(int lableId) {
-            this.lableId = lableId;
+        public void setLabel_id(int label_id) {
+            this.label_id = label_id;
         }
-        public int getLableId() {
-            return lableId;
+        public int getLabel_id() {
+            return label_id;
         }
 
         public void setName(String name) {
@@ -22,5 +23,7 @@ public class Label {
             return name;
         }
 
+    }
 
-}
+
+

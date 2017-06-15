@@ -8,10 +8,12 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.StrictMode;
 import android.provider.MediaStore;
 import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
@@ -39,6 +41,10 @@ import net.cpsec.zfwx.guodian.widget.DialogHint;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Map;
 
 
@@ -55,16 +61,36 @@ public class XiuGaiXinXiActivity extends BaseActivity implements View.OnClickLis
     private HeadDiaLog headDiaLog;
     private Dialog dialog;
     private static final int MY_PERMISSIONS_REQUEST_CALL_PHONE = 6;
+    String s;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_xiu_gai_xin_xi);
+        StrictMode.ThreadPolicy policy=new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
         initView();
         initHead();
     }
-
-
     private void initView() {
+        riv_header = (RoundedImageView) findViewById(R.id.riv_header);
+        riv_header.setOnClickListener(this);
+        rbt_man = (RadioButton) findViewById(R.id.rbt_man);
+        rbt_wuman = (RadioButton) findViewById(R.id.rbt_woman);
+        etName = (EditText) findViewById(R.id.et_xinxi_name);
+        etJianjie = (EditText) findViewById(R.id.et_xinxi_jianjie);
+        etBirth = (EditText) findViewById(R.id.et_birth);
+        etMianmao = (EditText) findViewById(R.id.et_xinxi_mianmao);
+        etDanwei = (EditText) findViewById(R.id.et_xinxi_danwei);
+        etaAddress = (EditText) findViewById(R.id.et_xinxi_address);
+        Intent intent=getIntent();
+        etName.setText(intent.getStringExtra("username"));
+        etJianjie.setText((intent.getStringExtra("ins")));
+        etBirth.setText((intent.getStringExtra("birth")));
+        etMianmao.setText((intent.getStringExtra("mianmao")));
+        etDanwei.setText((intent.getStringExtra("danwei")));
+        etaAddress.setText((intent.getStringExtra("address")));
+         s=intent.getStringExtra("pic");
+        ImageLoader.getInstance().displayImage("http://"+s,riv_header);
         rgender= (RadioGroup) findViewById(R.id.rg_gender);
         rgender.setOnCheckedChangeListener(this);
         iv_back = (ImageView) findViewById(R.id.iv_back);
@@ -79,13 +105,21 @@ public class XiuGaiXinXiActivity extends BaseActivity implements View.OnClickLis
             @Override
             public void onClick(View v) {
                 RequestMap params = new RequestMap();
+                String base64;
                 params.put("uid",3+"");
-                params.put("userpic",bitmapToBase64(head));
+                if (head==null){
+                   Bitmap bit=returnBitmap("http://"+s);
+                    base64=bitmapToBase64(bit);
+                }else {
+                    base64=bitmapToBase64(head);
+                }
+                params.put("userpic",base64);
+               // params.put("userpic",bitmapToBase64(head));
+                Debugging.debugging("AAAAAAAA+++++++"+base64);
                 Debugging.debugging("userpic=="+bitmapToBase64(head));
                 params.put("username", etName.getText().toString());
                 params.put("introduction", etJianjie.getText().toString());
                 params.put("sex", sex);
-                Debugging.debugging("sex=="+sex);
                 params.put("birth",etBirth.getText().toString());
                 params.put("background",etMianmao.getText().toString());
                 params.put("address",etaAddress.getText().toString());
@@ -93,26 +127,7 @@ public class XiuGaiXinXiActivity extends BaseActivity implements View.OnClickLis
                 setParams(NetUrl.XIUGAI_XINXI, params, 0);
             }
         });
-        riv_header = (RoundedImageView) findViewById(R.id.riv_header);
-        riv_header.setOnClickListener(this);
-        rbt_man = (RadioButton) findViewById(R.id.rbt_man);
-        rbt_wuman = (RadioButton) findViewById(R.id.rbt_woman);
-        etName = (EditText) findViewById(R.id.et_xinxi_name);
-        etJianjie = (EditText) findViewById(R.id.et_xinxi_jianjie);
-        etBirth = (EditText) findViewById(R.id.et_birth);
-        etMianmao = (EditText) findViewById(R.id.et_xinxi_mianmao);
-        etDanwei = (EditText) findViewById(R.id.et_xinxi_danwei);
-        etaAddress = (EditText) findViewById(R.id.et_xinxi_address);
 
-        Intent intent=getIntent();
-        etName.setText(intent.getStringExtra("username"));
-        etJianjie.setText((intent.getStringExtra("ins")));
-        etBirth.setText((intent.getStringExtra("birth")));
-        etMianmao.setText((intent.getStringExtra("mianmao")));
-        etDanwei.setText((intent.getStringExtra("danwei")));
-        etaAddress.setText((intent.getStringExtra("address")));
-        String s=intent.getStringExtra("pic");
-        ImageLoader.getInstance().displayImage("http://"+s,riv_header);
     }
 
     @Override
@@ -336,5 +351,34 @@ public class XiuGaiXinXiActivity extends BaseActivity implements View.OnClickLis
             }
         }
         return result;
+    }
+    /**
+     * 根据图片的url路径获得Bitmap对象
+     * @param url
+     * @return
+     */
+    private Bitmap returnBitmap(String url) {
+        URL fileUrl = null;
+        Bitmap bitmap = null;
+
+        try {
+            fileUrl = new URL(url);
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            HttpURLConnection conn = (HttpURLConnection) fileUrl
+                    .openConnection();
+            conn.setDoInput(true);
+            conn.connect();
+            InputStream is = conn.getInputStream();
+            bitmap = BitmapFactory.decodeStream(is);
+            is.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return bitmap;
+
     }
 }
