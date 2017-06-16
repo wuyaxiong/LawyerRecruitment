@@ -54,11 +54,13 @@ public class NetUrl {
     //个人中心------我的投票
     public static final String CENTER_TOUPIAO="http://115.28.77.187/tp5/bbss/public/index.php/index/center/myvote";
     //个人中心------我发布的帖子
-    public static final String CENTER_FABU="http://115.28.77.187/tp5/bbss/public/index.php/index/center/myvote";
+    public static final String CENTER_FABU="http://115.28.77.187/tp5/bbss/public/index.php/index/center/mypost ";
     //个人中心------我收藏的帖子
-    public static final String CENTER_SHOUCANG="http://115.28.77.187/tp5/bbss/public/index.php/index/center/myvote";
+    public static final String CENTER_SHOUCANG="http://115.28.77.187/tp5/bbss/public/index.php/index/center/mycollection";
     //个人中心------专家等待回答的帖子
-    public static final String CENTER_ZHUAJIAHUIDA="http://115.28.77.187/tp5/bbss/public/index.php/index/center/myvote";
+    public static final String CENTER_ZHUAJIAHUIDA="http://115.28.77.187/tp5/bbss/public/index.php/index/center/mynoask";
+    //个人中心------获取所有我@专家的提问
+    public static final String CENTER_TIWEN="http://115.28.77.187/tp5/bbss/public/index.php/index/center/allMyAsk";
     //接受好友添加申请
     public static final String GET_FRIEND_APPLY="http://115.28.77.187/tp5/bbss/public/index.php/index/user/accept1";
     //获取好友申请列表

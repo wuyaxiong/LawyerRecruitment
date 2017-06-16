@@ -35,4 +35,12 @@ public class TieZiDetailBean {
          return infor;
      }
 
+    @Override
+    public String toString() {
+        return "TieZiDetailBean{" +
+                "code=" + code +
+                ", msg='" + msg + '\'' +
+                ", infor=" + infor +
+                '}';
+    }
 }

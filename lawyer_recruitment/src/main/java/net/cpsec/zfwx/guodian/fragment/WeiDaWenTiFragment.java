@@ -31,7 +31,6 @@ import java.util.Map;
 public class WeiDaWenTiFragment extends BaseFragment implements YRecycleview.OnRefreshAndLoadMoreListener {
     private YRecycleview yRecycleview;
     private JiaoLiuAdapter adapter;
-
     private boolean isRefreshState = true;//是否刷新
     private List<QuanBuInfor> quanbuInfor;
     private List<QuanBuInfor> morequanbuInfor;

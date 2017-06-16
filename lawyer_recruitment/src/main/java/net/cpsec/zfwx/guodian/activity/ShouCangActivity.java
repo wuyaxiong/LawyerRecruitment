@@ -11,9 +11,8 @@ import com.alibaba.fastjson.JSON;
 import com.android.volley.manager.RequestMap;
 
 import net.cpsec.zfwx.guodian.R;
-import net.cpsec.zfwx.guodian.adapter.JiaoLiuAdapter;
-import net.cpsec.zfwx.guodian.entity.QuanBuBean;
-import net.cpsec.zfwx.guodian.entity.QuanBuInfor;
+import net.cpsec.zfwx.guodian.adapter.CenterTieZiAdapter;
+import net.cpsec.zfwx.guodian.entity.HuiFuBean;
 import net.cpsec.zfwx.guodian.ui.YRecycleview;
 import net.cpsec.zfwx.guodian.utils.Debugging;
 import net.cpsec.zfwx.guodian.utils.NetUrl;
@@ -21,15 +20,19 @@ import net.cpsec.zfwx.guodian.utils.Toast;
 
 import java.util.List;
 import java.util.Map;
-
+/**
+ * 我收藏的帖子页面
+ * */
 public class ShouCangActivity extends BaseActivity implements View.OnClickListener, YRecycleview.OnRefreshAndLoadMoreListener {
     private ImageView iv_back;
     private YRecycleview yRecycleview;
-    private JiaoLiuAdapter adapter;
+    private CenterTieZiAdapter adapter;
     private boolean isRefreshState = true;//是否刷新
-    private List<QuanBuInfor> quanbuInfor;
-    private List<QuanBuInfor> morequanbuInfor;
-    private QuanBuBean quanbuBean;
+    private List<HuiFuBean.InforBean> inforBeen;
+    private List<HuiFuBean.InforBean> moreInforBean;
+    private HuiFuBean huiFuBean;
+    HuiFuBean.InforBean infor;
+    int pos;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,15 +69,19 @@ public class ShouCangActivity extends BaseActivity implements View.OnClickListen
     public void onSuccess(String response, Map<String, String> headers, String url, int actionId) {
         super.onSuccess(response, headers, url, actionId);
         try {
-            quanbuBean = JSON.parseObject(response, QuanBuBean.class);
-            Debugging.debugging("position      =      " + (null == quanbuBean));
+            huiFuBean = JSON.parseObject(response, HuiFuBean.class);
+            if (huiFuBean == null) {
+                Toast.prompt(this, "目前没有数据");
+            }
+            Log.e("我回复的页面", "onSuccess: "+huiFuBean);
+            Debugging.debugging("我的收藏贴子      =      " + huiFuBean.toString());
             if (isRefreshState) {
                 yRecycleview.setReFreshComplete();
-                quanbuInfor = quanbuBean.getInfor();
-                Debugging.debugging("positionLists      =   " + (quanbuBean.getInfor().toString()));
+                inforBeen = huiFuBean.getInfor();
+                Debugging.debugging("positionLists      =   " + (huiFuBean.getInfor().toString()));
             } else {
-                morequanbuInfor = quanbuBean.getInfor();
-                quanbuInfor.addAll(morequanbuInfor);
+                moreInforBean = huiFuBean.getInfor();
+                inforBeen.addAll(moreInforBean);
             }
             setAdapter();
         } catch (Exception e) {
@@ -84,30 +91,39 @@ public class ShouCangActivity extends BaseActivity implements View.OnClickListen
 
 
     private void setAdapter() {
-        if (isRefreshState && null != quanbuInfor) {
-            adapter = new JiaoLiuAdapter(this, quanbuInfor);
+        if (isRefreshState && null != inforBeen) {
+            adapter = new CenterTieZiAdapter(this, inforBeen);
             yRecycleview.setLayoutManager(new LinearLayoutManager(this));
             yRecycleview.setAdapter(adapter);
         } else {
             adapter.notifyDataSetChanged();
         }
 
-        adapter.setOnItemClickListener(new JiaoLiuAdapter.OnItemClickListener() {
+
+        adapter.setOnTitleClickListener(new CenterTieZiAdapter.OnTitleClickListener() {
             @Override
-            public void onItemClick(View view, int position) {
-                Intent intent = new Intent(ShouCangActivity.this,WenTiXiangQiActivity.class);
-                QuanBuInfor infor=quanbuInfor.get(position-1);
-                Bundle bundle=new Bundle();
-                bundle.putString("from","6");
-                bundle.putString("username6",infor.getUsername().toString());
-                bundle.putString("content6",infor.getContent());
-                bundle.putString("time6",infor.getTime()+"");
-                bundle.putString("title6",infor.getTitle());
-                bundle.putString("image6",infor.getImage());
-                bundle.putString("userpic6",infor.getUserpic());
+            public void onTitleClick(String id, int position) {
+                Intent intent = new Intent(ShouCangActivity.this, TieZiDetailActivity.class);
+                Debugging.debugging("position+++++++++++++++++++++++" + position);
+                infor = inforBeen.get(position);
+                pos = infor.getId();
+                Bundle bundle = new Bundle();
+                Log.e("回复界面的artical_id", "artical_id: "+pos);
+                bundle.putString("artical_id", pos + "");
                 intent.putExtras(bundle);
                 startActivity(intent);
-                Log.d("闯过去的图片地址", "getImage: "+infor.getImage());
+            }
+        });
+
+        adapter.setHeadClickListener(new CenterTieZiAdapter.OnHeadClickListener() {
+            @Override
+            public void onHeadClick(String id, int position) {
+                Intent intent = new Intent(ShouCangActivity.this, XiangXiZiLiaoActivity.class);
+                infor = inforBeen.get(position);
+                Bundle bundle = new Bundle();
+                bundle.putString("phone", infor.getPhone());
+                intent.putExtras(bundle);
+                startActivity(intent);
             }
         });
     }
