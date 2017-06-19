@@ -17,7 +17,7 @@ import net.cpsec.zfwx.guodian.R;
 import net.cpsec.zfwx.guodian.activity.TieZiDetailActivity;
 import net.cpsec.zfwx.guodian.activity.XiangXiZiLiaoActivity;
 import net.cpsec.zfwx.guodian.adapter.CenterTieZiAdapter;
-import net.cpsec.zfwx.guodian.entity.HuiFuBean;
+import net.cpsec.zfwx.guodian.entity.ShouCangBean;
 import net.cpsec.zfwx.guodian.ui.YRecycleview;
 import net.cpsec.zfwx.guodian.utils.Debugging;
 import net.cpsec.zfwx.guodian.utils.NetUrl;
@@ -33,10 +33,10 @@ public class HuiFuFragment extends BaseFragment {
     private YRecycleview yRecycleview;
     private CenterTieZiAdapter adapter;
     private boolean isRefreshState = true;//是否刷新
-    private List<HuiFuBean.InforBean> inforBeen;
-    private List<HuiFuBean.InforBean> moreInforBean;
-    private HuiFuBean huiFuBean;
-    HuiFuBean.InforBean infor;
+    private List<ShouCangBean.InforBean> inforBeen;
+    private List<ShouCangBean.InforBean> moreInforBean;
+    private ShouCangBean huiFuBean;
+    ShouCangBean.InforBean infor;
     int pos;
 
     @Override
@@ -62,7 +62,7 @@ public class HuiFuFragment extends BaseFragment {
     public void onSuccess(String response, Map<String, String> headers, String url, int actionId) {
         super.onSuccess(response, headers, url, actionId);
         try {
-            huiFuBean = JSON.parseObject(response, HuiFuBean.class);
+            huiFuBean = JSON.parseObject(response, ShouCangBean.class);
             if (huiFuBean == null) {
                 Toast.prompt(getActivity(), "目前没有数据");
             }

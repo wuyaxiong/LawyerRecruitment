@@ -10,9 +10,10 @@ import android.widget.ImageView;
 import com.alibaba.fastjson.JSON;
 import com.android.volley.manager.RequestMap;
 
+import net.cpsec.zfwx.guodian.MyApplication;
 import net.cpsec.zfwx.guodian.R;
 import net.cpsec.zfwx.guodian.adapter.CenterTieZiAdapter;
-import net.cpsec.zfwx.guodian.entity.HuiFuBean;
+import net.cpsec.zfwx.guodian.entity.ShouCangBean;
 import net.cpsec.zfwx.guodian.ui.YRecycleview;
 import net.cpsec.zfwx.guodian.utils.Debugging;
 import net.cpsec.zfwx.guodian.utils.NetUrl;
@@ -28,10 +29,10 @@ public class ShouCangActivity extends BaseActivity implements View.OnClickListen
     private YRecycleview yRecycleview;
     private CenterTieZiAdapter adapter;
     private boolean isRefreshState = true;//是否刷新
-    private List<HuiFuBean.InforBean> inforBeen;
-    private List<HuiFuBean.InforBean> moreInforBean;
-    private HuiFuBean huiFuBean;
-    HuiFuBean.InforBean infor;
+    private List<ShouCangBean.InforBean> inforBeen;
+    private List<ShouCangBean.InforBean> moreInforBean;
+    private ShouCangBean shouCangBean;
+    ShouCangBean.InforBean infor;
     int pos;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,34 +60,37 @@ public class ShouCangActivity extends BaseActivity implements View.OnClickListen
     //数据请求
     private void initData() {
         RequestMap params = new RequestMap();
-        // params.put("uid",""+MyApplication.UID);
+         params.put("uid",""+ MyApplication.UID);
         //因为接口问题，先用全部帖子接口   CENTER_GUANZHU_TIEZI
-        setParams(NetUrl.QINGNIAN_JIJIAOLIU_SHIJIAN, params, 1);
+        setParams(NetUrl.CENTER_SHOUCANG, params, 1);
     }
 
     //数据请求成功后数据处理方法
     @Override
     public void onSuccess(String response, Map<String, String> headers, String url, int actionId) {
         super.onSuccess(response, headers, url, actionId);
-        try {
-            huiFuBean = JSON.parseObject(response, HuiFuBean.class);
-            if (huiFuBean == null) {
+//        try {
+//        Log.e("shouCangBean", "onSuccess: "+JSON.parseObject(response, ShouCangBean.class));
+            //Gson gson = new GsonBuilder().enableComplexMapKeySerialization().create();
+            //shouCangBean =gson.fromJson(response,ShouCangBean.class);
+            shouCangBean = JSON.parseObject(response, ShouCangBean.class);
+            if (shouCangBean == null) {
                 Toast.prompt(this, "目前没有数据");
             }
-            Log.e("我回复的页面", "onSuccess: "+huiFuBean);
-            Debugging.debugging("我的收藏贴子      =      " + huiFuBean.toString());
+            Log.e("我回复的页面", "onSuccess: "+ shouCangBean);
+            Debugging.debugging("我的收藏贴子      =      " + shouCangBean.toString());
             if (isRefreshState) {
                 yRecycleview.setReFreshComplete();
-                inforBeen = huiFuBean.getInfor();
-                Debugging.debugging("positionLists      =   " + (huiFuBean.getInfor().toString()));
+                inforBeen = shouCangBean.getInfor();
+                Debugging.debugging("positionLists      =   " + (shouCangBean.getInfor().toString()));
             } else {
-                moreInforBean = huiFuBean.getInfor();
+                moreInforBean = shouCangBean.getInfor();
                 inforBeen.addAll(moreInforBean);
             }
             setAdapter();
-        } catch (Exception e) {
-            Toast.prompt(this, "数据异常");
-        }
+//        } catch (Exception e) {
+//            Toast.prompt(this, "数据异常");
+//        }
     }
 
 

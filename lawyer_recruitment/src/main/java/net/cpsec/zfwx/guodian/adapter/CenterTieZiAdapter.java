@@ -14,7 +14,7 @@ import com.makeramen.roundedimageview.RoundedImageView;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import net.cpsec.zfwx.guodian.R;
-import net.cpsec.zfwx.guodian.entity.HuiFuBean;
+import net.cpsec.zfwx.guodian.entity.ShouCangBean;
 import net.cpsec.zfwx.guodian.utils.DateUtil;
 import net.cpsec.zfwx.guodian.utils.LocalDisplay;
 
@@ -27,13 +27,13 @@ import java.util.List;
 
 public class CenterTieZiAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements View.OnClickListener {
     private Context context;
-    private List<HuiFuBean.InforBean> inforBeen;
+    private List<ShouCangBean.InforBean> inforBeen;
     private OnItemClickListener mOnItemClickListener = null;
     List<String> list;
     public OnTitleClickListener mListener;
     public OnHeadClickListener mHeadlistener;
 
-    public CenterTieZiAdapter(Context context, List<HuiFuBean.InforBean> inforBeen) {
+    public CenterTieZiAdapter(Context context, List<net.cpsec.zfwx.guodian.entity.ShouCangBean.InforBean> inforBeen) {
         this.context = context;
         this.inforBeen = inforBeen;
     }

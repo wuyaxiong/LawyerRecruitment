@@ -12,7 +12,9 @@ import android.widget.ImageView;
 import net.cpsec.zfwx.guodian.R;
 import net.cpsec.zfwx.guodian.fragment.WoHuiDaFragment;
 import net.cpsec.zfwx.guodian.fragment.WoTiWenFragment;
-
+/**
+ * 个人中心问答页面
+ * */
 public class WenDaActivity extends BaseActivity {
     private ImageView iv_back;
     private ViewPager viewPager;
