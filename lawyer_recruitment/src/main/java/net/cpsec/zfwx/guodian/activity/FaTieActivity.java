@@ -269,14 +269,14 @@ public class FaTieActivity extends BaseActivity {
                 }
                 break;
             case 100:
-//                if (data == null||"".equals(data)){
-//                    return;
-//                }else {
+                if (data == null||"".equals(data)){
+                    return;
+                }else {
                     String zhuanjia_name = data.getStringExtra("zhuanjia_name");
                     Log.e("发帖页面", "回调专家姓名zhuanjia_name: "+zhuanjia_name);
                     tv_zhuanjia.setVisibility(View.VISIBLE);
                     tv_zhuanjia.setText(zhuanjia_name);
-//                }
+                }
                 break;
             default:
                 break;
