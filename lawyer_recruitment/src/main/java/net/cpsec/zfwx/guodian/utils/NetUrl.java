@@ -77,4 +77,6 @@ public class NetUrl {
     public static final String ZUZHIJIAGOU_SANJISUOYOUCHENGYUAN="http://115.28.77.187/tp5/bbss/public/index.php/index/user/threemember ";
     //组织架构--显示某二级单位下全部的人员
     public static final String ZUZHIJIAGOU_ERJISUOYOUCHENGYUAN="http://115.28.77.187/tp5/bbss/public/index.php/index/user/alltwo";
+    //获取所有专家
+    public static final String ZHUANJIA ="http://115.28.77.187/tp5/bbss/public/index.php/index/forum/allExpert ";
 }

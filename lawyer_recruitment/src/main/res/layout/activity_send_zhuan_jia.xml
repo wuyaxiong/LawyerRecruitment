@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="net.cpsec.zfwx.guodian.activity.SendZhuanJiaActivity"
+    android:orientation="vertical">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="#FFFFFF">
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_centerVertical="true"
+            android:src="@drawable/back_icon"
+            android:layout_marginLeft="20dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="内部专家"
+            android:textSize="18sp"
+            android:textColor="#575757"
+            android:layout_centerInParent="true"
+            android:gravity="center"/>
+    </RelativeLayout>
+    <View
+        android:layout_width="wrap_content"
+        android:layout_height="2dp"
+        android:background="#f0f0f0"
+        />
+    <net.cpsec.zfwx.guodian.ui.YRecycleview
+        android:id="@+id/sendzj_zhuanjia"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        />
+
+</LinearLayout>

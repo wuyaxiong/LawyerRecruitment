@@ -50,13 +50,13 @@ import java.util.List;
 import java.util.Map;
 
 public class FaTieActivity extends BaseActivity {
-    private TextView tv_back, tv_complete, tv_label;
+    private TextView tv_back, tv_complete, tv_label,tv_zhuanjia;
     private EditText et_zhuti, et_zhengwen;
     private LinearLayout ll_label;
     //private RecyclerView recyclerView;
    // List<Label> labelList;
     private LabelAdapter labelAdapter;
-    private ImageView iv_add_tupian;
+    private ImageView iv_add_tupian,check_zhuanjia;
     private GridView gridView_pics;
     private GridAdapter gridAdapter;
     private Context context;
@@ -90,8 +90,17 @@ public class FaTieActivity extends BaseActivity {
         initView();
     }
 
+    //@专家触发方法
+    public void sendZhuanJia (View view){
+        Intent intent = new Intent(this,SendZhuanJiaActivity.class);
+        startActivityForResult(intent,100);
+
+    }
+
 
     private void initView() {
+        tv_zhuanjia = (TextView) findViewById(R.id.zhuanjia_name);
+        check_zhuanjia= (ImageView) findViewById(R.id.check_zhuanjia);
         tv_label = (TextView) findViewById(R.id.tv_fatie_label);
         tv_back = (TextView) findViewById(R.id.tv_fatie_back);
         tv_complete = (TextView) findViewById(R.id.tv_fatie_complete);
@@ -244,8 +253,12 @@ public class FaTieActivity extends BaseActivity {
         gridAdapter.update();
         super.onRestart();
     }
+
+
+    // 回调方法，从第二个页面回来的时候会执行这个方法
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
         switch (requestCode) {
             case 2:
                 if (resultCode == Activity.RESULT_OK) {
@@ -254,6 +267,18 @@ public class FaTieActivity extends BaseActivity {
                         Bimp.drr.add(path);
                     }
                 }
+                break;
+            case 100:
+//                if (data == null||"".equals(data)){
+//                    return;
+//                }else {
+                    String zhuanjia_name = data.getStringExtra("zhuanjia_name");
+                    Log.e("发帖页面", "回调专家姓名zhuanjia_name: "+zhuanjia_name);
+                    tv_zhuanjia.setVisibility(View.VISIBLE);
+                    tv_zhuanjia.setText(zhuanjia_name);
+//                }
+                break;
+            default:
                 break;
         }
     }

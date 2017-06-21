@@ -91,9 +91,19 @@
             android:layout_weight="1" />
 
         <ImageView
+            android:id="@+id/check_zhuanjia"
             android:layout_width="25dp"
             android:layout_height="25dp"
-            android:src="@drawable/icon_quan" />
+            android:src="@drawable/icon_quan"
+            android:onClick="sendZhuanJia"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/zhuanjia_name"
+            android:layout_marginLeft="10dp"
+            android:text="专家"
+            android:visibility="gone"
+            />
 
         <ImageView
             android:id="@+id/iv_fatie_addtupian"

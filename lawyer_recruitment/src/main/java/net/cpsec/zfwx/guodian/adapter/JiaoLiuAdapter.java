@@ -86,6 +86,8 @@ public class JiaoLiuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         return quanBuInfors.size();
     }
 
+
+
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private RoundedImageView riv_avadar;
         private TextView tv_name, tv_title, tv_label, tv_shijian, tv_dianzan, tv_huifu;

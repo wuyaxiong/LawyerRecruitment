@@ -80,6 +80,7 @@
         <activity
             android:name=".activity.XiangXiZiLiaoActivity"
             android:theme="@style/ImageTranslucentTheme" />
+
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
@@ -110,9 +111,10 @@
             android:theme="@style/ImageTranslucentTheme" />
         <activity android:name=".activity.FaBuJianYIActivity" />
         <activity android:name=".activity.QingChunFenXiangDetailActivity" />
-        <activity android:name=".activity.TieZiDetailActivity"></activity>
-        <activity android:name=".activity.TouPiaoXiangQingActivity"></activity>
-        <activity android:name=".activity.ZhuzhijiagouActivity"></activity>
+        <activity android:name=".activity.TieZiDetailActivity" />
+        <activity android:name=".activity.TouPiaoXiangQingActivity" />
+        <activity android:name=".activity.ZhuzhijiagouActivity" />
+        <activity android:name=".activity.SendZhuanJiaActivity"></activity>
     </application>
 
 </manifest>

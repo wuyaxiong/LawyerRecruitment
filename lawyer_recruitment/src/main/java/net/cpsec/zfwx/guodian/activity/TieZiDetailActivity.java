@@ -3,10 +3,12 @@ package net.cpsec.zfwx.guodian.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -43,6 +45,7 @@ public class TieZiDetailActivity extends BaseActivity {
     //初始化（模拟）数据
     final ArrayList imageUrls = new ArrayList<String>();
     List<TieZiComment_info> coment_info;
+    WenTiXiangQingAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +54,31 @@ public class TieZiDetailActivity extends BaseActivity {
         //设置在activity启动的时候输入法默认是不开启的
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         initView();
+
     }
+
+      public void setListViewHeightBasedOnChildren(ListView listView) {
+        // 获取ListView对应的Adapter
+          ListAdapter listAdapter = listView.getAdapter();
+        if (listAdapter == null) {
+             return;
+        }
+         int totalHeight = 0;
+         for (int i = 0, len = listAdapter.getCount(); i < len; i++) {
+             // listAdapter.getCount()返回数据项的数目
+             View listItem = listAdapter.getView(i, null, listView);
+            // 计算子项View 的宽高
+             listItem.measure(0, 0);
+            // 统计所有子项的总高度
+             totalHeight += listItem.getMeasuredHeight();
+         }
+          ViewGroup.LayoutParams params = listView.getLayoutParams();
+          params.height = totalHeight+ (listView.getDividerHeight() * (listAdapter.getCount() - 1));
+        // listView.getDividerHeight()获取子项间分隔符占用的高度
+        // params.height最后得到整个ListView完整显示需要的高度
+          listView.setLayoutParams(params);
+      }
+
 
     private void initData() {
         RequestMap params = new RequestMap();
@@ -77,6 +104,11 @@ public class TieZiDetailActivity extends BaseActivity {
         tv_content = (TextView) findViewById(R.id.tv_tiezixiangqing_content);
         list_image = (ListView) findViewById(R.id.list_tizi_tupian);
         lv_pinglun = (ListView) findViewById(R.id.lv_tiezi_pinglun);
+
+        setListViewHeightBasedOnChildren(list_image);
+        setListViewHeightBasedOnChildren(lv_pinglun);
+
+
         et_pinglun = (EditText) findViewById(R.id.et_tiezi_pinglun);
         btn_pinglun = (Button) findViewById(R.id.btn_tiezi_pinglun);
         //  tv_label= (TextView) findViewById(R.id.tv_tiezi_label);
@@ -100,6 +132,7 @@ public class TieZiDetailActivity extends BaseActivity {
                 }
         });
         initData();
+
     }
 
     @Override
@@ -138,7 +171,7 @@ public class TieZiDetailActivity extends BaseActivity {
                         }
                     }
                     //初始化适配器
-                    WenTiXiangQingAdapter adapter = new WenTiXiangQingAdapter(this, imageUrls);
+                     adapter = new WenTiXiangQingAdapter(this, imageUrls);
                     //list_image.setFocusable(false);
                     list_image.setAdapter(adapter);
                     Utility.setListViewHeightBasedOnChildren(list_image);
@@ -146,6 +179,8 @@ public class TieZiDetailActivity extends BaseActivity {
                     coment_info = tieZiDetailBean.getInfor().getComment_info();
                     TieZiPIngLunAdapter pinlunAdapter = new TieZiPIngLunAdapter(this, coment_info);
                     lv_pinglun.setAdapter(pinlunAdapter);
+                    //刷新
+                    adapter.notifyDataSetChanged();
                 } catch (Exception e) {
                     Toast.prompt(this, "数据异常");
                 }
