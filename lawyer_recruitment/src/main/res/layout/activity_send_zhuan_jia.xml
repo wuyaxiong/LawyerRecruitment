@@ -11,28 +11,29 @@
         android:layout_height="60dp"
         android:background="#FFFFFF">
         <ImageView
-            android:id="@+id/iv_back"
+            android:id="@+id/iv_back_zhuanjia"
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_centerVertical="true"
             android:src="@drawable/back_icon"
-            android:layout_marginLeft="20dp"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="内部专家"
-            android:textSize="18sp"
-            android:textColor="#575757"
-            android:layout_centerInParent="true"
-            android:gravity="center"/>
+            android:layout_marginLeft="20dp"
+            />
+        <android.support.design.widget.TabLayout
+            android:id="@+id/tl_tab_zhuanjia"
+            android:layout_width="250dp"
+            android:layout_height="36dp"
+            android:background="@color/color_while"
+            android:fillViewport="false"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true" />
     </RelativeLayout>
     <View
         android:layout_width="wrap_content"
         android:layout_height="2dp"
         android:background="#f0f0f0"
         />
-    <net.cpsec.zfwx.guodian.ui.YRecycleview
-        android:id="@+id/sendzj_zhuanjia"
+    <android.support.v4.view.ViewPager
+        android:id="@+id/vp_zhuanjia"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         />

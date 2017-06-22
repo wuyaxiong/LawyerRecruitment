@@ -2,12 +2,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FFFFFF"
     tools:context="net.cpsec.zfwx.guodian.fragment.NeibuzhuanjiaFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <net.cpsec.zfwx.guodian.ui.YRecycleview
+        android:id="@+id/sendzj_neibuzhuanjia"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="内部专家" />
+        />
 
 </FrameLayout>
