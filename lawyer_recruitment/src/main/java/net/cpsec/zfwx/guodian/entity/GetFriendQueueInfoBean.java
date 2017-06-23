@@ -1,5 +1,7 @@
 package net.cpsec.zfwx.guodian.entity;
 
+import com.alibaba.mobileim.contact.IYWContact;
+
 import java.util.List;
 
 /**
@@ -42,7 +44,7 @@ public class GetFriendQueueInfoBean {
         this.infor = infor;
     }
 
-    public static class InforBean {
+    public static class InforBean  implements IYWContact {
         /**
          * username : 于健健
          * userpic : 115.28.77.187/tp5/bbss/public/uploads/325/593f5f52f2d0b.jpeg
@@ -56,6 +58,8 @@ public class GetFriendQueueInfoBean {
         private String phone;
         private String name;
         private int id;
+        private String appKey;
+
 
         public String getUsername() {
             return username;
@@ -95,6 +99,27 @@ public class GetFriendQueueInfoBean {
 
         public void setId(int id) {
             this.id = id;
+        }
+        @Override
+        public String getUserId() {
+            return id+"";
+        }
+        public  void setAppKey(String appKey){
+            this.appKey =appKey;
+        }
+        @Override
+        public String getAppKey() {
+            return appKey;
+        }
+
+        @Override
+        public String getAvatarPath() {
+            return userpic;
+        }
+
+        @Override
+        public String getShowName() {
+            return username;
         }
     }
 }

@@ -1,0 +1,174 @@
+package net.cpsec.zfwx.guodian.entity;
+
+/**
+ * Created by szh on 2017/6/20.
+ */
+
+public class HaoYouBean {
+
+    /**
+     * code : 200
+     * msg : 获取信息成功
+     * infor : {"re":{"id":333,"username":"han","phone":"15210191039","userpic":null,"background":"黨員","cname":"国电","sex":1,"address":"对方过后","introduction":null,"birth":"199009"},"num":0}
+     */
+
+    private int code;
+    private String msg;
+    private InforBean infor;
+
+    public int getCode() {
+        return code;
+    }
+
+    public void setCode(int code) {
+        this.code = code;
+    }
+
+    public String getMsg() {
+        return msg;
+    }
+
+    public void setMsg(String msg) {
+        this.msg = msg;
+    }
+
+    public InforBean getInfor() {
+        return infor;
+    }
+
+    public void setInfor(InforBean infor) {
+        this.infor = infor;
+    }
+
+    public static class InforBean {
+        /**
+         * re : {"id":333,"username":"han","phone":"15210191039","userpic":null,"background":"黨員","cname":"国电","sex":1,"address":"对方过后","introduction":null,"birth":"199009"}
+         * num : 0
+         */
+
+        private ReBean re;
+        private int num;
+
+        public ReBean getRe() {
+            return re;
+        }
+
+        public void setRe(ReBean re) {
+            this.re = re;
+        }
+
+        public int getNum() {
+            return num;
+        }
+
+        public void setNum(int num) {
+            this.num = num;
+        }
+
+        public static class ReBean {
+            /**
+             * id : 333
+             * username : han
+             * phone : 15210191039
+             * userpic : null
+             * background : 黨員
+             * cname : 国电
+             * sex : 1
+             * address : 对方过后
+             * introduction : null
+             * birth : 199009
+             */
+
+            private int id;
+            private String username;
+            private String phone;
+            private Object userpic;
+            private String background;
+            private String cname;
+            private int sex;
+            private String address;
+            private Object introduction;
+            private String birth;
+
+            public int getId() {
+                return id;
+            }
+
+            public void setId(int id) {
+                this.id = id;
+            }
+
+            public String getUsername() {
+                return username;
+            }
+
+            public void setUsername(String username) {
+                this.username = username;
+            }
+
+            public String getPhone() {
+                return phone;
+            }
+
+            public void setPhone(String phone) {
+                this.phone = phone;
+            }
+
+            public Object getUserpic() {
+                return userpic;
+            }
+
+            public void setUserpic(Object userpic) {
+                this.userpic = userpic;
+            }
+
+            public String getBackground() {
+                return background;
+            }
+
+            public void setBackground(String background) {
+                this.background = background;
+            }
+
+            public String getCname() {
+                return cname;
+            }
+
+            public void setCname(String cname) {
+                this.cname = cname;
+            }
+
+            public int getSex() {
+                return sex;
+            }
+
+            public void setSex(int sex) {
+                this.sex = sex;
+            }
+
+            public String getAddress() {
+                return address;
+            }
+
+            public void setAddress(String address) {
+                this.address = address;
+            }
+
+            public Object getIntroduction() {
+                return introduction;
+            }
+
+            public void setIntroduction(Object introduction) {
+                this.introduction = introduction;
+            }
+
+            public String getBirth() {
+                return birth;
+            }
+
+            public void setBirth(String birth) {
+                this.birth = birth;
+            }
+        }
+    }
+}

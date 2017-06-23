@@ -5,7 +5,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import net.cpsec.zfwx.guodian.R;
@@ -23,7 +22,6 @@ public class ZhuanJiaAdapter extends  RecyclerView.Adapter<RecyclerView.ViewHold
     private Context context;
     private List<ZhuanJiaBean.InforBean> zhuanJiaInforBeen;
     private OnItemClickListener mOnItemClickListener = null;
-    List<String> list;
 
     public ZhuanJiaAdapter(Context context, List<ZhuanJiaBean.InforBean> inforBeen) {
         this.context = context;
@@ -61,8 +59,6 @@ public class ZhuanJiaAdapter extends  RecyclerView.Adapter<RecyclerView.ViewHold
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private TextView tv_name;
-        private LinearLayout layout_toupiao;
-
         public ViewHolder(View itemView) {
             super(itemView);
             LocalDisplay.init(itemView.getContext());

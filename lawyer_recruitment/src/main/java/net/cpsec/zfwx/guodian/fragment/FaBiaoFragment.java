@@ -1,7 +1,9 @@
 package net.cpsec.zfwx.guodian.fragment;
 
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.util.Log;
@@ -12,7 +14,6 @@ import android.view.ViewGroup;
 import com.alibaba.fastjson.JSON;
 import com.android.volley.manager.RequestMap;
 
-import net.cpsec.zfwx.guodian.MyApplication;
 import net.cpsec.zfwx.guodian.R;
 import net.cpsec.zfwx.guodian.activity.TieZiDetailActivity;
 import net.cpsec.zfwx.guodian.activity.XiangXiZiLiaoActivity;
@@ -39,10 +40,12 @@ public class FaBiaoFragment extends BaseFragment {
     private ShouCangBean huiFuBean;
     ShouCangBean.InforBean infor;
     int pos;
-
+String uid;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_fa_biao, container, false);
+        SharedPreferences sp = getActivity().getSharedPreferences("uid", Context.MODE_PRIVATE);
+        uid= sp.getString("uid","");
         initData();
         initView(v);
         return v;
@@ -54,7 +57,7 @@ public class FaBiaoFragment extends BaseFragment {
 
     private void initData() {
         RequestMap params = new RequestMap();
-        params.put("uid",""+ MyApplication.UID);
+        params.put("uid", uid);
         setParams(NetUrl.CENTER_FABU, params, 1);
     }
 

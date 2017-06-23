@@ -23,6 +23,14 @@ public class NetUrl {
     public static final String TIEZI_DETAIL ="http://115.28.77.187/tp5/bbss/public/index.php/index/forum/articledetail";
     //青年交流---评论
     public static final String TIEZI_PINGLUN="http://115.28.77.187/tp5/bbss/public/index.php/index/discuss/comment";
+    //青年交流---帖子收藏
+    public static final String TIEZI_SHOUCANG="http://115.28.77.187/tp5/bbss/public/index.php/index/discuss/collection";
+    //青年交流---帖子点赞
+    public static final String TIEZI_DIANZAN="http://115.28.77.187/tp5/bbss/public/index.php/index/discuss/clickpraise";
+    //青年交流--按用户所在层级显示
+    public static final String QINGNIAN_JIJIAOLIU_CENGJI = "http://115.28.77.187/tp5/bbss/public/index.php/index/discuss/uparticle";
+    //青年交流--按用户所在单位显示
+    public static final String QINGNIAN_JIJIAOLIU_DANWEI = "http://115.28.77.187/tp5/bbss/public/index.php/index/discuss/usercompany";
     //青年交流----帖子按热度排序
     public static final String QINGNIAN_JIJIAOLIU_REDU = " http://115.28.77.187/tp5/bbss/public/index.php/index/discuss/deschot";
     //青年交流----帖子按时间排序
@@ -35,10 +43,25 @@ public class NetUrl {
     public static final String QINCHUN_MEIWEN = "http://115.28.77.187/tp5/bbss/public/index.php/index/share/goodsarticle";
     //青春分享----案例美文详情页
     public static final String QINCHUN_MEIWEN_DETAIL = "http://115.28.77.187/tp5/bbss/public/index.php/index/share/goodsarticledetail ";
+    //青春分享----政策通知详情页
+    public static final String QINCHUN_ZHENGCETONGZHI_DETAIL = "http://115.28.77.187/tp5/bbss/public/index.php/index/share/noticeDetail";
+   // 青春分享--政策通知评论
+   public static final String QINCHUN_ZHENGCETONGZHI_PINGLUN = "http://115.28.77.187/tp5/bbss/public/index.php/index/share/replynotice";
     //青春分享----案例美文评论
     public static final String QINGCHUN_MEIWEN_PINGLUN = "http://115.28.77.187/tp5/bbss/public/index.php/index/share/replygoodsarticle";
+    //青春分享----活动分享页面
+    public static final String HUODONG_FENXIANG = "http://115.28.77.187/tp5/bbss/public/index.php/index/share/activity";
     //青年之声----发起提问页面
     public static final String QINGNIAN_ZHISHENG_TIWEN = "http://115.28.77.187/tp5/bbss/public/index.php/index/voice/postAsk";
+    //青年之声----发起建议
+    public static final String QINGNIAN_ZHISHENG_JIANYI = "http://115.28.77.187/tp5/bbss/public/index.php/index/voice/postAdvice";
+    //青年之声----投票调查
+    public static final String QINGNIAN_ZHISHENG_TOUPIAO= "http://115.28.77.187/tp5/bbss/public/index.php/index/voice/vote";
+    //青年之声----投票详情页面
+    public static final String QINGNIAN_ZHISHENG_TOUPIAO_DETAIL= "http://115.28.77.187/tp5/bbss/public/index.php/index/voice/voteDetail";
+    //青年之声----投票详情页面
+    public static final String QINGNIAN_ZHISHENG_TOUPIAO_COMPLETE= "http://115.28.77.187/tp5/bbss/public/index.php/index/voice/vote_info";
+
     //搜索，按帖子标题搜索
     public static final String SEARCH_TITLE = "http://115.28.77.187/tp5/bbss/public/index.php/index/search/searchtitle";
     //搜索，按帖子单位搜索
@@ -77,6 +100,16 @@ public class NetUrl {
     public static final String ZUZHIJIAGOU_SANJISUOYOUCHENGYUAN="http://115.28.77.187/tp5/bbss/public/index.php/index/user/threemember ";
     //组织架构--显示某二级单位下全部的人员
     public static final String ZUZHIJIAGOU_ERJISUOYOUCHENGYUAN="http://115.28.77.187/tp5/bbss/public/index.php/index/user/alltwo";
+    //转移好友
+    public static final String MOVE_FRIEND="http://115.28.77.187/tp5/bbss/public/index.php/index/user/transfergroups";
+    //查询好友
+    public static final String ADD_FRIEND="http://115.28.77.187/tp5/bbss/public/index.php/index/user/phone_info";
+    //发起添加好友申请
+    public static final String ADD_FRIEND_APPLY="http://115.28.77.187/tp5/bbss/public/index.php/index/user/addfriendapp1";
+    //手机号查找手机好友信息
+    public static final String HAOYOU_DETAIL="http://115.28.77.187/tp5/bbss/public/index.php/index/user/phone_info";
+    //青春分享----团青矩阵页面
+    public static final String QINGCHUNFENXIANG_JUZHEN ="http://115.28.77.187/tp5/bbss/public/index.php/index/share/youngjuzhen";
     //获取所有专家
     public static final String ZHUANJIA ="http://115.28.77.187/tp5/bbss/public/index.php/index/forum/allExpert ";
 }

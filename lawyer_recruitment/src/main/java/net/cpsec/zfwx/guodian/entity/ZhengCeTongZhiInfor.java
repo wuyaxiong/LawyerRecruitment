@@ -1,6 +1,6 @@
 /**
-  * Copyright 2017 bejson.com 
-  */
+ * Copyright 2017 bejson.com
+ */
 package net.cpsec.zfwx.guodian.entity;
 
 /**
@@ -10,45 +10,60 @@ package net.cpsec.zfwx.guodian.entity;
  * @website http://www.bejson.com/java2pojo/
  */
 public class ZhengCeTongZhiInfor {
-
+    private int id;
     private String image;
     private String title;
-    private String content;
+    private String coment;
     private int time;
     private String cname;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getComent() {
+        return coment;
+    }
+
+    public void setComent(String coment) {
+        this.coment = coment;
+    }
+
     public void setImage(String image) {
-         this.image = image;
-     }
-     public String getImage() {
-         return image;
-     }
+        this.image = image;
+    }
+
+    public String getImage() {
+        return image;
+    }
 
     public void setTitle(String title) {
-         this.title = title;
-     }
-     public String getTitle() {
-         return title;
-     }
+        this.title = title;
+    }
 
-    public void setContent(String content) {
-         this.content = content;
-     }
-     public String getContent() {
-         return content;
-     }
+    public String getTitle() {
+        return title;
+    }
+
 
     public void setTime(int time) {
-         this.time = time;
-     }
-     public int getTime() {
-         return time;
-     }
+        this.time = time;
+    }
+
+    public int getTime() {
+        return time;
+    }
 
     public void setCname(String cname) {
-         this.cname = cname;
-     }
-     public String getCname() {
-         return cname;
-     }
+        this.cname = cname;
+    }
+
+    public String getCname() {
+        return cname;
+    }
 
 }

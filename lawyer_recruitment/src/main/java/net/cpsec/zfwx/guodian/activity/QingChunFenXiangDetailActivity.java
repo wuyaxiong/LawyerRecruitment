@@ -1,9 +1,12 @@
 package net.cpsec.zfwx.guodian.activity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -14,6 +17,8 @@ import com.android.volley.manager.RequestMap;
 
 import net.cpsec.zfwx.guodian.R;
 import net.cpsec.zfwx.guodian.adapter.PingLunAdapter;
+import net.cpsec.zfwx.guodian.adapter.WenTiXiangQingAdapter;
+import net.cpsec.zfwx.guodian.entity.AnLiMeiWenBean;
 import net.cpsec.zfwx.guodian.entity.Comment_info;
 import net.cpsec.zfwx.guodian.entity.Goods_article_all;
 import net.cpsec.zfwx.guodian.entity.MeiWenPingLunBean;
@@ -23,7 +28,9 @@ import net.cpsec.zfwx.guodian.utils.DateUtil;
 import net.cpsec.zfwx.guodian.utils.Debugging;
 import net.cpsec.zfwx.guodian.utils.NetUrl;
 import net.cpsec.zfwx.guodian.utils.Toast;
+import net.cpsec.zfwx.guodian.view.NoScrollListView;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -32,18 +39,28 @@ public class QingChunFenXiangDetailActivity extends BaseActivity implements View
     private ImageView iv_back;
     private YRecycleview yrv_list;
     private PingLunAdapter adapter;
-    String gid;
+    String gid,images;
     private List<Comment_info> coment_list;
     private MeiWenPingLunBean pinglunBean;
+    private AnLiMeiWenBean anLiMeiWenBean;
     private Goods_article_all good_artical;
     private MeiWenPingLunInfor pinglunInfor;
     private boolean isRefreshState = true;//是否刷新
     private EditText et_pinglun;
     private Button btn;
+    String uid;
+    private NoScrollListView list_image;
+    //初始化（模拟）数据
+    final ArrayList imageUrls = new ArrayList<String>();
+    WenTiXiangQingAdapter imageadapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //设置在activity启动的时候输入法默认是不开启的
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         setContentView(R.layout.activity_qing_chun_fen_xiang_detail);
+        SharedPreferences sp = getSharedPreferences("uid", Context.MODE_PRIVATE);
+        uid= sp.getString("uid","");
         initView();
     }
 
@@ -51,6 +68,7 @@ public class QingChunFenXiangDetailActivity extends BaseActivity implements View
         et_pinglun= (EditText) findViewById(R.id.et_meiwen_pinglun);
         btn= (Button) findViewById(R.id.btn_meiwen_pinglun);
         btn.setOnClickListener(this);
+        list_image = (NoScrollListView) findViewById(R.id.lv_fengxiang_images);
         iv_back = (ImageView) findViewById(R.id.toolbar_nav_iv);
         tv_title = (TextView) findViewById(R.id.tv_meiwendetail_title);
         tv_name = (TextView) findViewById(R.id.tv_meiwendetail_username);
@@ -88,7 +106,6 @@ public class QingChunFenXiangDetailActivity extends BaseActivity implements View
             case 0:
                 try {
                     pinglunBean = JSON.parseObject(response, MeiWenPingLunBean.class);
-                    pinglunBean = JSON.parseObject(response, MeiWenPingLunBean.class);
                     Debugging.debugging("position      =      " + (null == pinglunBean));
                     coment_list = pinglunBean.getInfor().getComment_info();
                     good_artical = pinglunBean.getInfor().getGoods_article_all();
@@ -96,6 +113,21 @@ public class QingChunFenXiangDetailActivity extends BaseActivity implements View
                     tv_name.setText(good_artical.getUsername());
                     tv_time.setText(DateUtil.converTime(good_artical.getTime()));
                     tv_content.setText(good_artical.getContent());
+                   images = pinglunBean.getInfor().getGoods_article_all().getImage();
+                    if (images == null|| images.isEmpty() ) {
+                        list_image.setVisibility(View.GONE);
+                    } else {
+                        String[] tupians = images.split(",");
+                        //每次刷新前清空图片列表
+                        imageUrls.clear();
+                        for (String substr : tupians) {
+                            imageUrls.add("http://" + substr);
+                            list_image.setVisibility(View.VISIBLE);
+                        }
+                    }
+                    //初始化适配器
+                    imageadapter= new WenTiXiangQingAdapter(this, imageUrls);
+                    list_image.setAdapter(imageadapter);
                 } catch (Exception e) {
                     Toast.prompt(this, "数据异常");
                 }
@@ -103,7 +135,7 @@ public class QingChunFenXiangDetailActivity extends BaseActivity implements View
                 break;
             case 1:
                 try {
-                    if (!"发表成功".equals(JSON.parseObject(response).getString("msg"))) {
+                    if (!"200".equals(JSON.parseObject(response).getString("code"))) {
                         Toast.prompt(this, JSON.parseObject(response).getString("infor"));
                         return;
                     } else {
@@ -129,12 +161,17 @@ public class QingChunFenXiangDetailActivity extends BaseActivity implements View
                 finish();
                 break;
             case R.id.btn_meiwen_pinglun:
-                RequestMap params = new RequestMap();
-                params.put("gid", gid + "");
-                params.put("uid","329");
-                params.put("status",1+"");
-                params.put("comment",et_pinglun.getText().toString());
-                setParams(NetUrl.QINGCHUN_MEIWEN_PINGLUN, params, 1);
+                if (et_pinglun.getText().toString().trim().isEmpty()||et_pinglun.getText().toString().trim() == null){
+                    Toast.prompt(this, "评论内容不能为空！");
+                    return;
+                } else {
+                    RequestMap params = new RequestMap();
+                    params.put("gid", gid + "");
+                    params.put("uid", uid);
+                    params.put("status", 1 + "");
+                    params.put("comment", et_pinglun.getText().toString());
+                    setParams(NetUrl.QINGCHUN_MEIWEN_PINGLUN, params, 1);
+                }
                 break;
         }
     }

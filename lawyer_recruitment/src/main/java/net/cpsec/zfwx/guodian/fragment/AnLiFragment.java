@@ -29,7 +29,7 @@ import java.util.Map;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class AnLiFragment extends BaseFragment implements YRecycleview.OnRefreshAndLoadMoreListener {
+public class AnLiFragment extends BaseFragment implements YRecycleview.OnRefreshAndLoadMoreListener, View.OnClickListener{
     private YRecycleview yRecycleview;
     private AnLiMeiWenAdapter adapter;
     private boolean isRefreshState = true;//是否刷新
@@ -63,18 +63,12 @@ public class AnLiFragment extends BaseFragment implements YRecycleview.OnRefresh
             @Override
             public void onItemClick(View view, int position) {
                 Intent intent=new Intent(getActivity(), QingChunFenXiangDetailActivity.class);
-                AnLiMeiWenInfor infor=anLiMeiWenInfors.get(position-1);
+              //  AnLiMeiWenInfor infor=anLiMeiWenInfors.get(position-1);
                 Bundle bundle=new Bundle();
                 bundle.putString("from","1");
-               bundle.putString("gid",position+"");
-//                bundle.putString("content3",infor.getContent());
-//                bundle.putString("time3",infor.getTime()+"");
-//                bundle.putString("title3",infor.getTitle());
-//                bundle.putString("image3",infor.getImage());
-//                bundle.putString("userpic3",infor.getUserpic());
+               bundle.putString("gid",anLiMeiWenInfors.get(position-1).getId()+"");
                 intent.putExtras(bundle);
                 startActivity(intent);
-            //    Log.d("闯过去的图片地址", "getImage: "+infor.getImage());
             }
         });
 
@@ -121,6 +115,11 @@ public class AnLiFragment extends BaseFragment implements YRecycleview.OnRefresh
         initData();
         yRecycleview.setNoMoreData(true);
         //Toast.prompt(getActivity(), "没有更多数据。测试阶段");
+    }
+
+    @Override
+    public void onClick(View v) {
+
     }
 }
 

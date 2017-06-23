@@ -1,7 +1,9 @@
 package net.cpsec.zfwx.guodian.fragment;
 
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.util.Log;
@@ -12,7 +14,6 @@ import android.view.ViewGroup;
 import com.alibaba.fastjson.JSON;
 import com.android.volley.manager.RequestMap;
 
-import net.cpsec.zfwx.guodian.MyApplication;
 import net.cpsec.zfwx.guodian.R;
 import net.cpsec.zfwx.guodian.activity.TieZiDetailActivity;
 import net.cpsec.zfwx.guodian.activity.XiangXiZiLiaoActivity;
@@ -38,11 +39,13 @@ public class WoHuiDaFragment extends BaseFragment implements YRecycleview.OnRefr
     private ShouCangBean huiDaBean;
     ShouCangBean.InforBean infor;
     int pos;
-
+String uid;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v= inflater.inflate(R.layout.fragment_wo_hui_da, container, false);
+        SharedPreferences sp = getActivity().getSharedPreferences("uid", Context.MODE_PRIVATE);
+        uid= sp.getString("uid","");
         initView(v);
         initData();
         return  v;
@@ -50,7 +53,7 @@ public class WoHuiDaFragment extends BaseFragment implements YRecycleview.OnRefr
 
     private void initData() {
         RequestMap params = new RequestMap();
-        params.put("uid",""+ MyApplication.UID);
+        params.put("uid",uid);
         setParams(NetUrl.CENTER_ZHUAJIAHUIDA, params, 0);
 
     }

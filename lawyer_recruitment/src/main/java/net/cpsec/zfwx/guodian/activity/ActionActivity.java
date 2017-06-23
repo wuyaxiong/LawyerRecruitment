@@ -1,6 +1,8 @@
 package net.cpsec.zfwx.guodian.activity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
@@ -8,20 +10,30 @@ import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.widget.Button;
 import android.widget.LinearLayout;
+
 import net.cpsec.zfwx.guodian.R;
+import net.cpsec.zfwx.guodian.utils.Debugging;
 
 
 public class ActionActivity extends BaseActivity {
     //private ImageView ivAction;
     private LinearLayout ll_yindao;
     Button btn_jinru;
-
+String isfirst;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_action);
-        initView();
-        setAnimation();
+        SharedPreferences sp = getSharedPreferences("isfirst", Context.MODE_PRIVATE);
+        isfirst= sp.getString("isfirst","");
+        Debugging.debugging("isfirst==============="+isfirst);
+        if (isfirst.equals("1")){
+            startActivity(new Intent(this,MainActivity.class));
+            finish();
+        }else{
+            setContentView(R.layout.activity_action);
+            initView();
+            setAnimation();
+        }
     }
 
     private void initView() {

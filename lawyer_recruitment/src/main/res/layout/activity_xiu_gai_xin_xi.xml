@@ -117,7 +117,7 @@
                     android:textColor="#929292"
                     android:textSize="18sp" />
 
-                <EditText
+                <TextView
                     android:id="@+id/et_xinxi_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -233,7 +233,7 @@
                     android:textColor="#929292"
                     android:textSize="18sp" />
 
-                <EditText
+                <TextView
                     android:id="@+id/et_birth"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -264,7 +264,7 @@
                     android:textColor="#929292"
                     android:textSize="18sp" />
 
-                <EditText
+                <TextView
                     android:id="@+id/et_xinxi_mianmao"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -295,7 +295,7 @@
                     android:textColor="#929292"
                     android:textSize="18sp" />
 
-                <EditText
+                <TextView
                     android:id="@+id/et_xinxi_danwei"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -326,7 +326,7 @@
                     android:textColor="#929292"
                     android:textSize="18sp" />
 
-                <EditText
+                <TextView
                     android:id="@+id/et_xinxi_address"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

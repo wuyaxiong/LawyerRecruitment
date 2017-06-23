@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -68,11 +69,14 @@ public class FaTieActivity extends BaseActivity {
     private LabelBean labelBean;
     private LabelGridAdapter labelGridAdapter;
     int label_id=1;
+    String uid;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fa_tie);
         context = this;
+        SharedPreferences sp = getSharedPreferences("uid", Context.MODE_PRIVATE);
+        uid= sp.getString("uid","");
         //设置在activity启动的时候输入法默认是不开启的
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
@@ -200,7 +204,7 @@ public class FaTieActivity extends BaseActivity {
                     sb.append(",");
                 }
                 RequestMap params = new RequestMap();
-                params.put("uid", "329");
+                params.put("uid", uid);
                 params.put("label_id", label_id+"");
                 params.put("cid", "1");
                 params.put("title", et_zhuti.getText().toString());
@@ -412,8 +416,8 @@ public class FaTieActivity extends BaseActivity {
         switch (actionId){
             case 0:
                 try {
-                    if (!"发帖成功".equals(JSON.parseObject(response).getString("msg"))) {
-                        Toast.prompt(this, JSON.parseObject(response).getString("infor"));
+                    if (!"200".equals(JSON.parseObject(response).getString("code"))) {
+                        Toast.prompt(this, JSON.parseObject(response).getString("发帖失败，请稍后重试"));
                         return;
                     } else {
                         Intent intent = new Intent(this, MainActivity.class);

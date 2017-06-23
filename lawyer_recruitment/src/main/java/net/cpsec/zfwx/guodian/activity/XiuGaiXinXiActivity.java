@@ -4,8 +4,10 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -19,6 +21,7 @@ import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
 import android.util.Base64;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -51,7 +54,8 @@ import java.util.Map;
 public class XiuGaiXinXiActivity extends BaseActivity implements View.OnClickListener,DialogHint.IRollSelector, HeadDiaLog.Picture, RadioGroup.OnCheckedChangeListener {
     private ImageView iv_back;
     private RoundedImageView riv_header;
-    private EditText etName, etJianjie, etBirth, etMianmao, etDanwei, etaAddress;
+    private EditText  etJianjie;
+    private TextView etName,etBirth, etMianmao, etDanwei, etaAddress;
     TextView tv_complete;
     RadioButton rbt_man, rbt_wuman;
     RadioGroup rgender;
@@ -62,10 +66,15 @@ public class XiuGaiXinXiActivity extends BaseActivity implements View.OnClickLis
     private Dialog dialog;
     private static final int MY_PERMISSIONS_REQUEST_CALL_PHONE = 6;
     String s;
+    String uid;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_xiu_gai_xin_xi);
+        SharedPreferences sp = getSharedPreferences("uid", Context.MODE_PRIVATE);
+        uid= sp.getString("uid","");
+        //设置在activity启动的时候输入法默认是不开启的
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         StrictMode.ThreadPolicy policy=new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
         initView();
@@ -76,12 +85,12 @@ public class XiuGaiXinXiActivity extends BaseActivity implements View.OnClickLis
         riv_header.setOnClickListener(this);
         rbt_man = (RadioButton) findViewById(R.id.rbt_man);
         rbt_wuman = (RadioButton) findViewById(R.id.rbt_woman);
-        etName = (EditText) findViewById(R.id.et_xinxi_name);
+        etName = (TextView) findViewById(R.id.et_xinxi_name);
         etJianjie = (EditText) findViewById(R.id.et_xinxi_jianjie);
-        etBirth = (EditText) findViewById(R.id.et_birth);
-        etMianmao = (EditText) findViewById(R.id.et_xinxi_mianmao);
-        etDanwei = (EditText) findViewById(R.id.et_xinxi_danwei);
-        etaAddress = (EditText) findViewById(R.id.et_xinxi_address);
+        etBirth = (TextView) findViewById(R.id.et_birth);
+        etMianmao = (TextView) findViewById(R.id.et_xinxi_mianmao);
+        etDanwei = (TextView) findViewById(R.id.et_xinxi_danwei);
+        etaAddress = (TextView) findViewById(R.id.et_xinxi_address);
         Intent intent=getIntent();
         etName.setText(intent.getStringExtra("username"));
         etJianjie.setText((intent.getStringExtra("ins")));
@@ -106,24 +115,23 @@ public class XiuGaiXinXiActivity extends BaseActivity implements View.OnClickLis
             public void onClick(View v) {
                 RequestMap params = new RequestMap();
                 String base64;
-                params.put("uid",3+"");
                 if (head==null){
                    Bitmap bit=returnBitmap("http://"+s);
                     base64=bitmapToBase64(bit);
                 }else {
                     base64=bitmapToBase64(head);
                 }
+              // params.put("userpic",bitmapToBase64(head));
+                //params.put("username", etName.getText().toString());
+              //  params.put("sex", sex);
+//                params.put("birth",etBirth.getText().toString());
+//                params.put("background",etMianmao.getText().toString());
+//                params.put("address",etaAddress.getText().toString());
+//                params.put("cname",etDanwei.getText().toString());
+                params.put("uid", uid);
+                Debugging.debugging("uid=============="+uid);
                 params.put("userpic",base64);
-               // params.put("userpic",bitmapToBase64(head));
-                Debugging.debugging("AAAAAAAA+++++++"+base64);
-                Debugging.debugging("userpic=="+bitmapToBase64(head));
-                params.put("username", etName.getText().toString());
                 params.put("introduction", etJianjie.getText().toString());
-                params.put("sex", sex);
-                params.put("birth",etBirth.getText().toString());
-                params.put("background",etMianmao.getText().toString());
-                params.put("address",etaAddress.getText().toString());
-                params.put("cname",etDanwei.getText().toString());
                 setParams(NetUrl.XIUGAI_XINXI, params, 0);
             }
         });

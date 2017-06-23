@@ -1,6 +1,7 @@
 package net.cpsec.zfwx.guodian.fragment;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,6 +13,7 @@ import com.alibaba.fastjson.JSON;
 import com.android.volley.manager.RequestMap;
 
 import net.cpsec.zfwx.guodian.R;
+import net.cpsec.zfwx.guodian.activity.ZhengCeTongZhiDetailActivity;
 import net.cpsec.zfwx.guodian.adapter.QingChunFenXiangAdapter;
 import net.cpsec.zfwx.guodian.entity.ZhengCeTongZhiBean;
 import net.cpsec.zfwx.guodian.entity.ZhengCeTongZhiInfor;
@@ -57,6 +59,19 @@ public class TongZhiFragment extends BaseFragment implements YRecycleview.OnRefr
         } else {
             adapter.notifyDataSetChanged();
         }
+        adapter.setOnItemClickListener(new QingChunFenXiangAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                Intent intent=new Intent(getActivity(), ZhengCeTongZhiDetailActivity.class);
+                ZhengCeTongZhiInfor infor=tongzhiInfor.get(position-1);
+                Bundle bundle=new Bundle();
+                bundle.putString("from","1");
+                bundle.putString("aid",infor.getId()+"");
+                intent.putExtras(bundle);
+                startActivity(intent);
+                //    Log.d("闯过去的图片地址", "getImage: "+infor.getImage());
+            }
+        });
     }
 
     @Override
@@ -70,9 +85,11 @@ public class TongZhiFragment extends BaseFragment implements YRecycleview.OnRefr
                 tongzhiInfor = tongzhiBean.getInfor();
                 Debugging.debugging("positionLists      =   " + (tongzhiInfor.size()));
             } else {
-                moretongzhiInfor = tongzhiBean.getInfor();
-                tongzhiInfor.addAll(moretongzhiInfor);
+                tongzhiInfor = tongzhiBean.getInfor();
+//                moretongzhiInfor = tongzhiBean.getInfor();
+//                tongzhiInfor.addAll(moretongzhiInfor);
             }
+            Debugging.debugging("HJIFHIBFIWIFBIWB+++++++"+tongzhiInfor.size());
             setAdapter();
         } catch (Exception e) {
             Toast.prompt(getActivity(), "数据异常");

@@ -38,7 +38,7 @@
         android:name=".MyApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
-        android:label="国电论坛"
+        android:label="国电青年"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
@@ -114,6 +114,9 @@
         <activity android:name=".activity.TieZiDetailActivity" />
         <activity android:name=".activity.TouPiaoXiangQingActivity" />
         <activity android:name=".activity.ZhuzhijiagouActivity" />
+        <activity android:name=".activity.ZhengCeTongZhiDetailActivity" />
+        <activity android:name=".activity.AddFriendActivity" />
+        <activity android:name=".activity.TouPiaoDetailActivity"></activity>
         <activity android:name=".activity.SendZhuanJiaActivity"></activity>
     </application>
 

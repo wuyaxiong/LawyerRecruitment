@@ -1,6 +1,8 @@
 package net.cpsec.zfwx.guodian.activity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -22,8 +24,11 @@ import java.util.Map;
 public class LoginActivity extends BaseActivity implements View.OnClickListener {
     private Button btn_login;
     private EditText etPhoneNumber, etVerificationCode;
-    private String phoneNums,code;
+    private String phoneNums, code;
     private ImageButton imageButton;
+//   // 登录请求 在成功的回调中将返回的token数据用SharedPreferences将token持久化 并 跳转到登录成功的界面
+//    SharedPreferences sp = getSharedPreferences(PreferencesStorageKey.UID, Context.MODE_PRIVATE);
+//    SharedPreferences.Editor editor = sp.edit();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,16 +51,25 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     @Override
     public void onClick(View v) {
         phoneNums = etPhoneNumber.getText().toString().trim();
-        code=etVerificationCode.getText().toString().trim();
+        code = etVerificationCode.getText().toString().trim();
         switch (v.getId()) {
             case R.id.ib_login_button:
-                RequestMap params = new RequestMap();
-                params.put("phone", phoneNums);
-                setParams(NetUrl.REGIST, params, 0);
+                if (etPhoneNumber.getText().toString().trim().isEmpty()){
+                    Toast.prompt(this, "请输入手机号");
+                    phoneNums = "";
+                    return;
+                }else if (!judgePhoneNums(phoneNums)){
+                    phoneNums = "";
+                    return;
+                }else{
+                    RequestMap params = new RequestMap();
+                    params.put("phone", phoneNums);
+                    setParams(NetUrl.REGIST, params, 0);
+                }
                 break;
             case R.id.btn_login:
-                Intent intent = new Intent(this, MainActivity.class);
-                startActivity(intent);
+//                Intent intent = new Intent(this, MainActivity.class);
+//                startActivity(intent);
                 phoneNums = etPhoneNumber.getText().toString().trim();
                 // 1. 通过规则判断手机号
                 if (!judgePhoneNums(phoneNums)) {
@@ -67,11 +81,11 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                     phoneNums = "";
                     return;
                 }
-                if (!etPhoneNumber.getText().toString().trim().equals(phoneNums)) {
-                    Toast.prompt(this, "获取验证码的手机号与该手机号不同");
-                    phoneNums = "";
-                    return;
-                }
+//                if (!etPhoneNumber.getText().toString().trim().equals(phoneNums)) {
+//                    Toast.prompt(this, "获取验证码的手机号与该手机号不同");
+//                    phoneNums = "";
+//                    return;
+//                }
                 RequestMap params1 = new RequestMap();
                 params1.put("phone", phoneNums);
                 params1.put("code", code);
@@ -85,8 +99,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         switch (actionId) {
             case 0:
                 try {
-                    if (!"验证码发送成功".equals(JSON.parseObject(response).getString("msg"))) {
-                        Toast.prompt(this, JSON.parseObject(response).getString("infor"));
+                    if (!"200".equals(JSON.parseObject(response).getString("code"))) {
+                        Toast.prompt(this, JSON.parseObject(response).getString("发送验证码失败，请稍后重试"));
                         return;
                     } else {
                         android.widget.Toast.makeText(this, "获取验证码成功", android.widget.Toast.LENGTH_SHORT).show();
@@ -97,19 +111,30 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 break;
             case 1:
                 try {
-                    if (!"登录成功".equals(JSON.parseObject(response).getString("msg"))) {
-                        Toast.prompt(this, JSON.parseObject(response).getString("infor"));
+                    if (!"200".equals(JSON.parseObject(response).getString("code"))) {
+                        Toast.prompt(this, "验证码错误！");
                         return;
                     } else {
                         android.widget.Toast.makeText(this, "登录成功", android.widget.Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(this, MainActivity.class);
+                        String uid = JSON.parseObject(response).getString("infor");
+                        SharedPreferences sp = getSharedPreferences("uid", Context.MODE_PRIVATE);
+                        SharedPreferences sp1 = getSharedPreferences("isfirst", Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sp.edit();
+                        SharedPreferences.Editor editor1 = sp1.edit();
+                        editor.putString("uid", uid);
+                        editor.commit();
+                        editor1.putString("isfirst", "1");
+                        editor1.commit();
                         startActivity(intent);
+                        finish();
                     }
                 } catch (Exception e) {
                     Toast.prompt(this, "数据异常");
                 }
         }
     }
+
     /**
      * 判断手机号码是否合理
      *

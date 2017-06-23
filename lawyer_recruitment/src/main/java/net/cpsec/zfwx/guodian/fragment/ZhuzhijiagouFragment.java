@@ -1,6 +1,7 @@
 package net.cpsec.zfwx.guodian.fragment;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -20,6 +21,7 @@ import com.alibaba.fastjson.JSON;
 import com.android.volley.manager.RequestMap;
 
 import net.cpsec.zfwx.guodian.R;
+import net.cpsec.zfwx.guodian.activity.XiangXiZiLiaoActivity;
 import net.cpsec.zfwx.guodian.adapter.ERGongsiAdapter;
 import net.cpsec.zfwx.guodian.adapter.JiagouHaoyouAdapter;
 import net.cpsec.zfwx.guodian.adapter.SanjibumenAdapter;
@@ -63,6 +65,7 @@ public class ZhuzhijiagouFragment extends BaseFragment {
     private List<SanjiaBumenBean.InforBean> sanjibumenList;
     private JiagouHaoyouBean sanjihaoyouBean;
     private List<JiagouHaoyouBean.InforBean> sanjibumenhaoyouList;
+    private  List<JiagouHaoyouBean.InforBean> haoyouList;
     String two_id;
     String three_id;
 
@@ -109,7 +112,7 @@ public class ZhuzhijiagouFragment extends BaseFragment {
             case 1:
                 try {
                     jiagouBean = JSON.parseObject(response, JiagouHaoyouBean.class);
-                    List<JiagouHaoyouBean.InforBean> haoyouList = jiagouBean.getInfor();
+                     haoyouList = jiagouBean.getInfor();
                     JiagouHaoyouAdapter adapter = new JiagouHaoyouAdapter(getActivity(), haoyouList);
                     lianxirenList.setAdapter(adapter);
                 } catch (Exception e) {
@@ -132,7 +135,6 @@ public class ZhuzhijiagouFragment extends BaseFragment {
                     sanjibumenList = sanjiBean.getInfor();
                     SanjibumenAdapter adapter3 = new SanjibumenAdapter(getActivity(), sanjibumenList);
                     bumenList.setAdapter(adapter3);
-
                 } catch (Exception e) {
                     Toast.prompt(getActivity(), "数据异常");
                 }
@@ -140,7 +142,7 @@ public class ZhuzhijiagouFragment extends BaseFragment {
             case 4:
                 try {
                     jiagouBean = JSON.parseObject(response, JiagouHaoyouBean.class);
-                    List<JiagouHaoyouBean.InforBean> haoyouList = jiagouBean.getInfor();
+                    haoyouList = jiagouBean.getInfor();
                     JiagouHaoyouAdapter adapter = new JiagouHaoyouAdapter(getActivity(), haoyouList);
                     lianxirenList.setAdapter(adapter);
                 } catch (Exception e) {
@@ -150,7 +152,7 @@ public class ZhuzhijiagouFragment extends BaseFragment {
             case 5:
                 try {
                     jiagouBean = JSON.parseObject(response, JiagouHaoyouBean.class);
-                    List<JiagouHaoyouBean.InforBean> haoyouList = jiagouBean.getInfor();
+                    haoyouList = jiagouBean.getInfor();
                     JiagouHaoyouAdapter adapter = new JiagouHaoyouAdapter(getActivity(), haoyouList);
                     lianxirenList.setAdapter(adapter);
                 } catch (Exception e) {
@@ -158,6 +160,16 @@ public class ZhuzhijiagouFragment extends BaseFragment {
                 }
                 break;
         }
+        lianxirenList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(getActivity(), XiangXiZiLiaoActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("phone",haoyouList.get(position).getPhone());
+                intent.putExtras(bundle);
+                startActivity(intent);
+            }
+        });
     }
 
     private void setAnimation() {
@@ -234,6 +246,7 @@ public class ZhuzhijiagouFragment extends BaseFragment {
             @Override
             public void onClick(View view) {
                 if (isxiala) {
+                    bumenText.setText("");
                     xialaImage.setImageResource(R.drawable.icon_backsl);
                     lianxirenList.setVisibility(View.INVISIBLE);
                     gongsiList.setVisibility(View.VISIBLE);
@@ -249,6 +262,7 @@ public class ZhuzhijiagouFragment extends BaseFragment {
                         RequestMap params5 = new RequestMap();
                         params5.put("two_id", two_id);
                         setParams(NetUrl.ZUZHIJIAGOU_ERJISUOYOUCHENGYUAN, params5, 5);
+                        bumenText.setText("");
                     }
                 }
 
@@ -289,7 +303,6 @@ public class ZhuzhijiagouFragment extends BaseFragment {
                 lianxirenList.setVisibility(View.VISIBLE);
             }
         });
-
 
     }
 

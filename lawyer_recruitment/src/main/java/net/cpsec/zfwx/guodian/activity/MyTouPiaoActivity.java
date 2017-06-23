@@ -1,6 +1,8 @@
 package net.cpsec.zfwx.guodian.activity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.util.Log;
@@ -10,7 +12,6 @@ import android.widget.ImageView;
 import com.alibaba.fastjson.JSON;
 import com.android.volley.manager.RequestMap;
 
-import net.cpsec.zfwx.guodian.MyApplication;
 import net.cpsec.zfwx.guodian.R;
 import net.cpsec.zfwx.guodian.adapter.TouPiaoAdapter;
 import net.cpsec.zfwx.guodian.entity.TouPiaoBean;
@@ -30,11 +31,14 @@ public class MyTouPiaoActivity extends BaseActivity implements View.OnClickListe
     private TouPiaoBean touPiaoBean;
     private TouPiaoAdapter adapter;
     private boolean isRefreshState = true;//是否刷新
+    String uid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_tou_piao);
+        SharedPreferences sp = getSharedPreferences("uid", Context.MODE_PRIVATE);
+        uid = sp.getString("uid", "");
         initView();
         initData();
     }
@@ -42,17 +46,19 @@ public class MyTouPiaoActivity extends BaseActivity implements View.OnClickListe
     private void initView() {
         iv_back = (ImageView) findViewById(R.id.iv_back);
         iv_back.setOnClickListener(this);
-        yRecycleview= (YRecycleview) findViewById(R.id.my_toupiao_list);
+        yRecycleview = (YRecycleview) findViewById(R.id.my_toupiao_list);
         yRecycleview.setRefreshAndLoadMoreListener(this);
 
     }
+
     //请求数据
     private void initData() {
         RequestMap params = new RequestMap();
-        params.put("uid",""+ MyApplication.UID);
+        params.put("uid", uid);
         //因为接口问题，先用全部帖子接口   CENTER_GUANZHU_TIEZI
         setParams(NetUrl.CENTER_TOUPIAO, params, 0);
     }
+
     //数据请求成功后数据处理方法
     @Override
     public void onSuccess(String response, Map<String, String> headers, String url, int actionId) {
@@ -90,14 +96,14 @@ public class MyTouPiaoActivity extends BaseActivity implements View.OnClickListe
         adapter.setOnItemClickListener(new TouPiaoAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                Log.e("投票点击事件", "onItemClick: "+"投票点击事件" );
-                Intent intent=new Intent(MyTouPiaoActivity.this, TouPiaoXiangQingActivity.class);
-                TouPiaoBean.InforBean infor= touPiaoInfor.get(position-1);
-                Bundle bundle=new Bundle();
-                bundle.putString("time",infor.getTime()+"");
-                bundle.putString("title",infor.getTitle());
-                bundle.putString("description",infor.getDescription());
-                bundle.putInt("voter_id",infor.getVote_id());
+                Log.e("投票点击事件", "onItemClick: " + "投票点击事件");
+                Intent intent = new Intent(MyTouPiaoActivity.this, TouPiaoXiangQingActivity.class);
+                TouPiaoBean.InforBean infor = touPiaoInfor.get(position - 1);
+                Bundle bundle = new Bundle();
+                bundle.putString("time", infor.getTime() + "");
+                bundle.putString("title", infor.getTitle());
+                bundle.putString("description", infor.getDescription());
+                bundle.putInt("voter_id", infor.getVote_id());
                 intent.putExtras(bundle);
                 startActivity(intent);
             }
@@ -112,6 +118,7 @@ public class MyTouPiaoActivity extends BaseActivity implements View.OnClickListe
                 break;
         }
     }
+
     public void onRefresh() {
         isRefreshState = true;
         yRecycleview.setReFreshComplete();

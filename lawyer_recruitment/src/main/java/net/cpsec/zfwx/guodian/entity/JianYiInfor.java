@@ -15,9 +15,37 @@ public class JianYiInfor implements Serializable {
 
     private String username;
     private String userpic;
+    private String phone;
     private int time;
     private String image;
     private String content;
+    private String  comment;
+    private int praise;
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
+
+    public int getPraise() {
+        return praise;
+    }
+
+    public void setPraise(int praise) {
+        this.praise = praise;
+    }
+
     public void setUsername(String username) {
          this.username = username;
      }

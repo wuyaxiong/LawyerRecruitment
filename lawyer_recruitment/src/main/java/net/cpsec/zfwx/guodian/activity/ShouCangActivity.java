@@ -1,6 +1,8 @@
 package net.cpsec.zfwx.guodian.activity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.util.Log;
@@ -10,7 +12,6 @@ import android.widget.ImageView;
 import com.alibaba.fastjson.JSON;
 import com.android.volley.manager.RequestMap;
 
-import net.cpsec.zfwx.guodian.MyApplication;
 import net.cpsec.zfwx.guodian.R;
 import net.cpsec.zfwx.guodian.adapter.CenterTieZiAdapter;
 import net.cpsec.zfwx.guodian.entity.ShouCangBean;
@@ -34,10 +35,13 @@ public class ShouCangActivity extends BaseActivity implements View.OnClickListen
     private ShouCangBean shouCangBean;
     ShouCangBean.InforBean infor;
     int pos;
+    String uid;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shou_cang);
+        SharedPreferences sp = getSharedPreferences("uid", Context.MODE_PRIVATE);
+        uid= sp.getString("uid","");
         initView();
         initData();
     }
@@ -60,7 +64,7 @@ public class ShouCangActivity extends BaseActivity implements View.OnClickListen
     //数据请求
     private void initData() {
         RequestMap params = new RequestMap();
-         params.put("uid",""+ MyApplication.UID);
+         params.put("uid",uid);
         //因为接口问题，先用全部帖子接口   CENTER_GUANZHU_TIEZI
         setParams(NetUrl.CENTER_SHOUCANG, params, 1);
     }

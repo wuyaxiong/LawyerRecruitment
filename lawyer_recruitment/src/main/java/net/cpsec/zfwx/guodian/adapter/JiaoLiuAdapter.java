@@ -31,6 +31,7 @@ public class JiaoLiuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     List<String> list;
     public OnTitleClickListener mListener;
     public OnHeadClickListener mHeadlistener;
+    public OnPicClickListener mPiclistener;
 
     public JiaoLiuAdapter(Context context, List<QuanBuInfor> quanBuInfors) {
         this.context = context;
@@ -54,7 +55,8 @@ public class JiaoLiuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         for (String substr : tupians) {
             list.add(substr);
         }
-
+        //给图片添加点击事件
+        ((ViewHolder) holder).img_01.setOnClickListener(new ClickPicListener(String.valueOf(position), position));
         if (!list.get(0).isEmpty()) {
             ((ViewHolder) holder).img_01.setVisibility(View.VISIBLE);
             ImageLoader.getInstance().displayImage("http://" + list.get(0), ((ViewHolder) holder).img_01);
@@ -131,6 +133,7 @@ public class JiaoLiuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         this.mOnItemClickListener = listener;
     }
 
+    //给文本添加点击事件
     public class ClickListener implements View.OnClickListener {//在这里我们重写了点击事件
         private String id;
         private int pos;
@@ -148,6 +151,7 @@ public class JiaoLiuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         }
     }
 
+    //给头像添加点击事件
     public class ClickHeadListener implements View.OnClickListener {//在这里我们重写了点击事件
         private String id;
         private int pos;
@@ -160,11 +164,31 @@ public class JiaoLiuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         @Override
         public void onClick(View view) {
 
-            if (mHeadlistener!=null){
-                mHeadlistener.onHeadClick(id,pos);
+            if (mHeadlistener != null) {
+                mHeadlistener.onHeadClick(id, pos);
             }
         }
     }
+
+    //给图片添加点击事件
+    public class ClickPicListener implements View.OnClickListener {//在这里我们重写了点击事件
+        private String id;
+        private int pos;
+
+        public ClickPicListener(String id, int postion) {
+            this.id = id;
+            this.pos = postion;
+        }
+
+        @Override
+        public void onClick(View view) {
+
+            if (mPiclistener != null) {
+                mPiclistener.onPicClick(id, pos);
+            }
+        }
+    }
+
     public void setOnTitleClickListener(OnTitleClickListener listener) {//自己写了一个方法，用上我们的接口
         mListener = listener;
     }
@@ -183,5 +207,15 @@ public class JiaoLiuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     public interface OnHeadClickListener {//自己写了一个点击事件的接口
 
         void onHeadClick(String id, int position);
+    }
+
+    public void setOnPicClickListener(OnPicClickListener listener) {//自己写了一个方法，用上我们的接口
+        mPiclistener = listener;
+    }
+
+
+    public interface OnPicClickListener {//自己写了一个点击事件的接口
+
+        void onPicClick(String id, int position);
     }
 }

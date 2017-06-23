@@ -35,7 +35,6 @@ repositories {
     }
 }
 
-
 dependencies {
     //可选，如果使用SDK的UI必须添加该依赖，如果不使用SDK的UI，完全自己开发UI则无需添加该依赖
     compile fileTree(include: ['*.jar'], dir: 'libs')
@@ -63,7 +62,7 @@ dependencies {
     compile 'org.ow2.util.base64:base64:2.0.0'
     compile 'com.owtelse.codec:base64:1.0.6'
     compile 'com.android.support:multidex:1.0.1'
+    testCompile 'junit:junit:4.12'
     compile 'com.google.code.gson:gson:2.8.1'
     compile 'com.squareup.picasso:picasso:2.5.2'
-    testCompile 'junit:junit:4.12'
 }

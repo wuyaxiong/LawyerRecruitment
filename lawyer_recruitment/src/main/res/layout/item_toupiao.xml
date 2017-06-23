@@ -18,6 +18,7 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="26dp"
             android:layout_marginStart="26dp"
+            android:singleLine="true"
             android:text="投票标题投票标题"
             android:textSize="18sp" />
 
@@ -49,7 +50,8 @@
             android:layout_alignParentBottom="true"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:text="人参与" />
+            android:text="人参与"
+            android:layout_marginRight="20dp"/>
 
     </RelativeLayout>
     <View

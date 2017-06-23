@@ -13,7 +13,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="6dp"
         android:paddingTop="5dp"
         android:paddingBottom="5dp"
         android:orientation="horizontal">
@@ -39,7 +39,7 @@
             android:text="王萌萌"
             android:textColor="#4b4b4b"
             android:layout_gravity="center_vertical"
-            android:layout_marginLeft="14dp"/>
+            android:layout_marginLeft="16dp"/>
     </LinearLayout>
     <TextView
         android:id="@+id/tv_xinsheng_question"
@@ -49,26 +49,29 @@
         android:layout_marginRight="20dp"
         android:layout_marginTop="8dp"
         android:text="锅炉的作用是什么？"
+        android:singleLine="true"
         android:textColor="#4b4b4b"
-        android:textSize="18dp" />
+        android:textSize="16sp" />
 
 
     <LinearLayout
+        android:id="@+id/ll_jianyi_huida"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="14dp">
+        android:background="#f6f6f6"
+        android:layout_marginTop="10dp">
 
         <TextView
             android:id="@+id/tv_xinsheng_huida"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="16sp"
+            android:textSize="14sp"
             android:textColor="#919191"
-            android:text="内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容"
-            android:layout_marginLeft="4dp"
-            android:layout_marginRight="20dp"/>
+            android:singleLine="true"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            />
     </LinearLayout>
     <View
         android:layout_width="match_parent"
@@ -76,13 +79,13 @@
         android:background="#bebebe"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        android:layout_marginTop="14dp"></View>
+        android:layout_marginTop="6dp"></View>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="36dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="6dp"
         android:orientation="horizontal">
         <TextView
             android:id="@+id/tv_xinsheng_time"
@@ -114,5 +117,5 @@
         android:layout_width="match_parent"
         android:layout_height="5dp"
         android:background="#f6f6f6"
-        android:layout_marginTop="14dp"></View>
+        android:layout_marginTop="6dp"></View>
 </LinearLayout>

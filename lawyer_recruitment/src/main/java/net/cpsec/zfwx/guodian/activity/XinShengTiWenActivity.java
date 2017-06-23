@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -34,7 +35,6 @@ import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import net.cpsec.zfwx.guodian.R;
 import net.cpsec.zfwx.guodian.utils.Bimp;
 import net.cpsec.zfwx.guodian.utils.BitmapToBase64;
-import net.cpsec.zfwx.guodian.utils.Debugging;
 import net.cpsec.zfwx.guodian.utils.FileUtils;
 import net.cpsec.zfwx.guodian.utils.ImageUtil;
 import net.cpsec.zfwx.guodian.utils.NetUrl;
@@ -58,11 +58,14 @@ public class XinShengTiWenActivity extends BaseActivity {
     List<String> stringList;
 private CheckBox cb_tiwen;
     int pub;
+    String uid;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_xin_sheng_ti_wen);
         context = this;
+        SharedPreferences sp = getSharedPreferences("uid", Context.MODE_PRIVATE);
+        uid= sp.getString("uid","");
         //设置在activity启动的时候输入法默认是不开启的
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(this)
@@ -150,23 +153,11 @@ private CheckBox cb_tiwen;
                 if (sb.length() > 0) {
                     sb.delete(sb.length() - 1, sb.length());
                 }
-                Debugging.debugging("sb============"+sb.toString());
-                //stringList.add(sb.toString());
-//                for (int i = 0; i < Bimp.bmp.size(); i++) {
-//                    Bitmap bt = Bimp.bmp.get(i);
-//                    String s=BitmapToBase64.bitmapToBase64(bt);
-//                    stringList.add(s);
-//                    Debugging.debugging("sssssss====+++++++++"+s);
-//                }
-                Debugging.debugging("stringlist=================="+stringList.size());
-                Debugging.debugging("stringlist====+++++++++"+Bimp.bmp.size());
-                Debugging.debugging("stringlist+++++++++"+stringList.toString());
                 RequestMap params = new RequestMap();
-                params.put("uid", "3");
+                params.put("uid", uid);
                 params.put("is_open",pub+"");
-               // params.put("title", et_zhuti.getText().toString());
                 params.put("content", et_zhengwen.getText().toString());
-//                params.put("images",sb.toString());
+                params.put("images",sb.toString());
                 setParams(NetUrl.QINGNIAN_ZHISHENG_TIWEN, params, 0);
                 break;
             // 拍照；
@@ -189,10 +180,11 @@ private CheckBox cb_tiwen;
     public void onSuccess(String response, Map<String, String> headers, String url, int actionId) {
         super.onSuccess(response, headers, url, actionId);
         try {
-            if (!"青年新声提问成功".equals(JSON.parseObject(response).getString("msg"))) {
-                Toast.prompt(this, JSON.parseObject(response).getString("infor"));
+            if (!"200".equals(JSON.parseObject(response).getString("code"))) {
+                Toast.prompt(this, "发布失败，稍后重试");
                 return;
             } else {
+                Toast.prompt(this, "发布成功");
                 Intent intent = new Intent(this, MainActivity.class);
                 startActivity(intent);
                 finish();

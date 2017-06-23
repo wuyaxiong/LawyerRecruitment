@@ -485,6 +485,7 @@
         />
 
     <RelativeLayout
+        android:id="@+id/rl_login_out"
         android:layout_width="match_parent"
         android:layout_height="38dp">
         <TextView

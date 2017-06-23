@@ -1,15 +1,14 @@
 package net.cpsec.zfwx.guodian.activity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ListAdapter;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
@@ -20,68 +19,51 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import net.cpsec.zfwx.guodian.R;
 import net.cpsec.zfwx.guodian.adapter.TieZiPIngLunAdapter;
 import net.cpsec.zfwx.guodian.adapter.WenTiXiangQingAdapter;
+import net.cpsec.zfwx.guodian.entity.DianZanBean;
 import net.cpsec.zfwx.guodian.entity.TieZiComment_info;
 import net.cpsec.zfwx.guodian.entity.TieZiDetailBean;
 import net.cpsec.zfwx.guodian.utils.DateUtil;
 import net.cpsec.zfwx.guodian.utils.Debugging;
 import net.cpsec.zfwx.guodian.utils.NetUrl;
 import net.cpsec.zfwx.guodian.utils.Toast;
-import net.cpsec.zfwx.guodian.utils.Utility;
+import net.cpsec.zfwx.guodian.view.NoScrollListView;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 public class TieZiDetailActivity extends BaseActivity {
-    private ImageView iv_back;
+    private ImageView iv_back, iv_shoucang, iv_dainzan, iv_yishoucang;
     private RoundedImageView head;
     private TextView tv_name, tv_time, tv_content, tv_title, tv_label, tv_dainzan, tv_pinglun;
-    private ListView list_image, lv_pinglun;
+    private NoScrollListView list_image, lv_pinglun;
     String artical_id;
     private TieZiDetailBean tieZiDetailBean;
     String images;
     private EditText et_pinglun;
     private Button btn_pinglun;
+    WenTiXiangQingAdapter adapter;
+    TieZiPIngLunAdapter pinlunAdapter;
     //初始化（模拟）数据
     final ArrayList imageUrls = new ArrayList<String>();
     List<TieZiComment_info> coment_info;
-    WenTiXiangQingAdapter adapter;
+    String uid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tie_zi_detail);
+        SharedPreferences sp = getSharedPreferences("uid", Context.MODE_PRIVATE);
+        uid = sp.getString("uid", "");
         //设置在activity启动的时候输入法默认是不开启的
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         initView();
-
+        initData();
     }
-
-      public void setListViewHeightBasedOnChildren(ListView listView) {
-        // 获取ListView对应的Adapter
-          ListAdapter listAdapter = listView.getAdapter();
-        if (listAdapter == null) {
-             return;
-        }
-         int totalHeight = 0;
-         for (int i = 0, len = listAdapter.getCount(); i < len; i++) {
-             // listAdapter.getCount()返回数据项的数目
-             View listItem = listAdapter.getView(i, null, listView);
-            // 计算子项View 的宽高
-             listItem.measure(0, 0);
-            // 统计所有子项的总高度
-             totalHeight += listItem.getMeasuredHeight();
-         }
-          ViewGroup.LayoutParams params = listView.getLayoutParams();
-          params.height = totalHeight+ (listView.getDividerHeight() * (listAdapter.getCount() - 1));
-        // listView.getDividerHeight()获取子项间分隔符占用的高度
-        // params.height最后得到整个ListView完整显示需要的高度
-          listView.setLayoutParams(params);
-      }
-
 
     private void initData() {
         RequestMap params = new RequestMap();
+        params.put("uid", uid);
         params.put("article_id", artical_id);
         setParams(NetUrl.TIEZI_DETAIL, params, 0);
     }
@@ -90,6 +72,27 @@ public class TieZiDetailActivity extends BaseActivity {
         Intent intent = getIntent();
         artical_id = intent.getStringExtra("artical_id");
         Debugging.debugging("artical_id" + artical_id);
+        iv_yishoucang = (ImageView) findViewById(R.id.iv_tiezi_yishoucang);
+        iv_shoucang = (ImageView) findViewById(R.id.iv_tiezi_shoucang);
+        iv_shoucang.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                RequestMap params = new RequestMap();
+                params.put("aid", artical_id);
+                params.put("uid", uid);
+                setParams(NetUrl.TIEZI_SHOUCANG, params, 2);
+            }
+        });
+        iv_dainzan = (ImageView) findViewById(R.id.iv_tiezi_dainzan);
+        iv_dainzan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                RequestMap params = new RequestMap();
+                params.put("aid", artical_id);
+                params.put("uid", uid);
+                setParams(NetUrl.TIEZI_DIANZAN, params, 3);
+            }
+        });
         iv_back = (ImageView) findViewById(R.id.toolbar_nav_iv);
         iv_back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -102,16 +105,10 @@ public class TieZiDetailActivity extends BaseActivity {
         tv_title = (TextView) findViewById(R.id.tv_tiezixiangqing_title);
         tv_time = (TextView) findViewById(R.id.tv_tiezixiangqing_time);
         tv_content = (TextView) findViewById(R.id.tv_tiezixiangqing_content);
-        list_image = (ListView) findViewById(R.id.list_tizi_tupian);
-        lv_pinglun = (ListView) findViewById(R.id.lv_tiezi_pinglun);
-
-        setListViewHeightBasedOnChildren(list_image);
-        setListViewHeightBasedOnChildren(lv_pinglun);
-
-
+        list_image = (NoScrollListView) findViewById(R.id.list_tizi_tupian);
+        lv_pinglun = (NoScrollListView) findViewById(R.id.lv_tiezi_pinglun);
         et_pinglun = (EditText) findViewById(R.id.et_tiezi_pinglun);
         btn_pinglun = (Button) findViewById(R.id.btn_tiezi_pinglun);
-        //  tv_label= (TextView) findViewById(R.id.tv_tiezi_label);
         tv_dainzan = (TextView) findViewById(R.id.tv_tiezi_dianzan);
         tv_pinglun = (TextView) findViewById(R.id.tv_tiezi_huifu);
         et_pinglun = (EditText) findViewById(R.id.et_tiezi_pinglun);
@@ -132,7 +129,6 @@ public class TieZiDetailActivity extends BaseActivity {
                 }
         });
         initData();
-
     }
 
     @Override
@@ -152,6 +148,14 @@ public class TieZiDetailActivity extends BaseActivity {
                     int prise_num = tieZiDetailBean.getInfor().getPrise_num();
                     int coment_num = tieZiDetailBean.getInfor().getComment_num();
                     ImageLoader.getInstance().displayImage("http://" + userpic, head);
+                    int iscollect = tieZiDetailBean.getIs_collection();
+                    if (iscollect == 0) {
+                        iv_shoucang.setVisibility(View.VISIBLE);
+                        iv_yishoucang.setVisibility(View.GONE);
+                    } else {
+                        iv_shoucang.setVisibility(View.GONE);
+                        iv_yishoucang.setVisibility(View.VISIBLE);
+                    }
                     int time = tieZiDetailBean.getInfor().getForum_info().getTime();
                     tv_title.setText(title);
                     tv_name.setText(username);
@@ -164,23 +168,21 @@ public class TieZiDetailActivity extends BaseActivity {
                         list_image.setVisibility(View.GONE);
                     } else {
                         String[] tupians = images.split(",");
-                        Debugging.debugging("images==============" + images);
+                        //每次刷新前清空图片列表
+                        imageUrls.clear();
                         for (String substr : tupians) {
                             imageUrls.add("http://" + substr);
                             list_image.setVisibility(View.VISIBLE);
                         }
                     }
                     //初始化适配器
-                     adapter = new WenTiXiangQingAdapter(this, imageUrls);
-                    //list_image.setFocusable(false);
-                    list_image.setAdapter(adapter);
-                    Utility.setListViewHeightBasedOnChildren(list_image);
-                    Utility.setListViewHeightBasedOnChildren(lv_pinglun);
+                    adapter = new WenTiXiangQingAdapter(this, imageUrls);
                     coment_info = tieZiDetailBean.getInfor().getComment_info();
-                    TieZiPIngLunAdapter pinlunAdapter = new TieZiPIngLunAdapter(this, coment_info);
-                    lv_pinglun.setAdapter(pinlunAdapter);
-                    //刷新
+                    pinlunAdapter = new TieZiPIngLunAdapter(this, coment_info);
                     adapter.notifyDataSetChanged();
+                    pinlunAdapter.notifyDataSetChanged();
+                    list_image.setAdapter(adapter);
+                    lv_pinglun.setAdapter(pinlunAdapter);
                 } catch (Exception e) {
                     Toast.prompt(this, "数据异常");
                 }
@@ -189,10 +191,43 @@ public class TieZiDetailActivity extends BaseActivity {
                 if (!"200".equals(JSON.parseObject(response).getString("code"))) {
                     Toast.prompt(this, "评论失败，稍后重试！");
                 } else {
-                    images=null;
                     initData();
+                    pinlunAdapter.notifyDataSetChanged();
+                    adapter.notifyDataSetChanged();
                     Toast.prompt(this, "评论成功！");
+                    coment_info.clear();
                     et_pinglun.setText("");
+                }
+                break;
+            case 2:
+                if (!"200".equals(JSON.parseObject(response).getString("code"))) {
+                    Toast.prompt(this, "收藏失败，稍后重试！");
+                } else {
+                    if ("0".equals(JSON.parseObject(response).getString("infor"))) {
+                        initData();
+                        Toast.prompt(this, "收藏成功！");
+                        iv_shoucang.setImageResource(R.drawable.icon_collect);
+                    } else {
+                        Toast.prompt(this, "帖子已收藏");
+                        iv_shoucang.setImageResource(R.drawable.icon_collect);
+                    }
+                }
+                break;
+            case 3:
+                try {
+                    DianZanBean dianZanBean = JSON.parseObject(response, DianZanBean.class);
+                    if (200 != dianZanBean.getCode()) {
+                        Debugging.debugging("dianZanBean.getCode(=============" + dianZanBean.getCode());
+                        Toast.prompt(this, "点赞失败，稍后重试！");
+                    } else if (0 == dianZanBean.getInfor().getRes()) {
+                        initData();
+                        Toast.prompt(this, "点赞成功！");
+                    } else if (1 == dianZanBean.getInfor().getRes()) {
+                        initData();
+                        Toast.prompt(this, "取消点赞成功！");
+                    }
+                } catch (Exception e) {
+                    Toast.prompt(this, "数据异常");
                 }
                 break;
         }

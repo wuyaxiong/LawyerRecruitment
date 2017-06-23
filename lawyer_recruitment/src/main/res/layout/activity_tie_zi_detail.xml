@@ -8,7 +8,54 @@
     android:fitsSystemWindows="true"
     android:orientation="vertical"
     tools:context="net.cpsec.zfwx.guodian.activity.TieZiDetailActivity">
-    <include layout="@layout/toolbar" />
+    <LinearLayout
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:orientation="horizontal"
+        android:background="@color/color_while">
+
+        <ImageView
+            android:id="@+id/toolbar_nav_iv"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/back_icon"/>
+
+        <TextView
+            android:id="@+id/toolbar_title"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            />
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginRight="20dp">
+            <ImageView
+                android:id="@+id/iv_tiezi_shoucang"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/icon_shoucang"/>
+            <ImageView
+                android:id="@+id/iv_tiezi_yishoucang"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/icon_collect"
+                android:visibility="gone"/>
+        </FrameLayout>
+
+        <ImageView
+            android:id="@+id/ivRightToolBar"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_gravity="center"
+            android:layout_marginRight="20dp"
+            android:src="@drawable/icon_share"/>
+    </LinearLayout>
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
@@ -98,31 +145,6 @@
                 android:text="发帖内容"
                 android:textSize="16sp"
                 android:layout_marginBottom="8dp"/>
-            <!--<LinearLayout-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_marginLeft="20dp"-->
-                <!--android:orientation="horizontal"-->
-                <!--android:layout_marginBottom="6dp">-->
-
-                <!--<ImageView-->
-                    <!--android:layout_width="16dp"-->
-                    <!--android:layout_height="16dp"-->
-                    <!--android:src="@drawable/icon_tag" />-->
-
-                <!--<TextView-->
-                    <!--android:id="@+id/tv_tiezi_label"-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_marginLeft="8dp"-->
-                    <!--android:text="国电电力"-->
-                    <!--android:textColor="#919191"-->
-                    <!--android:textSize="16sp" />-->
-            <!--</LinearLayout>-->
-            <!--<View-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="1dp"-->
-                <!--android:background="#DDDDDD" />-->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="20dp"
@@ -142,6 +164,7 @@
                     android:textSize="14sp" />
 
                 <ImageView
+                    android:id="@+id/iv_tiezi_dainzan"
                     android:layout_width="14dp"
                     android:layout_height="14dp"
                     android:layout_gravity="center_vertical"
@@ -174,9 +197,11 @@
                     android:textColor="#1c7cea"
                     android:textSize="14sp" />
             </LinearLayout>
-
-
-            <ListView
+<View
+    android:layout_width="match_parent"
+    android:layout_height="0.5dp"
+    android:background="#bbbbbb"/>
+            <net.cpsec.zfwx.guodian.view.NoScrollListView
                 android:id="@+id/list_tizi_tupian"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -184,15 +209,17 @@
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:layout_marginBottom="8dp"
-                android:visibility="gone"/>
+                />
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="#DDDDDD" />
-            <ListView
+            <net.cpsec.zfwx.guodian.view.NoScrollListView
                 android:id="@+id/lv_tiezi_pinglun"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"></ListView>
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"></net.cpsec.zfwx.guodian.view.NoScrollListView>
         </LinearLayout>
     </ScrollView>
     <LinearLayout

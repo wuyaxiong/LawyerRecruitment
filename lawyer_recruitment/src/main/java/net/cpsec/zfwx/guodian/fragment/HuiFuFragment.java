@@ -1,7 +1,9 @@
 package net.cpsec.zfwx.guodian.fragment;
 
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.util.Log;
@@ -12,7 +14,6 @@ import android.view.ViewGroup;
 import com.alibaba.fastjson.JSON;
 import com.android.volley.manager.RequestMap;
 
-import net.cpsec.zfwx.guodian.MyApplication;
 import net.cpsec.zfwx.guodian.R;
 import net.cpsec.zfwx.guodian.activity.TieZiDetailActivity;
 import net.cpsec.zfwx.guodian.activity.XiangXiZiLiaoActivity;
@@ -22,6 +23,7 @@ import net.cpsec.zfwx.guodian.ui.YRecycleview;
 import net.cpsec.zfwx.guodian.utils.Debugging;
 import net.cpsec.zfwx.guodian.utils.NetUrl;
 import net.cpsec.zfwx.guodian.utils.Toast;
+
 import java.util.List;
 import java.util.Map;
 
@@ -38,12 +40,14 @@ public class HuiFuFragment extends BaseFragment {
     private ShouCangBean huiFuBean;
     ShouCangBean.InforBean infor;
     int pos;
-
+String uid;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
        View v =inflater.inflate(R.layout.fragment_hui_fu, container, false);
+        SharedPreferences sp =getActivity().getSharedPreferences("uid", Context.MODE_PRIVATE);
+        uid= sp.getString("uid","");
         initData();
         initView(v);
         return v;
@@ -54,7 +58,7 @@ public class HuiFuFragment extends BaseFragment {
 //MyApplication.UID是存在MyApplication中的假数据，后期改成从偏好设置中拿
     private void initData() {
         RequestMap params = new RequestMap();
-        params.put("uid",""+ MyApplication.UID);
+        params.put("uid",uid);
         setParams(NetUrl.CENTER_HUIFU_TIEZI, params, 1);
     }
     //数据请求成功后数据处理方法

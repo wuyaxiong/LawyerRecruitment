@@ -8,11 +8,14 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.nostra13.universalimageloader.core.ImageLoader;
+
 import net.cpsec.zfwx.guodian.R;
 import net.cpsec.zfwx.guodian.entity.AnLiMeiWenInfor;
 import net.cpsec.zfwx.guodian.utils.DateUtil;
 import net.cpsec.zfwx.guodian.utils.LocalDisplay;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -23,6 +26,7 @@ public class AnLiMeiWenAdapter  extends RecyclerView.Adapter<RecyclerView.ViewHo
     private Context context;
     private List<AnLiMeiWenInfor> quanBuInfors;
     private OnItemClickListener mOnItemClickListener = null;
+    List<String> list;
     public AnLiMeiWenAdapter(Context context, List<AnLiMeiWenInfor> quanBuInfors) {
         this.context = context;
         this.quanBuInfors = quanBuInfors;
@@ -36,6 +40,22 @@ public class AnLiMeiWenAdapter  extends RecyclerView.Adapter<RecyclerView.ViewHo
 
     @Override
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
+        //把javabean中的图片地址转化成list集合
+        list = new ArrayList<String>();
+        list.clear();
+        String tupian = quanBuInfors.get(position).getImage();
+        if (tupian==null||tupian.isEmpty()) {
+            ((ViewHolder) holder).iv_avadar.setImageResource(R.drawable.pic_jiazai1);
+        }else {
+            String[] tupians = tupian.split(",");
+            for (String substr : tupians) {
+                list.add(substr);
+            }
+            if (!list.get(0).isEmpty()) {
+                ((ViewHolder) holder).iv_avadar.setVisibility(View.VISIBLE);
+                ImageLoader.getInstance().displayImage("http://" + list.get(0), ((ViewHolder) holder).iv_avadar);
+            }
+        }
         ((ViewHolder) holder).tv_companyname.setText(quanBuInfors.get(position).getNum()+"条评论");
         ((ViewHolder) holder).tv_title.setText(quanBuInfors.get(position).getTitle());
         ((ViewHolder) holder).tv_shijian.setText(DateUtil.converTime(quanBuInfors.get(position).getTime()));

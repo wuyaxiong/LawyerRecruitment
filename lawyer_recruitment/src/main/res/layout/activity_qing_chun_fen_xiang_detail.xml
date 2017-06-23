@@ -52,6 +52,7 @@
         <TextView
             android:id="@+id/tv_meiwendetail_username"
             android:layout_width="0dp"
+            android:singleLine="true"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
             android:layout_weight="1"
@@ -93,13 +94,26 @@
     <!--android:layout_width="match_parent"-->
     <!--android:layout_height="0dp"-->
     <!--android:layout_weight="1">-->
+        <net.cpsec.zfwx.guodian.view.NoScrollListView
+            android:id="@+id/lv_fengxiang_images"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"></net.cpsec.zfwx.guodian.view.NoScrollListView>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="#bbbbbb" />
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp">
     <net.cpsec.zfwx.guodian.ui.YRecycleview
         android:id="@+id/yrv_pinglun_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
         android:orientation="vertical"></net.cpsec.zfwx.guodian.ui.YRecycleview>
         </RelativeLayout>
     </LinearLayout>

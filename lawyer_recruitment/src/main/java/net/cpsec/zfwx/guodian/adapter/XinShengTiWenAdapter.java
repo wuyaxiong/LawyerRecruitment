@@ -27,10 +27,6 @@ public class XinShengTiWenAdapter extends RecyclerView.Adapter<RecyclerView.View
     private List<ShengDetail> shengList;
     private OnItemClickListener mOnItemClickListener = null;
     List<String> list;
-
-    //define interface
-
-
     public XinShengTiWenAdapter(Context context, List<ShengDetail> shengList) {
         this.context = context;
         this.shengList = shengList;

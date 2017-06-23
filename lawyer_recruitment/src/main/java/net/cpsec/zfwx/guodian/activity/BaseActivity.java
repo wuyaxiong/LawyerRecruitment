@@ -1,25 +1,21 @@
 package net.cpsec.zfwx.guodian.activity;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.FrameLayout;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.android.volley.manager.RequestManager;
 import com.android.volley.manager.RequestMap;
 
-import net.cpsec.zfwx.guodian.utils.ScreenManager;
 import net.cpsec.zfwx.guodian.MyApplication;
 import net.cpsec.zfwx.guodian.utils.Debugging;
-import net.cpsec.zfwx.guodian.utils.SharePreferenceEditor;
+import net.cpsec.zfwx.guodian.utils.ScreenManager;
 import net.cpsec.zfwx.guodian.utils.Toast;
 
 import java.util.Map;
@@ -28,43 +24,17 @@ import jetbrick.util.StringUtils;
 
 public class  BaseActivity extends AppCompatActivity implements View.OnClickListener, RequestManager.RequestListener {
 
-    public SharedPreferences sharedPreferences;
-    public SharedPreferences.Editor editor;
-
-    private ImageView ivBack;
-    private TextView tvTitle;
-    private FrameLayout llTopTitle;
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         MyApplication.FINISH_INDEX = true;
         ScreenManager.getScreenManager().pushActivity(this);
-        SharePreferenceEditor sharePreferenceEditor = SharePreferenceEditor.newInstance(this);
-        sharedPreferences = sharePreferenceEditor.getSharedPreferences();
-        editor = sharePreferenceEditor.getEditor();
+      //  hideSystemNavigationBar();
     }
 
 //    public void setContentView(int layoutResID, Integer titleId) {
 //        super.setContentView(layoutResID);
-//        if (titleId != null && titleId != -1) {
-//            switch (layoutResID) {
-//                case R.layout.activity_foget_password:
-//                case R.layout.activity_login:
-//                case R.layout.activity_company_details:
-//                    llTopTitle = (FrameLayout) findViewById(R.id.fl_top_title);
-//                    llTopTitle.setBackgroundColor(getResources().getColor(R.color.color_while_transparent));
-//                    break;
-//            }
-//            ivBack = (ImageView) findViewById(R.id.iv_back);
-//            tvTitle = (TextView) findViewById(R.id.tv_title);
-//
-//            tvTitle.setText(titleId);
-//            ivBack.setOnClickListener(this);
-//            if (layoutResID == R.layout.activity_company_details) {
-//                ivBack.setImageResource(R.drawable.fanhui_touming_9);
-//            }
-//        }
+//hideSystemNavigationBar();
 //    }
 
     /**
@@ -175,5 +145,17 @@ public class  BaseActivity extends AppCompatActivity implements View.OnClickList
     @Override
     public void onError(String errorMsg, String url, int actionId) {
         Debugging.debugging("errorMsg" + "=" + errorMsg + "\nurl" + "=" + url + "\nactionId" + "=" + actionId);
+    }
+//隐藏底部虚拟按键并全屏
+    private void hideSystemNavigationBar() {
+        if (Build.VERSION.SDK_INT > 11 && Build.VERSION.SDK_INT < 19) {
+            View view = this.getWindow().getDecorView();
+            view.setSystemUiVisibility(View.GONE);
+        } else if (Build.VERSION.SDK_INT >= 19) {
+            View decorView = getWindow().getDecorView();
+            int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                    | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY | View.SYSTEM_UI_FLAG_FULLSCREEN;
+            decorView.setSystemUiVisibility(uiOptions);
+        }
     }
 }

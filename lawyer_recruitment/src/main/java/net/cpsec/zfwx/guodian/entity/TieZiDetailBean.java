@@ -14,6 +14,16 @@ public class TieZiDetailBean {
     private int code;
     private String msg;
     private TieZiDetailInfor infor;
+    private int is_collection;
+
+    public int getIs_collection() {
+        return is_collection;
+    }
+
+    public void setIs_collection(int is_collection) {
+        this.is_collection = is_collection;
+    }
+
     public void setCode(int code) {
          this.code = code;
      }

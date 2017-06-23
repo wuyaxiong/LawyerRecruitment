@@ -24,14 +24,26 @@
         <!--android:layout_marginTop="100dp"-->
         <!--android:background="@color/color_e7eaf3"></View>-->
     </SearchView>
-    <ExpandableListView
-        android:id="@+id/lv_tongxun"
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/id_swipe_ly"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:scrollbars="none"
-        android:layout_marginTop="7dp"></ExpandableListView>
-
-
-
+        android:layout_height="match_parent" >
+        <ExpandableListView
+            android:id="@+id/lv_tongxun"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:scrollbars="none"
+            android:layout_marginTop="7dp"></ExpandableListView>
+        <ListView
+            android:id="@+id/lv_search"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:scrollbars="none"
+            android:layout_marginTop="7dp"
+            android:visibility="gone"
+            />
+    </android.support.v4.widget.SwipeRefreshLayout>
 </LinearLayout>

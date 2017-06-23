@@ -19,6 +19,7 @@
         android:id="@+id/imageView12" />
 
     <TextView
+        android:id="@+id/tv_huodong_title"
         android:layout_width="230dp"
         android:layout_height="wrap_content"
         android:text="标题标题标题标题标题标题标题标题标题标题标题标题标题"
@@ -40,40 +41,31 @@
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         app:layout_constraintRight_toRightOf="parent"
-        android:id="@+id/textView19" />
+        android:id="@+id/tv_huodong_price"
+        app:layout_constraintHorizontal_bias="0.474" />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="条评论"
-        app:layout_constraintLeft_toRightOf="@+id/textView19"
-        android:layout_marginLeft="0dp"
         android:layout_marginRight="8dp"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="79dp"
-        app:layout_constraintHorizontal_bias="0.0"
-        android:id="@+id/textView20" />
+        android:id="@+id/textView20"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintHorizontal_bias="0.748" />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="1分钟"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="79dp"
-        app:layout_constraintLeft_toRightOf="@+id/textView20"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="0dp"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        android:id="@+id/textView21" />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="前"
-        android:layout_marginRight="16dp"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="79dp"
-        app:layout_constraintLeft_toRightOf="@+id/textView21"
-        android:layout_marginLeft="0dp"
-        app:layout_constraintHorizontal_bias="0.0" />
+        app:layout_constraintHorizontal_bias="0.908"
+        android:id="@+id/tv_huodong_time"
+        app:layout_constraintLeft_toLeftOf="parent" />
+
 </android.support.constraint.ConstraintLayout>

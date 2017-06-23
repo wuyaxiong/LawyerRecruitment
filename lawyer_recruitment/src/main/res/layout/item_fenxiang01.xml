@@ -49,14 +49,13 @@
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="12dp"
                 android:layout_marginRight="32dp"
-                android:text="已解答"
                 android:textColor="#4b4b4b"
                 android:textSize="16dp" />
         </LinearLayout>
     </RelativeLayout>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="30dp"
         android:background="#f4f4f4f4">
     <TextView
         android:id="@+id/tv_jiaoliu_title"
@@ -65,17 +64,18 @@
         android:paddingLeft="16dp"
         android:paddingRight="16dp"
         android:clickable="true"
+        android:layout_gravity="center_vertical"
         android:background="@drawable/selector_label"
         android:text="锅炉的作用是什么？"
         android:textColor="#4b4b4b"
-
+android:singleLine="true"
         android:textSize="16dp" />
 
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="4dp"
         android:orientation="vertical">
         <ImageView
             android:id="@+id/img_jialiu_01"
@@ -89,7 +89,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
-        android:layout_marginTop="14dp"
+        android:layout_marginTop="4dp"
         android:orientation="horizontal">
 
         <ImageView
@@ -116,10 +116,10 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="36dp"
+        android:layout_height="30dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="4dp"
         android:orientation="horizontal">
 
         <TextView

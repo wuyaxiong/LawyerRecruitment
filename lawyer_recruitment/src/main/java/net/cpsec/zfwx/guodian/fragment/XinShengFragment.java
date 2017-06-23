@@ -14,7 +14,7 @@ import com.android.volley.manager.RequestMap;
 
 import net.cpsec.zfwx.guodian.R;
 import net.cpsec.zfwx.guodian.activity.WenTiXiangQiActivity;
-import net.cpsec.zfwx.guodian.adapter.XinShengTiWenAdapter;
+import net.cpsec.zfwx.guodian.adapter.XinShengAdapter;
 import net.cpsec.zfwx.guodian.entity.ShengBean;
 import net.cpsec.zfwx.guodian.entity.ShengDetail;
 import net.cpsec.zfwx.guodian.ui.YRecycleview;
@@ -31,11 +31,12 @@ import java.util.Map;
  */
 public class XinShengFragment extends BaseFragment implements YRecycleview.OnRefreshAndLoadMoreListener {
     private YRecycleview yRecycleview;
-    private XinShengTiWenAdapter adapter;
+    private XinShengAdapter adapter;
     private boolean isRefreshState = true;//是否刷新
     private List<ShengDetail> shengLists;
     private List<ShengDetail> moreshengLists;
     private ShengBean shengBean;
+    private ShengDetail shengDetail;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -55,17 +56,33 @@ public class XinShengFragment extends BaseFragment implements YRecycleview.OnRef
     }
     private void setAdapter() {
         if (isRefreshState && null != shengLists) {
-            adapter = new XinShengTiWenAdapter(getActivity(), shengLists);
+            adapter = new XinShengAdapter(getActivity(), shengLists);
             yRecycleview.setLayoutManager(new LinearLayoutManager(getActivity()));
             yRecycleview.setAdapter(adapter);
         } else {
             adapter.notifyDataSetChanged();
         }
-        adapter.setOnItemClickListener(new XinShengTiWenAdapter.OnItemClickListener() {
+//        adapter.setOnItemClickListener(new XinShengTiWenAdapter.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(View view, int position) {
+//                Intent intent=new Intent(getActivity(), WenTiXiangQiActivity.class);
+//                ShengDetail infor=shengLists.get(position-1);
+//                Bundle bundle=new Bundle();
+//                bundle.putString("from","1");
+//                bundle.putString("username1",infor.getUsername().toString());
+//                bundle.putString("content1",infor.getContent());
+//                bundle.putString("asktime1",infor.getAsktime()+"");
+//                bundle.putString("image1",infor.getImage());
+//                bundle.putString("userpic1",infor.getUserpic());
+//                intent.putExtras(bundle);
+//                startActivity(intent);
+//            }
+//        });
+        adapter.setOnTitleClickListener(new XinShengAdapter.OnTitleClickListener() {
             @Override
-            public void onItemClick(View view, int position) {
+            public void onTitleClick(String id, int position) {
                 Intent intent=new Intent(getActivity(), WenTiXiangQiActivity.class);
-                ShengDetail infor=shengLists.get(position-1);
+                ShengDetail infor=shengLists.get(position);
                 Bundle bundle=new Bundle();
                 bundle.putString("from","1");
                 bundle.putString("username1",infor.getUsername().toString());
@@ -75,8 +92,27 @@ public class XinShengFragment extends BaseFragment implements YRecycleview.OnRef
                 bundle.putString("userpic1",infor.getUserpic());
                 intent.putExtras(bundle);
                 startActivity(intent);
+//                Intent intent = new Intent(getActivity(), TieZiDetailActivity.class);
+//                Debugging.debugging("position+++++++++++++++++++++++" + position);
+//                shengDetail = shengLists.get(position);
+//                Bundle bundle = new Bundle();
+//                bundle.putString("artical_id", shengDetail.getAsk_id()+"");
+//                intent.putExtras(bundle);
+//                startActivity(intent);
             }
         });
+
+//        adapter.setHeadClickListener(new JiaoLiuAdapter.OnHeadClickListener() {
+//            @Override
+//            public void onHeadClick(String id, int position) {
+//                Intent intent = new Intent(getActivity(), XiangXiZiLiaoActivity.class);
+////                infor = quanbuInfor.get(position);
+////                Bundle bundle = new Bundle();
+////                bundle.putString("phone", infor.getPhone());
+////                intent.putExtras(bundle);
+////                startActivity(intent);
+//            }
+//        });
     }
 
     @Override
