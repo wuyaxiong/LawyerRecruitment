@@ -8,44 +8,47 @@
     android:fitsSystemWindows="true"
     android:orientation="vertical"
     tools:context="net.cpsec.zfwx.guodian.activity.TieZiDetailActivity">
+
     <LinearLayout
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:orientation="horizontal"
-        android:background="@color/color_while">
+        android:layout_height="45dp"
+        android:background="@color/color_while"
+        android:orientation="horizontal">
 
         <ImageView
             android:id="@+id/toolbar_nav_iv"
             android:layout_width="20dp"
             android:layout_height="20dp"
-            android:layout_marginLeft="20dp"
             android:layout_gravity="center_vertical"
-            android:src="@drawable/back_icon"/>
+            android:layout_marginLeft="20dp"
+            android:src="@drawable/back_icon" />
 
         <TextView
             android:id="@+id/toolbar_title"
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            />
+            android:layout_weight="1" />
+
         <FrameLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginRight="20dp">
+
             <ImageView
                 android:id="@+id/iv_tiezi_shoucang"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
-                android:src="@drawable/icon_shoucang"/>
+                android:src="@drawable/icon_shoucang" />
+
             <ImageView
                 android:id="@+id/iv_tiezi_yishoucang"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:src="@drawable/icon_collect"
-                android:visibility="gone"/>
+                android:visibility="gone" />
         </FrameLayout>
 
         <ImageView
@@ -54,12 +57,14 @@
             android:layout_height="20dp"
             android:layout_gravity="center"
             android:layout_marginRight="20dp"
-            android:src="@drawable/icon_share"/>
+            android:src="@drawable/icon_share" />
     </LinearLayout>
+
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="#bbbbbb" />
+
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="70dp"
@@ -135,23 +140,25 @@
                 android:layout_marginTop="8dp"
                 android:text="锅炉的作用是什么"
                 android:textSize="18sp" />
+
             <TextView
                 android:id="@+id/tv_tiezixiangqing_content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:layout_marginTop="8dp"
                 android:text="发帖内容"
-                android:textSize="16sp"
-                android:layout_marginBottom="8dp"/>
+                android:textSize="16sp" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="20dp"
+                android:layout_marginBottom="6dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:layout_marginTop="6dp"
-                android:layout_marginBottom="6dp"
                 android:orientation="horizontal">
 
                 <TextView
@@ -197,23 +204,24 @@
                     android:textColor="#1c7cea"
                     android:textSize="14sp" />
             </LinearLayout>
-<View
-    android:layout_width="match_parent"
-    android:layout_height="0.5dp"
-    android:background="#bbbbbb"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="#bbbbbb" />
+
             <net.cpsec.zfwx.guodian.view.NoScrollListView
                 android:id="@+id/list_tizi_tupian"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:layout_marginBottom="8dp"
-                />
+                android:layout_marginBottom="8dp" />
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="#DDDDDD" />
+
             <net.cpsec.zfwx.guodian.view.NoScrollListView
                 android:id="@+id/lv_tiezi_pinglun"
                 android:layout_width="match_parent"
@@ -222,29 +230,32 @@
                 android:layout_marginRight="20dp"></net.cpsec.zfwx.guodian.view.NoScrollListView>
         </LinearLayout>
     </ScrollView>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:orientation="horizontal"
-        android:layout_marginBottom="8dp">
+        android:layout_marginBottom="8dp"
+        android:orientation="horizontal">
+
         <EditText
             android:id="@+id/et_tiezi_pinglun"
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="40dp"
             android:layout_marginLeft="16dp"
+            android:layout_weight="1"
+            android:background="@drawable/shape_search"
             android:maxLines="4"
-            android:paddingLeft="5dp"
-            android:background="@drawable/shape_search"/>
+            android:paddingLeft="5dp" />
+
         <Button
             android:id="@+id/btn_tiezi_pinglun"
             android:layout_width="60dp"
             android:layout_height="40dp"
             android:layout_gravity="center_vertical"
-            android:text="发送"
-            android:layout_marginRight="16dp"
             android:layout_marginLeft="8dp"
-            android:textSize="16sp"/>
+            android:layout_marginRight="16dp"
+            android:text="发送"
+            android:textSize="16sp" />
     </LinearLayout>
 </LinearLayout>

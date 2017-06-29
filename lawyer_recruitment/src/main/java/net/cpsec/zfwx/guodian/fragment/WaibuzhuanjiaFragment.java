@@ -58,7 +58,7 @@ public class WaibuzhuanjiaFragment extends BaseFragment implements View.OnClickL
     //请求数据
     private void initData() {
         RequestMap params = new RequestMap();
-        setParams(NetUrl.ZHUANJIA, params, 0);
+        setParams(NetUrl.WAIBU_ZHUANJIA, params, 0);
     }
     //数据请求成功后数据处理方法
     @Override
@@ -97,6 +97,7 @@ public class WaibuzhuanjiaFragment extends BaseFragment implements View.OnClickL
                 ZhuanJiaBean.InforBean infor= zhuanJiaInfor.get(position-1);
                 Log.e("专家页面", "infor.getUsername()"+infor.getUsername() );
                 Intent mIntent = new Intent();
+                mIntent.putExtra("eid", infor.getId()+"");
                 mIntent.putExtra("zhuanjia_name", infor.getUsername());
                 // 设置结果，并进行传送
                 getActivity().setResult(resultCode, mIntent);

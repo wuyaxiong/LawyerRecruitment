@@ -7,6 +7,11 @@
     tools:context=".fragment.JuZhenFragment"
     android:orientation="vertical"
     >
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="8dp"
+        android:background="#f6f6f6"
+        ></View>
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">

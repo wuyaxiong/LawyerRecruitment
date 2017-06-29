@@ -29,6 +29,7 @@ public class JiaoLiuFragment extends Fragment implements View.OnClickListener {
     private TextView tv_title;
     private ViewPager viewPager;
     TabLayout tabLayout;
+    Fragment fragment = new Fragment();
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -78,7 +79,7 @@ public class JiaoLiuFragment extends Fragment implements View.OnClickListener {
 
         @Override
         public Fragment getItem(int position) {
-            Fragment fragment = new Fragment();
+
             switch (position) {
                 case 0:
                     fragment = new QuanBuFragment();

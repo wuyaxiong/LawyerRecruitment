@@ -8,11 +8,13 @@ import java.util.List;
 
 //个人中心的我回复过的帖子的实体类，个人中心的帖子都可以用这个类
 public class ShouCangBean {
+
     /**
      * code : 200
      * msg : 成功
-     * infor : [{"id":3,"uid":3,"image":"115.28.77.187/tp5/bbss/public/uploads/3/5938a28c7d4a5.jpeg","status":0,"title":"哈哈哈","content":"@李鑫","label_id":1,"time":1496883852,"praise":0,"collection":0,"comment":0,"is_hot":1,"classid":null,"cid":9,"eid":null,"is_ok":1,"is_report":0,"userpic":"115.28.77.187/tp5/bbss/public/uploads/3/59439b8fd828e.jpeg","username":"李鑫","sex":1,"introduction":"工人","birth":"1987.03","background":"党员","expert":0,"last_login_time":0,"phone":"15641446512","cname":"国电东胜公司","address":"东胜","is_header":1,"name":"火电技术"}]
+     * infor : [{"id":52,"title":"安卓测试","image":"115.28.77.187/tp5/bbss/public/uploads/3/5937a1318ba27.jpeg","content":"1","comment":11,"praise":3,"time":1496817969,"collection":0,"username":"gfdgg","userpic":"115.28.77.187/tp5/bbss/public/uploads/1/59324ebe29499.jpeg","phone":"13081363699","name":"火电技术"},{"id":70,"title":"图片一","image":"115.28.77.187/tp5/bbss/public/uploads/3/5938bcd6ae9fe.jpeg","content":"阿坝","comment":0,"praise":2,"time":1496890582,"collection":0,"username":"李鑫","userpic":"115.28.77.187/tp5/bbss/public/uploads/3/59439b8fd828e.jpeg","phone":"15641446512","name":"火电技术"},{"id":204,"title":"111","image":"","content":"3333","comment":0,"praise":5,"time":1497443300,"collection":0,"username":"飞锐","userpic":"","phone":"17600382402","name":"火电技术"},{"id":206,"title":"sss","image":"","content":"Dddd","comment":14,"praise":1,"time":1497444115,"collection":0,"username":"飞锐","userpic":"","phone":"17600382402","name":"火电技术"},{"id":226,"title":"hi","image":"115.28.77.187/tp5/bbss/public/uploads/329/4057e04261612f0dbd482d2e42f8eee8.jpeg","content":"hi","comment":12,"praise":1,"time":1497856668,"collection":0,"username":"飞锐","userpic":"","phone":"17600382402","name":"火电技术"},{"id":297,"title":"@外部专家，翟帅","image":"115.28.77.187/tp5/bbss/public/uploads/330/eb9585235c8ae6f5e2790565eeb8f1d1.jpeg","content":"74646478244744","comment":1,"praise":1,"time":1498633765,"collection":0,"username":"王红甫","userpic":null,"phone":"18601979290","name":"风电技术"},{"id":270,"title":"版本更新提示","image":"115.28.77.187/tp5/bbss/public/uploads/330/9a1c948d0502a91e40e30b7fceb793c7.jpeg","content":"AAP Store已经更新版本1.0.18，下一个版本纠正类别为社交，谢谢！","comment":14,"praise":2,"time":1498007560,"collection":0,"username":"王红甫","userpic":null,"phone":"18601979290","name":"闪电技术"}]
      */
+
     private int code;
     private String msg;
     private List<InforBean> infor;
@@ -43,67 +45,31 @@ public class ShouCangBean {
 
     public static class InforBean {
         /**
-         * id : 3
-         * uid : 3
-         * image : 115.28.77.187/tp5/bbss/public/uploads/3/5938a28c7d4a5.jpeg
-         * status : 0
-         * title : 哈哈哈
-         * content : @李鑫
-         * label_id : 1
-         * time : 1496883852
-         * praise : 0
+         * id : 52
+         * title : 安卓测试
+         * image : 115.28.77.187/tp5/bbss/public/uploads/3/5937a1318ba27.jpeg
+         * content : 1
+         * comment : 11
+         * praise : 3
+         * time : 1496817969
          * collection : 0
-         * comment : 0
-         * is_hot : 1
-         * classid : null
-         * cid : 9
-         * eid : null
-         * is_ok : 1
-         * is_report : 0
-         * userpic : 115.28.77.187/tp5/bbss/public/uploads/3/59439b8fd828e.jpeg
-         * username : 李鑫
-         * sex : 1
-         * introduction : 工人
-         * birth : 1987.03
-         * background : 党员
-         * expert : 0
-         * last_login_time : 0
-         * phone : 15641446512
-         * cname : 国电东胜公司
-         * address : 东胜
-         * is_header : 1
+         * username : gfdgg
+         * userpic : 115.28.77.187/tp5/bbss/public/uploads/1/59324ebe29499.jpeg
+         * phone : 13081363699
          * name : 火电技术
          */
 
         private int id;
-        private int uid;
-        private String image;
-        private int status;
         private String title;
+        private String image;
         private String content;
-        private int label_id;
-        private int time;
-        private int praise;
-        private int collection;
         private int comment;
-        private int is_hot;
-        private Object classid;
-        private int cid;
-        private Object eid;
-        private int is_ok;
-        private int is_report;
-        private String userpic;
+        private int praise;
+        private int time;
+        private int collection;
         private String username;
-        private int sex;
-        private String introduction;
-        private String birth;
-        private String background;
-        private int expert;
-        private int last_login_time;
+        private String userpic;
         private String phone;
-        private String cname;
-        private String address;
-        private int is_header;
         private String name;
 
         public int getId() {
@@ -114,12 +80,12 @@ public class ShouCangBean {
             this.id = id;
         }
 
-        public int getUid() {
-            return uid;
+        public String getTitle() {
+            return title;
         }
 
-        public void setUid(int uid) {
-            this.uid = uid;
+        public void setTitle(String title) {
+            this.title = title;
         }
 
         public String getImage() {
@@ -130,60 +96,12 @@ public class ShouCangBean {
             this.image = image;
         }
 
-        public int getStatus() {
-            return status;
-        }
-
-        public void setStatus(int status) {
-            this.status = status;
-        }
-
-        public String getTitle() {
-            return title;
-        }
-
-        public void setTitle(String title) {
-            this.title = title;
-        }
-
         public String getContent() {
             return content;
         }
 
         public void setContent(String content) {
             this.content = content;
-        }
-
-        public int getLabel_id() {
-            return label_id;
-        }
-
-        public void setLabel_id(int label_id) {
-            this.label_id = label_id;
-        }
-
-        public int getTime() {
-            return time;
-        }
-
-        public void setTime(int time) {
-            this.time = time;
-        }
-
-        public int getPraise() {
-            return praise;
-        }
-
-        public void setPraise(int praise) {
-            this.praise = praise;
-        }
-
-        public int getCollection() {
-            return collection;
-        }
-
-        public void setCollection(int collection) {
-            this.collection = collection;
         }
 
         public int getComment() {
@@ -194,60 +112,28 @@ public class ShouCangBean {
             this.comment = comment;
         }
 
-        public int getIs_hot() {
-            return is_hot;
+        public int getPraise() {
+            return praise;
         }
 
-        public void setIs_hot(int is_hot) {
-            this.is_hot = is_hot;
+        public void setPraise(int praise) {
+            this.praise = praise;
         }
 
-        public Object getClassid() {
-            return classid;
+        public int getTime() {
+            return time;
         }
 
-        public void setClassid(Object classid) {
-            this.classid = classid;
+        public void setTime(int time) {
+            this.time = time;
         }
 
-        public int getCid() {
-            return cid;
+        public int getCollection() {
+            return collection;
         }
 
-        public void setCid(int cid) {
-            this.cid = cid;
-        }
-
-        public Object getEid() {
-            return eid;
-        }
-
-        public void setEid(Object eid) {
-            this.eid = eid;
-        }
-
-        public int getIs_ok() {
-            return is_ok;
-        }
-
-        public void setIs_ok(int is_ok) {
-            this.is_ok = is_ok;
-        }
-
-        public int getIs_report() {
-            return is_report;
-        }
-
-        public void setIs_report(int is_report) {
-            this.is_report = is_report;
-        }
-
-        public String getUserpic() {
-            return userpic;
-        }
-
-        public void setUserpic(String userpic) {
-            this.userpic = userpic;
+        public void setCollection(int collection) {
+            this.collection = collection;
         }
 
         public String getUsername() {
@@ -258,52 +144,12 @@ public class ShouCangBean {
             this.username = username;
         }
 
-        public int getSex() {
-            return sex;
+        public String getUserpic() {
+            return userpic;
         }
 
-        public void setSex(int sex) {
-            this.sex = sex;
-        }
-
-        public String getIntroduction() {
-            return introduction;
-        }
-
-        public void setIntroduction(String introduction) {
-            this.introduction = introduction;
-        }
-
-        public String getBirth() {
-            return birth;
-        }
-
-        public void setBirth(String birth) {
-            this.birth = birth;
-        }
-
-        public String getBackground() {
-            return background;
-        }
-
-        public void setBackground(String background) {
-            this.background = background;
-        }
-
-        public int getExpert() {
-            return expert;
-        }
-
-        public void setExpert(int expert) {
-            this.expert = expert;
-        }
-
-        public int getLast_login_time() {
-            return last_login_time;
-        }
-
-        public void setLast_login_time(int last_login_time) {
-            this.last_login_time = last_login_time;
+        public void setUserpic(String userpic) {
+            this.userpic = userpic;
         }
 
         public String getPhone() {
@@ -312,30 +158,6 @@ public class ShouCangBean {
 
         public void setPhone(String phone) {
             this.phone = phone;
-        }
-
-        public String getCname() {
-            return cname;
-        }
-
-        public void setCname(String cname) {
-            this.cname = cname;
-        }
-
-        public String getAddress() {
-            return address;
-        }
-
-        public void setAddress(String address) {
-            this.address = address;
-        }
-
-        public int getIs_header() {
-            return is_header;
-        }
-
-        public void setIs_header(int is_header) {
-            this.is_header = is_header;
         }
 
         public String getName() {

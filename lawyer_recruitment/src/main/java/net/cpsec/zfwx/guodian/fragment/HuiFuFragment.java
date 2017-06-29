@@ -31,7 +31,7 @@ import java.util.Map;
 /**
  * 个人中心-发帖-我回复的帖子
  */
-public class HuiFuFragment extends BaseFragment {
+public class HuiFuFragment extends BaseFragment implements YRecycleview.OnRefreshAndLoadMoreListener {
     private YRecycleview yRecycleview;
     private CenterTieZiAdapter adapter;
     private boolean isRefreshState = true;//是否刷新
@@ -54,6 +54,7 @@ String uid;
     }
     private void initView(View v) {
         yRecycleview = (YRecycleview) v.findViewById(R.id.hf_tiezilist);
+        yRecycleview.setRefreshAndLoadMoreListener(this);
     }
 //MyApplication.UID是存在MyApplication中的假数据，后期改成从偏好设置中拿
     private void initData() {
@@ -70,8 +71,6 @@ String uid;
             if (huiFuBean == null) {
                 Toast.prompt(getActivity(), "目前没有数据");
             }
-            Log.e("我回复的页面", "onSuccess: "+huiFuBean);
-            Debugging.debugging("我的收藏贴子      =      " + huiFuBean.toString());
             if (isRefreshState) {
                 yRecycleview.setReFreshComplete();
                 inforBeen = huiFuBean.getInfor();
@@ -120,6 +119,46 @@ String uid;
                 startActivity(intent);
             }
         });
+        adapter.setOnPicClickListener(new CenterTieZiAdapter.OnPicClickListener() {
+            @Override
+            public void onPicClick(String id, int position) {
+                Intent intent = new Intent(getActivity(), TieZiDetailActivity.class);
+                infor = inforBeen.get(position);
+                pos = infor.getId();
+                Bundle bundle = new Bundle();
+                bundle.putString("artical_id", pos + "");
+                intent.putExtras(bundle);
+                startActivity(intent);
+            }
+        });
+        adapter.setOnLLClickListener(new CenterTieZiAdapter.OnLLClickListener() {
+            @Override
+            public void onLLClick(String id, int position) {
+                Intent intent = new Intent(getActivity(), TieZiDetailActivity.class);
+                infor = inforBeen.get(position);
+                pos = infor.getId();
+                Bundle bundle = new Bundle();
+                bundle.putString("artical_id", pos + "");
+                intent.putExtras(bundle);
+                startActivity(intent);
+            }
+        });
+    }
+
+    @Override
+    public void onRefresh() {
+        isRefreshState = true;
+        yRecycleview.setReFreshComplete();
+        initData();
+        //    Toast.prompt(getActivity(), "刷新完成。测试阶段");
+    }
+
+    @Override
+    public void onLoadMore() {
+        isRefreshState = false;
+        initData();
+        yRecycleview.setNoMoreData(true);
+        //Toast.prompt(getActivity(), "没有更多数据。测试阶段");
     }
 
 }

@@ -113,7 +113,6 @@ public class TouPiaoDetailActivity extends BaseActivity {
                 }
                 break;
             case 2:
-                Debugging.debugging("JSON.parseObject(response).getString(\"code\"))====="+JSON.parseObject(response).getString("code"));
                 if ("200".equals(JSON.parseObject(response).getString("code"))) {
                     Toast.prompt(this, "投票成功！");
                     finish();

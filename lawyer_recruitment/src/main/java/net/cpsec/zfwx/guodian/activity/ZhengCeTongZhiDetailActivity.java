@@ -15,8 +15,8 @@ import com.alibaba.fastjson.JSON;
 import com.android.volley.manager.RequestMap;
 
 import net.cpsec.zfwx.guodian.R;
+import net.cpsec.zfwx.guodian.adapter.ListImageAdapter;
 import net.cpsec.zfwx.guodian.adapter.TongZhiPingLunAdapter;
-import net.cpsec.zfwx.guodian.adapter.WenTiXiangQingAdapter;
 import net.cpsec.zfwx.guodian.entity.ZhengCeTongzhiDetailBean;
 import net.cpsec.zfwx.guodian.utils.DateUtil;
 import net.cpsec.zfwx.guodian.utils.Debugging;
@@ -33,7 +33,7 @@ public class ZhengCeTongZhiDetailActivity extends BaseActivity implements View.O
     private ImageView iv_back;
     private NoScrollListView lv_images, lv_pinglun;
     private TongZhiPingLunAdapter pinlunAdapter;
-    WenTiXiangQingAdapter adapter;
+    ListImageAdapter adapter;
     String aid;
     String images;
     String uid;
@@ -103,7 +103,7 @@ public class ZhengCeTongZhiDetailActivity extends BaseActivity implements View.O
                             lv_images.setVisibility(View.VISIBLE);
                         }
                     }
-                    adapter = new WenTiXiangQingAdapter(this, imageUrls);
+                    adapter = new ListImageAdapter(this, imageUrls);
                     lv_images.setAdapter(adapter);
                     List<ZhengCeTongzhiDetailBean.InforBean.NoticeCommentBean> coment_info = pinglunBean.getInfor().getNotice_comment();
                     pinlunAdapter = new TongZhiPingLunAdapter(this, coment_info);

@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="net.cpsec.zfwx.guodian">
+    package="net.cpsec.zfwx.guodian"
+    android:versionCode="2"
+    android:versionName="1.0.1">
 
     <!-- net.cpsec.zfwx.lawyer_recruitment -->
     <!-- 通用权限 -->
@@ -50,6 +52,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <meta-data
+            android:name="UMENG_APPKEY"
+            android:value="5949f2741061d21259000fc2" />
+
         <activity
             android:name=".activity.MainActivity"
             android:theme="@style/ImageTranslucentTheme" />
@@ -116,8 +123,44 @@
         <activity android:name=".activity.ZhuzhijiagouActivity" />
         <activity android:name=".activity.ZhengCeTongZhiDetailActivity" />
         <activity android:name=".activity.AddFriendActivity" />
-        <activity android:name=".activity.TouPiaoDetailActivity"></activity>
-        <activity android:name=".activity.SendZhuanJiaActivity"></activity>
+        <activity android:name=".activity.TouPiaoDetailActivity" />
+        <activity android:name=".activity.SendZhuanJiaActivity" />
+        <activity
+            android:name=".wbapi.WBShareActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="com.sina.weibo.sdk.action.ACTION_SDK_REQ_ACTIVITY" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.umeng.qq.tencent.AuthActivity"
+            android:launchMode="singleTask"
+            android:noHistory="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="tencent100424468" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".wxapi.WXEntryActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <activity
+            android:name="com.umeng.qq.tencent.AssistActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <activity android:name=".activity.XinShengDetailActivity" />
+        <activity android:name=".activity.JianYiDetailActivity"></activity>
     </application>
 
 </manifest>

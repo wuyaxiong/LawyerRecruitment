@@ -104,7 +104,9 @@
             <net.cpsec.zfwx.guodian.view.NoScrollListView
                 android:id="@+id/lv_tongzhi_pinglun"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"></net.cpsec.zfwx.guodian.view.NoScrollListView>
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"></net.cpsec.zfwx.guodian.view.NoScrollListView>
         </LinearLayout>
     </ScrollView>
     <LinearLayout
@@ -112,7 +114,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         android:orientation="horizontal"
-        android:layout_marginBottom="8dp">
+        android:layout_marginBottom="8dp"
+        android:visibility="gone">
         <EditText
             android:id="@+id/et_tongzhi_pinglun"
             android:layout_width="0dp"

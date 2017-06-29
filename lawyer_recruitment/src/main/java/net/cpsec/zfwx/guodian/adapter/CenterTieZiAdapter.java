@@ -2,7 +2,6 @@ package net.cpsec.zfwx.guodian.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,7 +31,8 @@ public class CenterTieZiAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     List<String> list;
     public OnTitleClickListener mListener;
     public OnHeadClickListener mHeadlistener;
-
+    public OnPicClickListener mPiclistener;
+    public OnLLClickListener mLLlistener;
     public CenterTieZiAdapter(Context context, List<net.cpsec.zfwx.guodian.entity.ShouCangBean.InforBean> inforBeen) {
         this.context = context;
         this.inforBeen = inforBeen;
@@ -50,20 +50,20 @@ public class CenterTieZiAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         //把javabean中的图片地址转化成list集合
         list = new ArrayList<>();
         list.clear();
-        Log.e("tupian", "tupian: " +inforBeen);
         String tupian = inforBeen.get(position).getImage();
-
+        if (tupian==null||tupian.isEmpty()) {
+            ((ViewHolder) holder).img_01.setVisibility(View.GONE);
+        }else {
         String[] tupians = tupian.split(",");
         for (String substr : tupians) {
             list.add(substr);
         }
-
         if (!list.get(0).isEmpty()) {
             ((ViewHolder) holder).img_01.setVisibility(View.VISIBLE);
             ImageLoader.getInstance().displayImage("http://" + list.get(0), ((ViewHolder) holder).img_01);
         } else {
             ((ViewHolder) holder).img_01.setVisibility(View.GONE);
-        }
+        }}
         ImageLoader.getInstance().displayImage("http://" + inforBeen.get(position).getUserpic(), ((ViewHolder) holder).riv_avadar);
         ((ViewHolder) holder).tv_name.setText(inforBeen.get(position).getUsername());
         ((ViewHolder) holder).tv_title.setText(inforBeen.get(position).getContent());
@@ -71,6 +71,10 @@ public class CenterTieZiAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         ((ViewHolder) holder).tv_label.setText(inforBeen.get(position).getName());
         ((ViewHolder) holder).tv_title.setOnClickListener(new ClickListener(String.valueOf(position), position));
         ((ViewHolder) holder).riv_avadar.setOnClickListener(new ClickHeadListener(String.valueOf(position), position));
+        //给图片添加点击事件
+        ((ViewHolder) holder).img_01.setOnClickListener(new ClickPicListener(String.valueOf(position), position));
+        ((ViewHolder) holder).linearLayout.setOnClickListener(new ClickLLListener(String.valueOf(position), position));
+
         if (mOnItemClickListener != null) {
             //为ItemView设置监听器
             holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -93,14 +97,13 @@ public class CenterTieZiAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         private RoundedImageView riv_avadar;
         private TextView tv_name, tv_title, tv_label, tv_shijian, tv_dianzan, tv_huifu;
         private ImageView img_01;
-        private LinearLayout layout_tupian;
+        private LinearLayout linearLayout;
 
         public ViewHolder(View itemView) {
             super(itemView);
             LocalDisplay.init(itemView.getContext());
             itemView.setOnClickListener(this);
             riv_avadar = (RoundedImageView) itemView.findViewById(R.id.riv_jiaoliu_avater);
-
             tv_name = (TextView) itemView.findViewById(R.id.tv_jiaoliu_name);
             tv_title = (TextView) itemView.findViewById(R.id.tv_jiaoliu_title);
             tv_label = (TextView) itemView.findViewById(R.id.tv_jiaoliu_label);
@@ -108,6 +111,7 @@ public class CenterTieZiAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             tv_dianzan = (TextView) itemView.findViewById(R.id.tv_jiaoliu_dianzan);
             tv_huifu = (TextView) itemView.findViewById(R.id.tv_jiaoliu_huifu);
             img_01 = (ImageView) itemView.findViewById(R.id.img_jialiu_01);
+            linearLayout= (LinearLayout) itemView.findViewById(R.id.ll_bottom);
         }
 
         @Override
@@ -185,5 +189,61 @@ public class CenterTieZiAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     public interface OnHeadClickListener {//自己写了一个点击事件的接口
 
         void onHeadClick(String id, int position);
+    }
+
+    //给图片添加点击事件
+    public class ClickPicListener implements View.OnClickListener {//在这里我们重写了点击事件
+        private String id;
+        private int pos;
+
+        public ClickPicListener(String id, int postion) {
+            this.id = id;
+            this.pos = postion;
+        }
+
+        @Override
+        public void onClick(View view) {
+
+            if (mPiclistener != null) {
+                mPiclistener.onPicClick(id, pos);
+            }
+        }
+    }
+    public void setOnPicClickListener(OnPicClickListener listener) {//自己写了一个方法，用上我们的接口
+        mPiclistener = listener;
+    }
+
+
+    public interface OnPicClickListener {//自己写了一个点击事件的接口
+
+        void onPicClick(String id, int position);
+    }
+
+    //给底部布局添加点击事件
+    public class ClickLLListener implements View.OnClickListener {//在这里我们重写了点击事件
+        private String id;
+        private int pos;
+
+        public ClickLLListener(String id, int postion) {
+            this.id = id;
+            this.pos = postion;
+        }
+
+        @Override
+        public void onClick(View view) {
+
+            if (mLLlistener != null) {
+                mLLlistener.onLLClick(id, pos);
+            }
+        }
+    }
+    public void setOnLLClickListener(OnLLClickListener listener) {//自己写了一个方法，用上我们的接口
+        mLLlistener = listener;
+    }
+
+
+    public interface OnLLClickListener {//自己写了一个点击事件的接口
+
+        void onLLClick(String id, int position);
     }
 }

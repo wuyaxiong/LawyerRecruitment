@@ -6,10 +6,10 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.alibaba.fastjson.JSON;
 import com.android.volley.manager.RequestMap;
@@ -39,29 +39,32 @@ public class WoHuiDaFragment extends BaseFragment implements YRecycleview.OnRefr
     private ShouCangBean huiDaBean;
     ShouCangBean.InforBean infor;
     int pos;
-String uid;
+    String uid;
+    private ImageView iv_wenda;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View v= inflater.inflate(R.layout.fragment_wo_hui_da, container, false);
+        View v = inflater.inflate(R.layout.fragment_wo_hui_da, container, false);
         SharedPreferences sp = getActivity().getSharedPreferences("uid", Context.MODE_PRIVATE);
-        uid= sp.getString("uid","");
+        uid = sp.getString("uid", "");
         initView(v);
-        initData();
-        return  v;
+        return v;
     }
 
     private void initData() {
         RequestMap params = new RequestMap();
-        params.put("uid",uid);
+        params.put("uid", uid);
         setParams(NetUrl.CENTER_ZHUAJIAHUIDA, params, 0);
 
     }
 
     private void initView(View v) {
-        yRecycleview = (YRecycleview) v.findViewById(R.id.yrv_wenda_wohuida     );
+        yRecycleview = (YRecycleview) v.findViewById(R.id.yrv_wenda_wohuida);
         yRecycleview.setRefreshAndLoadMoreListener(this);
         yRecycleview.setLayoutManager(new LinearLayoutManager(getActivity()));
+        iv_wenda = (ImageView) v.findViewById(R.id.iv_wenda);
+      //  initData();
     }
 
     private void setAdapter() {
@@ -76,11 +79,9 @@ String uid;
             @Override
             public void onTitleClick(String id, int position) {
                 Intent intent = new Intent(getActivity(), TieZiDetailActivity.class);
-                Debugging.debugging("position+++++++++++++++++++++++" + position);
                 infor = inforBeen.get(position);
                 pos = infor.getId();
                 Bundle bundle = new Bundle();
-                Log.e("回复界面的artical_id", "artical_id: "+pos);
                 bundle.putString("artical_id", pos + "");
                 intent.putExtras(bundle);
                 startActivity(intent);
@@ -106,20 +107,25 @@ String uid;
         super.onSuccess(response, headers, url, actionId);
         try {
             huiDaBean = JSON.parseObject(response, ShouCangBean.class);
-            if (huiDaBean == null) {
-                Toast.prompt(getActivity(), "目前没有数据");
+            if (!"200".equals(JSON.parseObject(response).getString("code"))){
+                yRecycleview.setVisibility(View.GONE);
+                iv_wenda.setVisibility(View.VISIBLE);
             }
-            Log.e("我回复的页面", "onSuccess: "+ huiDaBean);
-            Debugging.debugging("我的收藏贴子      =      " + huiDaBean.toString());
-            if (isRefreshState) {
-                yRecycleview.setReFreshComplete();
-                inforBeen = huiDaBean.getInfor();
-                Debugging.debugging("positionLists      =   " + (huiDaBean.getInfor().toString()));
-            } else {
-                moreInforBean = huiDaBean.getInfor();
-                inforBeen.addAll(moreInforBean);
+//            if (huiDaBean == null) {
+//                yRecycleview.setVisibility(View.GONE);
+//                iv_wenda.setVisibility(View.VISIBLE);
+//            }
+            else {
+                if (isRefreshState) {
+                    yRecycleview.setReFreshComplete();
+                    inforBeen = huiDaBean.getInfor();
+                    Debugging.debugging("positionLists      =   " + (huiDaBean.getInfor().toString()));
+                } else {
+                    moreInforBean = huiDaBean.getInfor();
+                    inforBeen.addAll(moreInforBean);
+                }
+                setAdapter();
             }
-            setAdapter();
         } catch (Exception e) {
             Toast.prompt(getActivity(), "数据异常");
         }

@@ -27,7 +27,7 @@ import java.util.Map;
  */
 public class JuZhenFragment extends BaseFragment {
 
-
+    JuzhenGridAdapter adapter1,adapter2,adapter3;
     private JuzhenBean juzhenBean;
     private GridView yijiGrid;
     private GridView erjiGrid;
@@ -45,7 +45,7 @@ public class JuZhenFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View v= inflater.inflate(R.layout.fragment_ju_zhen, container, false);
+        View v = inflater.inflate(R.layout.fragment_ju_zhen, container, false);
         yijiGrid = (GridView) v.findViewById(R.id.yijigongsiGrid);
         erjiGrid = (GridView) v.findViewById(R.id.erjibumenGrid);
         sanjiGrid = (GridView) v.findViewById(R.id.sanjibumenGrid);
@@ -91,9 +91,9 @@ public class JuZhenFragment extends BaseFragment {
         }
     }
     private void setAdapter() {
-       if(yijijuzhenList!=null) {JuzhenGridAdapter adapter1 = new JuzhenGridAdapter(getActivity(), yijijuzhenList);   yijiGrid.setAdapter(adapter1);}
-       if (erjijuzhenList!=null) {JuzhenGridAdapter adapter2 = new JuzhenGridAdapter(getActivity(), erjijuzhenList);erjiGrid.setAdapter(adapter2);}
-        if(sanjijuzhenList!=null){JuzhenGridAdapter adapter3 = new JuzhenGridAdapter(getActivity(), sanjijuzhenList);sanjiGrid.setAdapter(adapter3);}
+       if(yijijuzhenList!=null) {adapter1 = new JuzhenGridAdapter(getActivity(), yijijuzhenList);   yijiGrid.setAdapter(adapter1);}
+       if (erjijuzhenList!=null) { adapter2 = new JuzhenGridAdapter(getActivity(), erjijuzhenList);erjiGrid.setAdapter(adapter2);}
+        if(sanjijuzhenList!=null){ adapter3 = new JuzhenGridAdapter(getActivity(), sanjijuzhenList);sanjiGrid.setAdapter(adapter3);}
     }
 }
 

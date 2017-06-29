@@ -34,10 +34,9 @@ public class HuoDongFenXiangAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     }
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(context).inflate(R.layout.item_huodong, null);
+        View v = LayoutInflater.from(context).inflate(R.layout.item_huodong1, null);
         return new ViewHolder(v);
     }
-
     @Override
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
         //把javabean中的图片地址转化成list集合

@@ -19,7 +19,7 @@ public class WenDaActivity extends BaseActivity {
     private ImageView iv_back;
     private ViewPager viewPager;
     TabLayout tabLayout;
-
+    Fragment fragment = new Fragment();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,7 +56,6 @@ public class WenDaActivity extends BaseActivity {
 
         @Override
         public Fragment getItem(int position) {
-            Fragment fragment = new Fragment();
             switch (position) {
                 case 0:
                     fragment = new WoTiWenFragment();

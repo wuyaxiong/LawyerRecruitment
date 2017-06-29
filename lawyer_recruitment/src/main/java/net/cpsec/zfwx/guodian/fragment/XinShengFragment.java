@@ -13,7 +13,8 @@ import com.alibaba.fastjson.JSON;
 import com.android.volley.manager.RequestMap;
 
 import net.cpsec.zfwx.guodian.R;
-import net.cpsec.zfwx.guodian.activity.WenTiXiangQiActivity;
+import net.cpsec.zfwx.guodian.activity.XiangXiZiLiaoActivity;
+import net.cpsec.zfwx.guodian.activity.XinShengDetailActivity;
 import net.cpsec.zfwx.guodian.adapter.XinShengAdapter;
 import net.cpsec.zfwx.guodian.entity.ShengBean;
 import net.cpsec.zfwx.guodian.entity.ShengDetail;
@@ -37,23 +38,26 @@ public class XinShengFragment extends BaseFragment implements YRecycleview.OnRef
     private List<ShengDetail> moreshengLists;
     private ShengBean shengBean;
     private ShengDetail shengDetail;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View v= inflater.inflate(R.layout.fragment_xin_sheng, container, false);
+        View v = inflater.inflate(R.layout.fragment_xin_sheng, container, false);
         initView(v);
         return v;
     }
+
     private void initView(View v) {
         yRecycleview = (YRecycleview) v.findViewById(R.id.yrv_sheng_xinsheng);
         yRecycleview.setRefreshAndLoadMoreListener(this);
-       initData();
+        initData();
     }
 
     private void initData() {
         RequestMap params = new RequestMap();
         setParams(NetUrl.QINGNIAN_ZHISHENG, params, 0);
     }
+
     private void setAdapter() {
         if (isRefreshState && null != shengLists) {
             adapter = new XinShengAdapter(getActivity(), shengLists);
@@ -81,17 +85,23 @@ public class XinShengFragment extends BaseFragment implements YRecycleview.OnRef
         adapter.setOnTitleClickListener(new XinShengAdapter.OnTitleClickListener() {
             @Override
             public void onTitleClick(String id, int position) {
-                Intent intent=new Intent(getActivity(), WenTiXiangQiActivity.class);
-                ShengDetail infor=shengLists.get(position);
-                Bundle bundle=new Bundle();
-                bundle.putString("from","1");
-                bundle.putString("username1",infor.getUsername().toString());
-                bundle.putString("content1",infor.getContent());
-                bundle.putString("asktime1",infor.getAsktime()+"");
-                bundle.putString("image1",infor.getImage());
-                bundle.putString("userpic1",infor.getUserpic());
+                Intent intent = new Intent(getActivity(), XinShengDetailActivity.class);
+                ShengDetail infor = shengLists.get(position);
+                Bundle bundle = new Bundle();
+                bundle.putString("ask_id", infor.getAsk_id() + "");
                 intent.putExtras(bundle);
                 startActivity(intent);
+//                Intent intent = new Intent(getActivity(), WenTiXiangQiActivity.class);
+//                ShengDetail infor = shengLists.get(position);
+//                Bundle bundle = new Bundle();
+//                bundle.putString("from", "1");
+//                bundle.putString("username1", infor.getUsername().toString());
+//                bundle.putString("content1", infor.getContent());
+//                bundle.putString("asktime1", infor.getAsktime() + "");
+//                bundle.putString("image1", infor.getImage());
+//                bundle.putString("userpic1", infor.getUserpic());
+//                intent.putExtras(bundle);
+//                startActivity(intent);
 //                Intent intent = new Intent(getActivity(), TieZiDetailActivity.class);
 //                Debugging.debugging("position+++++++++++++++++++++++" + position);
 //                shengDetail = shengLists.get(position);
@@ -101,18 +111,39 @@ public class XinShengFragment extends BaseFragment implements YRecycleview.OnRef
 //                startActivity(intent);
             }
         });
-
-//        adapter.setHeadClickListener(new JiaoLiuAdapter.OnHeadClickListener() {
-//            @Override
-//            public void onHeadClick(String id, int position) {
-//                Intent intent = new Intent(getActivity(), XiangXiZiLiaoActivity.class);
-////                infor = quanbuInfor.get(position);
-////                Bundle bundle = new Bundle();
-////                bundle.putString("phone", infor.getPhone());
-////                intent.putExtras(bundle);
-////                startActivity(intent);
-//            }
-//        });
+        adapter.setHeadClickListener(new XinShengAdapter.OnHeadClickListener() {
+            @Override
+            public void onHeadClick(String id, int position) {
+                Intent intent = new Intent(getActivity(), XiangXiZiLiaoActivity.class);
+                ShengDetail infor = shengLists.get(position);
+                Bundle bundle = new Bundle();
+                bundle.putString("phone", infor.getPhone());
+                intent.putExtras(bundle);
+                startActivity(intent);
+            }
+        });
+        adapter.setOnPicClickListener(new XinShengAdapter.OnPicClickListener() {
+            @Override
+            public void onPicClick(String id, int position) {
+                Intent intent = new Intent(getActivity(), XinShengDetailActivity.class);
+                ShengDetail infor = shengLists.get(position);
+                Bundle bundle = new Bundle();
+                bundle.putString("ask_id", infor.getAsk_id() + "");
+                intent.putExtras(bundle);
+                startActivity(intent);
+            }
+        });
+        adapter.setOnLLClickListener(new XinShengAdapter.OnLLClickListener() {
+            @Override
+            public void onLLClick(String id, int position) {
+                Intent intent = new Intent(getActivity(), XinShengDetailActivity.class);
+                ShengDetail infor = shengLists.get(position);
+                Bundle bundle = new Bundle();
+                bundle.putString("ask_id", infor.getAsk_id() + "");
+                intent.putExtras(bundle);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -148,7 +179,7 @@ public class XinShengFragment extends BaseFragment implements YRecycleview.OnRef
         isRefreshState = false;
         initData();
         yRecycleview.setNoMoreData(true);
-       // yRecycleview.setNoMoreData(true);
+        // yRecycleview.setNoMoreData(true);
         //Toast.prompt(getActivity(), "没有更多数据。测试阶段");
     }
 }

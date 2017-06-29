@@ -3,10 +3,23 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="net.cpsec.zfwx.lawyer_recruitment.net.cpsec.zfwx.guodian.fragment.WoTiWenFragment">
+    tools:context=".fragment.WoTiWenFragment">
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="8dp"
+        android:background="#f6f6f6"></View>
     <net.cpsec.zfwx.guodian.ui.YRecycleview
         android:id="@+id/yrv_wenda_wotiwen"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"/>
+        android:orientation="vertical"
+        android:visibility="gone"/>
+    <ImageView
+        android:id="@+id/iv_wenda"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:src="@drawable/pic_wenda"
+        android:layout_marginTop="100dp"
+        />
 </LinearLayout>

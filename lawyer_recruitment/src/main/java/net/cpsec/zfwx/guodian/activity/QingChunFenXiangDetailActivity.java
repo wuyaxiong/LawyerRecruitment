@@ -16,8 +16,8 @@ import com.alibaba.fastjson.JSON;
 import com.android.volley.manager.RequestMap;
 
 import net.cpsec.zfwx.guodian.R;
+import net.cpsec.zfwx.guodian.adapter.ListImageAdapter;
 import net.cpsec.zfwx.guodian.adapter.PingLunAdapter;
-import net.cpsec.zfwx.guodian.adapter.WenTiXiangQingAdapter;
 import net.cpsec.zfwx.guodian.entity.AnLiMeiWenBean;
 import net.cpsec.zfwx.guodian.entity.Comment_info;
 import net.cpsec.zfwx.guodian.entity.Goods_article_all;
@@ -52,7 +52,7 @@ public class QingChunFenXiangDetailActivity extends BaseActivity implements View
     private NoScrollListView list_image;
     //初始化（模拟）数据
     final ArrayList imageUrls = new ArrayList<String>();
-    WenTiXiangQingAdapter imageadapter;
+    ListImageAdapter imageadapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -126,7 +126,7 @@ public class QingChunFenXiangDetailActivity extends BaseActivity implements View
                         }
                     }
                     //初始化适配器
-                    imageadapter= new WenTiXiangQingAdapter(this, imageUrls);
+                    imageadapter= new ListImageAdapter(this, imageUrls);
                     list_image.setAdapter(imageadapter);
                 } catch (Exception e) {
                     Toast.prompt(this, "数据异常");

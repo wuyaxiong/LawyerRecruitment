@@ -32,7 +32,7 @@ public class JiaoLiuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     public OnTitleClickListener mListener;
     public OnHeadClickListener mHeadlistener;
     public OnPicClickListener mPiclistener;
-
+    public OnLLClickListener mLLlistener;
     public JiaoLiuAdapter(Context context, List<QuanBuInfor> quanBuInfors) {
         this.context = context;
         this.quanBuInfors = quanBuInfors;
@@ -51,6 +51,9 @@ public class JiaoLiuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         list = new ArrayList<String>();
         list.clear();
         String tupian = quanBuInfors.get(position).getImage();
+        if (tupian==null||tupian.isEmpty()) {
+            ((ViewHolder) holder).img_01.setVisibility(View.GONE);
+        }else {
         String[] tupians = tupian.split(",");
         for (String substr : tupians) {
             list.add(substr);
@@ -62,14 +65,17 @@ public class JiaoLiuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             ImageLoader.getInstance().displayImage("http://" + list.get(0), ((ViewHolder) holder).img_01);
         } else {
             ((ViewHolder) holder).img_01.setVisibility(View.GONE);
-        }
+        }}
         ImageLoader.getInstance().displayImage("http://" + quanBuInfors.get(position).getUserpic(), ((ViewHolder) holder).riv_avadar);
         ((ViewHolder) holder).tv_name.setText(quanBuInfors.get(position).getUsername());
-        ((ViewHolder) holder).tv_title.setText(quanBuInfors.get(position).getContent());
+        ((ViewHolder) holder).tv_title.setText(quanBuInfors.get(position).getTitle());
         ((ViewHolder) holder).tv_shijian.setText(DateUtil.converTime(quanBuInfors.get(position).getTime()));
         ((ViewHolder) holder).tv_label.setText(quanBuInfors.get(position).getName());
+        ((ViewHolder) holder).tv_dianzan.setText(quanBuInfors.get(position).getPraise()+"");
+        ((ViewHolder) holder).tv_huifu.setText(quanBuInfors.get(position).getComment()+"");
         ((ViewHolder) holder).tv_title.setOnClickListener(new ClickListener(String.valueOf(position), position));
         ((ViewHolder) holder).riv_avadar.setOnClickListener(new ClickHeadListener(String.valueOf(position), position));
+        ((ViewHolder) holder).linearLayout.setOnClickListener(new ClickLLListener(String.valueOf(position), position));
         if (mOnItemClickListener != null) {
             //为ItemView设置监听器
             holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -94,14 +100,13 @@ public class JiaoLiuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         private RoundedImageView riv_avadar;
         private TextView tv_name, tv_title, tv_label, tv_shijian, tv_dianzan, tv_huifu;
         private ImageView img_01;
-        private LinearLayout layout_tupian;
+        private LinearLayout linearLayout;
 
         public ViewHolder(View itemView) {
             super(itemView);
             LocalDisplay.init(itemView.getContext());
             itemView.setOnClickListener(this);
             riv_avadar = (RoundedImageView) itemView.findViewById(R.id.riv_jiaoliu_avater);
-
             tv_name = (TextView) itemView.findViewById(R.id.tv_jiaoliu_name);
             tv_title = (TextView) itemView.findViewById(R.id.tv_jiaoliu_title);
             tv_label = (TextView) itemView.findViewById(R.id.tv_jiaoliu_label);
@@ -109,6 +114,7 @@ public class JiaoLiuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             tv_dianzan = (TextView) itemView.findViewById(R.id.tv_jiaoliu_dianzan);
             tv_huifu = (TextView) itemView.findViewById(R.id.tv_jiaoliu_huifu);
             img_01 = (ImageView) itemView.findViewById(R.id.img_jialiu_01);
+            linearLayout= (LinearLayout) itemView.findViewById(R.id.ll_bottom);
         }
 
         @Override
@@ -217,5 +223,33 @@ public class JiaoLiuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     public interface OnPicClickListener {//自己写了一个点击事件的接口
 
         void onPicClick(String id, int position);
+    }
+
+    //给底部布局添加点击事件
+    public class ClickLLListener implements View.OnClickListener {//在这里我们重写了点击事件
+        private String id;
+        private int pos;
+
+        public ClickLLListener(String id, int postion) {
+            this.id = id;
+            this.pos = postion;
+        }
+
+        @Override
+        public void onClick(View view) {
+
+            if (mLLlistener != null) {
+                mLLlistener.onLLClick(id, pos);
+            }
+        }
+    }
+    public void setOnLLClickListener(OnLLClickListener listener) {//自己写了一个方法，用上我们的接口
+        mLLlistener = listener;
+    }
+
+
+    public interface OnLLClickListener {//自己写了一个点击事件的接口
+
+        void onLLClick(String id, int position);
     }
 }

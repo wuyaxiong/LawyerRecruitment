@@ -15,6 +15,8 @@ import com.facebook.drawee.backends.pipeline.Fresco;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.umeng.socialize.PlatformConfig;
+import com.umeng.socialize.UMShareAPI;
 
 import net.cpsec.zfwx.guodian.view.ConversationListUICustomSample;
 
@@ -59,7 +61,11 @@ public class MyApplication extends Application {
         }
         //其中yourclass_1是继承自IMConversationListUI的自定义类
         AdviceBinder.bindAdvice(PointCutEnum.CONVERSATION_FRAGMENT_UI_POINTCUT, ConversationListUICustomSample.class);
+        UMShareAPI.get(this);
+        PlatformConfig.setWeixin("wx52258c82ee69f82e", "a8949735a4a54c73eb35b3c03dbd42a1");
 
+        PlatformConfig.setQQZone("1106238106", "jjoTfMsmC7efHU8Q");
+        PlatformConfig.setSinaWeibo("3921700954", "04b48b094faeb16683c32669824ebdad", "http://sns.whalecloud.com");
     }
 
     @Override

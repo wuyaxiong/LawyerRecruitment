@@ -112,4 +112,10 @@ public class NetUrl {
     public static final String QINGCHUNFENXIANG_JUZHEN ="http://115.28.77.187/tp5/bbss/public/index.php/index/share/youngjuzhen";
     //获取所有专家
     public static final String ZHUANJIA ="http://115.28.77.187/tp5/bbss/public/index.php/index/forum/allExpert ";
+    //获取外部专家
+    public static final String WAIBU_ZHUANJIA ="http://115.28.77.187/tp5/bbss/public/index.php/index/forum/outExpert";
+    //青年心声详情页面
+    public static final String XINSHENG_DETAIL ="http://115.28.77.187/tp5/bbss/public/index.php/index/voice/youngAskdetail" ;
+    //合理化建议详情页面
+    public static final String JIANYI_DETAIL ="http://115.28.77.187/tp5/bbss/public/index.php/index/voice/adviceDetail " ;
 }

@@ -8,14 +8,17 @@
 
     <ImageView
         android:id="@+id/id_index_gallery_item_image"
-        android:layout_width="300dp"
-        android:layout_height="200dp"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="8dp"
-        android:layout_gravity="center"
-        android:src="@drawable/pic_jiazai1"
+        android:layout_marginTop="4dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
+        android:scaleType="centerInside"
+        android:layout_gravity="center_horizontal"
+        android:src="@drawable/pic_jiazai3"
         />
 
 </LinearLayout>

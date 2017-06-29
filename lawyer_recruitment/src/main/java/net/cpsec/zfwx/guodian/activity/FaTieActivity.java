@@ -69,7 +69,7 @@ public class FaTieActivity extends BaseActivity {
     private LabelBean labelBean;
     private LabelGridAdapter labelGridAdapter;
     int label_id=1;
-    String uid;
+    String uid,eid;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -168,14 +168,6 @@ public class FaTieActivity extends BaseActivity {
 //        this.recyclerView.addItemDecoration(decoration);
 //        this.labelAdapter.setOnItemClickListener(this);
     }
-//    @Override
-//    public void onItemClick(View view, int postion) {
-//        Label bean = labelList.get(postion);
-//        if (bean != null) {
-//            tv_label.setText(bean.getName());
-//            recyclerView.setVisibility(View.GONE);
-//        }
-//    }
     @Override
     public void onClick(View v) {
         super.onClick(v);
@@ -206,7 +198,7 @@ public class FaTieActivity extends BaseActivity {
                 RequestMap params = new RequestMap();
                 params.put("uid", uid);
                 params.put("label_id", label_id+"");
-                params.put("cid", "1");
+                params.put("eid", eid);
                 params.put("title", et_zhuti.getText().toString());
                 params.put("content", et_zhengwen.getText().toString());
                 params.put("images",sb.toString()  );
@@ -278,6 +270,7 @@ public class FaTieActivity extends BaseActivity {
                 }else {
                     String zhuanjia_name = data.getStringExtra("zhuanjia_name");
                     Log.e("发帖页面", "回调专家姓名zhuanjia_name: "+zhuanjia_name);
+                    eid=data.getStringExtra("eid");
                     tv_zhuanjia.setVisibility(View.VISIBLE);
                     tv_zhuanjia.setText(zhuanjia_name);
                 }
@@ -417,9 +410,10 @@ public class FaTieActivity extends BaseActivity {
             case 0:
                 try {
                     if (!"200".equals(JSON.parseObject(response).getString("code"))) {
-                        Toast.prompt(this, JSON.parseObject(response).getString("发帖失败，请稍后重试"));
+                        Toast.prompt(this, "发帖失败，请稍后重试");
                         return;
                     } else {
+                        Toast.prompt(this, "发帖成功");
                         Intent intent = new Intent(this, MainActivity.class);
                         startActivity(intent);
                         finish();

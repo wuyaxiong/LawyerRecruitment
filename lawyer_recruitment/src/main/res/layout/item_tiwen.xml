@@ -52,12 +52,10 @@
         android:singleLine="true"
         android:textColor="#4b4b4b"
         android:textSize="16sp" />
-
-
     <LinearLayout
         android:id="@+id/ll_jianyi_huida"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="35dp"
         android:orientation="horizontal"
         android:background="#f6f6f6"
         android:layout_marginTop="10dp">
@@ -68,6 +66,7 @@
             android:layout_height="wrap_content"
             android:textSize="14sp"
             android:textColor="#919191"
+            android:layout_gravity="center_vertical"
             android:singleLine="true"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"

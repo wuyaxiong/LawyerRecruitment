@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -22,9 +21,10 @@ import net.cpsec.zfwx.guodian.utils.Toast;
 
 import java.util.List;
 import java.util.Map;
+
 /**
  * 我收藏的帖子页面
- * */
+ */
 public class ShouCangActivity extends BaseActivity implements View.OnClickListener, YRecycleview.OnRefreshAndLoadMoreListener {
     private ImageView iv_back;
     private YRecycleview yRecycleview;
@@ -36,35 +36,39 @@ public class ShouCangActivity extends BaseActivity implements View.OnClickListen
     ShouCangBean.InforBean infor;
     int pos;
     String uid;
+    private ImageView iv_NO;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shou_cang);
         SharedPreferences sp = getSharedPreferences("uid", Context.MODE_PRIVATE);
-        uid= sp.getString("uid","");
+        uid = sp.getString("uid", "");
         initView();
         initData();
     }
 
     private void initView() {
-        iv_back= (ImageView) findViewById(R.id.iv_back);
+        iv_back = (ImageView) findViewById(R.id.iv_back);
         iv_back.setOnClickListener(this);
         yRecycleview = (YRecycleview) findViewById(R.id.sc_tiezilist);
         yRecycleview.setRefreshAndLoadMoreListener(this);
+        iv_NO = (ImageView) findViewById(R.id.iv_wenda);
     }
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.iv_back:
                 finish();
                 break;
         }
     }
+
     //数据请求
     private void initData() {
         RequestMap params = new RequestMap();
-         params.put("uid",uid);
+        params.put("uid", uid);
         //因为接口问题，先用全部帖子接口   CENTER_GUANZHU_TIEZI
         setParams(NetUrl.CENTER_SHOUCANG, params, 1);
     }
@@ -73,28 +77,25 @@ public class ShouCangActivity extends BaseActivity implements View.OnClickListen
     @Override
     public void onSuccess(String response, Map<String, String> headers, String url, int actionId) {
         super.onSuccess(response, headers, url, actionId);
-//        try {
-//        Log.e("shouCangBean", "onSuccess: "+JSON.parseObject(response, ShouCangBean.class));
-            //Gson gson = new GsonBuilder().enableComplexMapKeySerialization().create();
-            //shouCangBean =gson.fromJson(response,ShouCangBean.class);
-            shouCangBean = JSON.parseObject(response, ShouCangBean.class);
-            if (shouCangBean == null) {
-                Toast.prompt(this, "目前没有数据");
-            }
-            Log.e("我回复的页面", "onSuccess: "+ shouCangBean);
-            Debugging.debugging("我的收藏贴子      =      " + shouCangBean.toString());
-            if (isRefreshState) {
-                yRecycleview.setReFreshComplete();
-                inforBeen = shouCangBean.getInfor();
-                Debugging.debugging("positionLists      =   " + (shouCangBean.getInfor().toString()));
+        try {
+            if (!"200".equals(JSON.parseObject(response).getString("code"))) {
+                yRecycleview.setVisibility(View.GONE);
+                iv_NO.setVisibility(View.VISIBLE);
             } else {
-                moreInforBean = shouCangBean.getInfor();
-                inforBeen.addAll(moreInforBean);
+                shouCangBean = JSON.parseObject(response, ShouCangBean.class);
+                if (isRefreshState) {
+                    yRecycleview.setReFreshComplete();
+                    inforBeen = shouCangBean.getInfor();
+                    Debugging.debugging("positionLists      =   " + (shouCangBean.getInfor().toString()));
+                } else {
+                    moreInforBean = shouCangBean.getInfor();
+                    inforBeen.addAll(moreInforBean);
+                }
+                setAdapter();
             }
-            setAdapter();
-//        } catch (Exception e) {
-//            Toast.prompt(this, "数据异常");
-//        }
+        } catch (Exception e) {
+            Toast.prompt(this, "数据异常");
+        }
     }
 
 
@@ -112,11 +113,9 @@ public class ShouCangActivity extends BaseActivity implements View.OnClickListen
             @Override
             public void onTitleClick(String id, int position) {
                 Intent intent = new Intent(ShouCangActivity.this, TieZiDetailActivity.class);
-                Debugging.debugging("position+++++++++++++++++++++++" + position);
                 infor = inforBeen.get(position);
                 pos = infor.getId();
                 Bundle bundle = new Bundle();
-                Log.e("回复界面的artical_id", "artical_id: "+pos);
                 bundle.putString("artical_id", pos + "");
                 intent.putExtras(bundle);
                 startActivity(intent);
@@ -134,6 +133,30 @@ public class ShouCangActivity extends BaseActivity implements View.OnClickListen
                 startActivity(intent);
             }
         });
+        adapter.setOnPicClickListener(new CenterTieZiAdapter.OnPicClickListener() {
+            @Override
+            public void onPicClick(String id, int position) {
+                Intent intent = new Intent(ShouCangActivity.this, TieZiDetailActivity.class);
+                infor = inforBeen.get(position);
+                pos = infor.getId();
+                Bundle bundle = new Bundle();
+                bundle.putString("artical_id", pos + "");
+                intent.putExtras(bundle);
+                startActivity(intent);
+            }
+        });
+        adapter.setOnLLClickListener(new CenterTieZiAdapter.OnLLClickListener() {
+            @Override
+            public void onLLClick(String id, int position) {
+                Intent intent = new Intent(ShouCangActivity.this, TieZiDetailActivity.class);
+                infor = inforBeen.get(position);
+                pos = infor.getId();
+                Bundle bundle = new Bundle();
+                bundle.putString("artical_id", pos + "");
+                intent.putExtras(bundle);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -142,6 +165,7 @@ public class ShouCangActivity extends BaseActivity implements View.OnClickListen
         yRecycleview.setReFreshComplete();
         initData();
     }
+
     //上拉加载
     @Override
     public void onLoadMore() {

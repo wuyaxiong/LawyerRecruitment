@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -15,6 +16,11 @@ import com.alibaba.fastjson.JSON;
 import com.android.volley.manager.RequestMap;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.umeng.socialize.ShareAction;
+import com.umeng.socialize.UMShareListener;
+import com.umeng.socialize.bean.SHARE_MEDIA;
+import com.umeng.socialize.media.UMEmoji;
+import com.umeng.socialize.media.UMWeb;
 
 import net.cpsec.zfwx.guodian.R;
 import net.cpsec.zfwx.guodian.adapter.TieZiPIngLunAdapter;
@@ -35,6 +41,7 @@ import java.util.Map;
 public class TieZiDetailActivity extends BaseActivity {
     private ImageView iv_back, iv_shoucang, iv_dainzan, iv_yishoucang;
     private RoundedImageView head;
+    private ImageView ivRightToolBar;
     private TextView tv_name, tv_time, tv_content, tv_title, tv_label, tv_dainzan, tv_pinglun;
     private NoScrollListView list_image, lv_pinglun;
     String artical_id;
@@ -116,17 +123,53 @@ public class TieZiDetailActivity extends BaseActivity {
         btn_pinglun.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (et_pinglun.getText().toString().trim()==null){
+                if (et_pinglun.getText().toString().trim()==null||et_pinglun.getText().toString().isEmpty()){
                     android.widget.Toast.makeText(TieZiDetailActivity.this,"评论内容不能为空！",android.widget.Toast.LENGTH_SHORT).show();
-                    return;
-                }else {
+                    return;}else {
                     RequestMap params = new RequestMap();
                     params.put("aid", artical_id);
-                    params.put("uid","329");
+                    params.put("uid",uid);
                     params.put("content",et_pinglun.getText().toString());
                     setParams(NetUrl.TIEZI_PINGLUN, params, 1);
                 }
                 }
+        });
+        ivRightToolBar = (ImageView) findViewById(R.id.ivRightToolBar);
+        final UMWeb web = new UMWeb("http://www.baidu.com");
+        web.setTitle("This is music title");//标题
+        web.setThumb(new UMEmoji(this,R.mipmap.ic_launcher));  //缩略图
+        web.setDescription("my description");//描述
+        ivRightToolBar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new ShareAction(TieZiDetailActivity.this)  .withMedia(web)
+                        .setDisplayList(SHARE_MEDIA.SINA,SHARE_MEDIA.QQ,SHARE_MEDIA.WEIXIN)
+                        .setCallback(new UMShareListener() {
+                            @Override
+                            public void onStart(SHARE_MEDIA share_media) {
+
+                            }
+
+                            @Override
+                            public void onResult(SHARE_MEDIA share_media) {
+                                Toast.prompt(TieZiDetailActivity.this,share_media+"分享成功");
+
+                            }
+
+                            @Override
+                            public void onError(SHARE_MEDIA share_media, Throwable throwable) {
+                                Toast.prompt(TieZiDetailActivity.this,share_media+"分享失败"+throwable.getMessage());
+                                if(throwable!=null){
+                                    Log.d("throw","throw:"+throwable.getMessage());
+                                }
+                            }
+
+                            @Override
+                            public void onCancel(SHARE_MEDIA share_media) {
+                                Toast.prompt(TieZiDetailActivity.this,share_media+"分享取消");
+                            }
+                        }).open();
+            }
         });
         initData();
     }

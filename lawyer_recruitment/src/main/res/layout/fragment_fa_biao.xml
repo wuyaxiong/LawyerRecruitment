@@ -1,13 +1,18 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="net.cpsec.zfwx.guodian.fragment.FaBiaoFragment">
-
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="8dp"
+        android:background="#f6f6f6"
+        ></View>
     <net.cpsec.zfwx.guodian.ui.YRecycleview
         android:id="@+id/fb_tiezilist"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"/>
 
-</FrameLayout>
+</LinearLayout>

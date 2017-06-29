@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="74dp">
@@ -18,6 +19,9 @@
                 android:id="@+id/riv_jiaoliu_avater"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="20dp"
+                android:clickable="true"
                 android:scaleType="center"
                 android:src="@drawable/bantouming"
                 app:riv_border_color="#bbbbbb"
@@ -25,10 +29,7 @@
                 app:riv_corner_radius="15dp"
                 app:riv_mutate_background="true"
                 app:riv_oval="true"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="20dp"
-                app:riv_tile_mode="repeat"
-                android:clickable="true"/>
+                app:riv_tile_mode="repeat" />
 
             <TextView
                 android:id="@+id/tv_jiaoliu_name"
@@ -53,121 +54,136 @@
                 android:textSize="16dp" />
         </LinearLayout>
     </RelativeLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="30dp"
         android:background="#f4f4f4f4">
-    <TextView
-        android:id="@+id/tv_jiaoliu_title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp"
-        android:clickable="true"
-        android:layout_gravity="center_vertical"
-        android:background="@drawable/selector_label"
-        android:text="锅炉的作用是什么？"
-        android:textColor="#4b4b4b"
-android:singleLine="true"
-        android:textSize="16dp" />
+
+        <TextView
+            android:id="@+id/tv_jiaoliu_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:background="@drawable/selector_label"
+            android:clickable="true"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:singleLine="true"
+            android:text="锅炉的作用是什么？"
+            android:textColor="#4b4b4b"
+            android:textSize="16dp" />
 
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
         android:orientation="vertical">
+
         <ImageView
             android:id="@+id/img_jialiu_01"
-            android:layout_width="250dp"
-            android:layout_height="150dp"
-            android:src="@drawable/pic_jiazai1"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
             android:layout_gravity="center_horizontal"
-            />
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/pic_jiazai1" />
     </LinearLayout>
+
     <LinearLayout
+        android:id="@+id/ll_bottom"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
         android:layout_marginTop="4dp"
-        android:orientation="horizontal">
+        android:orientation="vertical">
 
-        <ImageView
-            android:layout_width="16dp"
-            android:layout_height="16dp"
-            android:src="@drawable/icon_tag" />
-
-        <TextView
-            android:id="@+id/tv_jiaoliu_label"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:text="国电电力"
-            android:textColor="#919191"
-            android:textSize="16sp" />
-    </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:background="#DDDDDD"></View>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginTop="4dp"
-        android:orientation="horizontal">
-
-        <TextView
-            android:id="@+id/tv_jiaoliu_time"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_weight="1"
-            android:text="一分钟前"
-            android:textColor="#bebebe"
-            android:textSize="14sp" />
-
-        <ImageView
-            android:layout_width="14dp"
-            android:layout_height="14dp"
-            android:layout_gravity="center_vertical"
-            android:src="@drawable/icon_zan" />
-
-        <TextView
-            android:id="@+id/tv_jiaoliu_dianzan"
-            android:layout_width="14sp"
-            android:layout_height="14sp"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="8dp"
-            android:text="100"
-            android:textColor="#1c7cea"
-            android:textSize="14sp" />
-
-        <ImageView
-            android:layout_width="14dp"
-            android:layout_height="14dp"
-            android:layout_gravity="center_vertical"
             android:layout_marginLeft="20dp"
-            android:src="@drawable/icon_pinglun" />
+            android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/tv_jiaoliu_huifu"
-            android:layout_width="14sp"
-            android:layout_height="14sp"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="8dp"
-            android:text="100"
-            android:textColor="#1c7cea"
-            android:textSize="14sp" />
+            <ImageView
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:src="@drawable/icon_tag" />
+
+            <TextView
+                android:id="@+id/tv_jiaoliu_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:text="国电电力"
+                android:layout_gravity="center_vertical"
+                android:textColor="#919191"
+                android:textSize="16sp" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:background="#DDDDDD"></View>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="4dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_jiaoliu_time"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:text="一分钟前"
+                android:textColor="#bebebe"
+                android:textSize="14sp" />
+
+            <ImageView
+                android:layout_width="14dp"
+                android:layout_height="14dp"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/icon_zan" />
+
+            <TextView
+                android:id="@+id/tv_jiaoliu_dianzan"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="8dp"
+                android:text="100"
+                android:textColor="#1c7cea"
+                android:textSize="14sp" />
+
+            <ImageView
+                android:layout_width="14dp"
+                android:layout_height="14dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="20dp"
+                android:src="@drawable/icon_pinglun" />
+
+            <TextView
+                android:id="@+id/tv_jiaoliu_huifu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="8dp"
+                android:text="100"
+                android:textColor="#1c7cea"
+                android:textSize="14sp" />
+        </LinearLayout>
     </LinearLayout>
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#DDDDDD"></View>
+        android:layout_height="8dp"
+        android:background="#f6f6f6"></View>
 </LinearLayout>

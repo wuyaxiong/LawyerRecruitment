@@ -36,7 +36,6 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 
 import net.cpsec.zfwx.guodian.R;
 import net.cpsec.zfwx.guodian.ui.HeadDiaLog;
-import net.cpsec.zfwx.guodian.utils.Debugging;
 import net.cpsec.zfwx.guodian.utils.NetUrl;
 import net.cpsec.zfwx.guodian.utils.Toast;
 import net.cpsec.zfwx.guodian.widget.DialogHint;
@@ -129,7 +128,6 @@ public class XiuGaiXinXiActivity extends BaseActivity implements View.OnClickLis
 //                params.put("address",etaAddress.getText().toString());
 //                params.put("cname",etDanwei.getText().toString());
                 params.put("uid", uid);
-                Debugging.debugging("uid=============="+uid);
                 params.put("userpic",base64);
                 params.put("introduction", etJianjie.getText().toString());
                 setParams(NetUrl.XIUGAI_XINXI, params, 0);
@@ -169,15 +167,6 @@ public class XiuGaiXinXiActivity extends BaseActivity implements View.OnClickLis
                 return;
             } else {
                 Intent intent = new Intent(this, MyCenterActivity.class);
-//                intent.putExtra("head",bitmapToBase64(head));
-//                intent.putExtra("instruction",etJianjie.getText().toString());
-//                intent.putExtra("name",etName.getText().toString());
-//                intent.putExtra("sex",sex);
-//                intent.putExtra("cname",etDanwei.getText().toString());
-//                intent.putExtra("address",etaAddress.getText().toString());
-//                intent.putExtra("birth",etBirth.getText().toString());
-//                intent.putExtra("mianmao",etMianmao.getText().toString());
-                //setResult(8,intent);
                 startActivity(intent);
                 finish();
             }
@@ -304,8 +293,8 @@ public class XiuGaiXinXiActivity extends BaseActivity implements View.OnClickLis
         intent.putExtra("aspectX", 1);
         intent.putExtra("aspectY", 1);
         // outputX outputY 是裁剪图片宽高
-        intent.putExtra("outputX", 100);
-        intent.putExtra("outputY", 100);
+        intent.putExtra("outputX", 300);
+        intent.putExtra("outputY", 300);
         intent.putExtra("return-data", true);
         startActivityForResult(intent, 7);
     }

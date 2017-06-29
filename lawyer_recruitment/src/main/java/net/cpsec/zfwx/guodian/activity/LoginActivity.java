@@ -7,13 +7,13 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 
 import com.alibaba.fastjson.JSON;
 import com.android.volley.manager.RequestMap;
 
 import net.cpsec.zfwx.guodian.R;
 import net.cpsec.zfwx.guodian.utils.Constant;
+import net.cpsec.zfwx.guodian.utils.DingShiQiUtil;
 import net.cpsec.zfwx.guodian.utils.NetUrl;
 import net.cpsec.zfwx.guodian.utils.Toast;
 import net.cpsec.zfwx.guodian.utils.VerifyPhoneNumber;
@@ -25,7 +25,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     private Button btn_login;
     private EditText etPhoneNumber, etVerificationCode;
     private String phoneNums, code;
-    private ImageButton imageButton;
+    private Button imageButton;
 //   // 登录请求 在成功的回调中将返回的token数据用SharedPreferences将token持久化 并 跳转到登录成功的界面
 //    SharedPreferences sp = getSharedPreferences(PreferencesStorageKey.UID, Context.MODE_PRIVATE);
 //    SharedPreferences.Editor editor = sp.edit();
@@ -36,16 +36,19 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         setContentView(R.layout.activity_login);
         initView();
     }
+    @Override
+    protected void onDestroy() {
+        DingShiQiUtil.close();// 关闭定时器；
+        super.onDestroy();
+    }
 
     private void initView() {
-        imageButton = (ImageButton) findViewById(R.id.ib_login_button);
+        imageButton = (Button) findViewById(R.id.ib_login_button);
         imageButton.setOnClickListener(this);
         btn_login = (Button) findViewById(R.id.btn_login);
         etPhoneNumber = (EditText) findViewById(R.id.et_login_phonenumber);
         etVerificationCode = (EditText) findViewById(R.id.et_login_phonecode);
         btn_login.setOnClickListener(this);
-//        etPhoneNumber.setText("17600382402");
-//        etVerificationCode.setText("1234");
     }
 
     @Override
@@ -62,6 +65,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                     phoneNums = "";
                     return;
                 }else{
+                    DingShiQiUtil.init(imageButton);
+                    DingShiQiUtil.open();
                     RequestMap params = new RequestMap();
                     params.put("phone", phoneNums);
                     setParams(NetUrl.REGIST, params, 0);
@@ -119,10 +124,12 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                         Intent intent = new Intent(this, MainActivity.class);
                         String uid = JSON.parseObject(response).getString("infor");
                         SharedPreferences sp = getSharedPreferences("uid", Context.MODE_PRIVATE);
-                        SharedPreferences sp1 = getSharedPreferences("isfirst", Context.MODE_PRIVATE);
                         SharedPreferences.Editor editor = sp.edit();
-                        SharedPreferences.Editor editor1 = sp1.edit();
                         editor.putString("uid", uid);
+                        SharedPreferences sp1 = getSharedPreferences("isfirst", Context.MODE_PRIVATE);
+
+                        SharedPreferences.Editor editor1 = sp1.edit();
+
                         editor.commit();
                         editor1.putString("isfirst", "1");
                         editor1.commit();

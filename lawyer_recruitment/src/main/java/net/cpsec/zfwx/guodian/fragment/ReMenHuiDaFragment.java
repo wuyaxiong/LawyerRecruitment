@@ -65,23 +65,6 @@ public class ReMenHuiDaFragment extends BaseFragment implements YRecycleview.OnR
         } else {
             adapter.notifyDataSetChanged();
         }
-//        adapter.setOnItemClickListener(new JiaoLiuAdapter.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(View view, int position) {
-//                Intent intent=new Intent(getActivity(), WenTiXiangQiActivity.class);
-//                QuanBuInfor infor=quanbuInfor.get(position-1);
-//                Bundle bundle=new Bundle();
-//                bundle.putString("from","4");
-//                bundle.putString("username4",infor.getUsername().toString());
-//                bundle.putString("content4",infor.getContent());
-//                bundle.putString("time4",infor.getTime()+"");
-//                bundle.putString("title4",infor.getTitle());
-//                bundle.putString("image4",infor.getImage());
-//                bundle.putString("userpic4",infor.getUserpic());
-//                intent.putExtras(bundle);
-//                startActivity(intent);
-//            }
-//        });
         adapter.setOnTitleClickListener(new JiaoLiuAdapter.OnTitleClickListener() {
             @Override
             public void onTitleClick(String id, int position) {
@@ -108,6 +91,18 @@ public class ReMenHuiDaFragment extends BaseFragment implements YRecycleview.OnR
         adapter.setOnPicClickListener(new JiaoLiuAdapter.OnPicClickListener() {
             @Override
             public void onPicClick(String id, int position) {
+                Intent intent = new Intent(getActivity(), TieZiDetailActivity.class);
+                infor = quanbuInfor.get(position);
+                pos = infor.getId();
+                Bundle bundle = new Bundle();
+                bundle.putString("artical_id", pos + "");
+                intent.putExtras(bundle);
+                startActivity(intent);
+            }
+        });
+        adapter.setOnLLClickListener(new JiaoLiuAdapter.OnLLClickListener() {
+            @Override
+            public void onLLClick(String id, int position) {
                 Intent intent = new Intent(getActivity(), TieZiDetailActivity.class);
                 infor = quanbuInfor.get(position);
                 pos = infor.getId();

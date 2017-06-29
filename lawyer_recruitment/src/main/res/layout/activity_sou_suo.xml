@@ -10,7 +10,7 @@
     tools:context=".activity.SouSuoTieZiActivity">
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="45dp"
         android:orientation="horizontal">
         <TextView
             android:id="@+id/tv_sousuo_back"
@@ -36,26 +36,28 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="#b2b2b2"/>
+
     <LinearLayout
         android:id="@+id/relativeLayout"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:background="#f5f5f5"
+        android:background="#F7F7F7"
         android:orientation="horizontal">
 
         <EditText
             android:id="@+id/et_search"
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="35dp"
+            android:layout_gravity="center_vertical"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
+            android:layout_weight="1"
+            android:background="@drawable/shape_search"
             android:hint="搜索关键词"
-            android:paddingLeft="5dp"
-            android:layout_gravity="center_vertical"
-            android:background="@drawable/shape_search"></EditText>
+            android:paddingLeft="5dp"></EditText>
     </LinearLayout>
-<View
+
+    <View
     android:layout_width="match_parent"
     android:layout_height="1dp"
     android:background="#b2b2b2"/>
@@ -71,7 +73,8 @@
             android:layout_marginLeft="20dp"
             android:text="标题"
             android:layout_gravity="center_vertical"
-            android:background="@drawable/selector_label"/>
+            android:background="@drawable/search_selector"
+            />
         <Button
             android:id="@+id/btn_search02"
             android:layout_width="0dp"
@@ -79,7 +82,7 @@
             android:layout_height="40dp"
             android:text="单位"
             android:layout_gravity="center_vertical"
-            android:background="@drawable/selector_label"
+            android:background="@drawable/search_selector"
             android:layout_marginLeft="10dp"/>
 
         <Button
@@ -91,8 +94,12 @@
             android:layout_marginRight="20dp"
             android:layout_marginLeft="10dp"
             android:layout_gravity="center_vertical"
-            android:background="@drawable/selector_label"/>
+            android:background="@drawable/search_selector"/>
     </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="8dp"
+        android:background="#f5f5f5"/>
     <net.cpsec.zfwx.guodian.ui.YRecycleview
         android:id="@+id/yrv_search_tiezi"
         android:layout_width="match_parent"

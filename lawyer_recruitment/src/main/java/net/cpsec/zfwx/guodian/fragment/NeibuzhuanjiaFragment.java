@@ -96,6 +96,7 @@ public class NeibuzhuanjiaFragment extends BaseFragment implements View.OnClickL
                 ZhuanJiaBean.InforBean infor= zhuanJiaInfor.get(position-1);
                 Log.e("专家页面", "infor.getUsername()"+infor.getUsername() );
                 Intent mIntent = new Intent();
+                mIntent.putExtra("eid", infor.getId()+"");
                 mIntent.putExtra("zhuanjia_name", infor.getUsername());
                 // 设置结果，并进行传送
                 getActivity().setResult(resultCode, mIntent);

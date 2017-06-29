@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.makeramen.roundedimageview.RoundedImageView;
@@ -30,7 +31,8 @@ public class XinShengAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     List<String> list;
     public OnTitleClickListener mListener;
     public OnHeadClickListener mHeadlistener;
-
+    public OnPicClickListener mPiclistener;
+    public OnLLClickListener mLLlistener;
     public XinShengAdapter(Context context, List<ShengDetail> shengList) {
         this.context = context;
         this.shengList = shengList;
@@ -59,13 +61,15 @@ public class XinShengAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         } else {
             ((ViewHolder) holder).img_01.setVisibility(View.GONE);
         }
+        ((ViewHolder) holder).img_01.setOnClickListener(new ClickPicListener(String.valueOf(position), position));
+
         ImageLoader.getInstance().displayImage("http://" + shengList.get(position).getUserpic(), ((ViewHolder) holder).riv_avadar);
         ((ViewHolder) holder).tv_name.setText(shengList.get(position).getUsername());
         ((ViewHolder) holder).tv_title.setText(shengList.get(position).getContent());
         ((ViewHolder) holder).tv_shijian.setText(DateUtil.converTime(shengList.get(position).getAsktime()));
-        //((ViewHolder) holder).tv_dianzan.setText(shengList.get(position).getPraise()+"");
         ((ViewHolder) holder).tv_title.setOnClickListener(new ClickListener(String.valueOf(position), position));
         ((ViewHolder) holder).riv_avadar.setOnClickListener(new ClickHeadListener(String.valueOf(position), position));
+        ((ViewHolder) holder).linearLayout.setOnClickListener(new ClickLLListener(String.valueOf(position), position));
         if (mOnItemClickListener != null) {
             //为ItemView设置监听器
             holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -88,6 +92,7 @@ public class XinShengAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         private RoundedImageView riv_avadar;
         private TextView tv_name, tv_title, tv_shijian, tv_dianzan;
         private ImageView img_01;
+        private LinearLayout linearLayout;
         public ViewHolder(View itemView) {
             super(itemView);
             LocalDisplay.init(itemView.getContext());
@@ -98,6 +103,7 @@ public class XinShengAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             tv_shijian = (TextView) itemView.findViewById(R.id.tv_xinsheng_time);
             tv_dianzan = (TextView) itemView.findViewById(R.id.tv_xinsheng_dainzxan);
             img_01 = (ImageView) itemView.findViewById(R.id.img_xinsheng_01);
+            linearLayout= (LinearLayout) itemView.findViewById(R.id.ll_xinsheng_bottom);
         }
 
         @Override
@@ -174,5 +180,61 @@ public class XinShengAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     public interface OnHeadClickListener {//自己写了一个点击事件的接口
 
         void onHeadClick(String id, int position);
+    }
+
+    //给图片添加点击事件
+    public class ClickPicListener implements View.OnClickListener {//在这里我们重写了点击事件
+        private String id;
+        private int pos;
+
+        public ClickPicListener(String id, int postion) {
+            this.id = id;
+            this.pos = postion;
+        }
+
+        @Override
+        public void onClick(View view) {
+
+            if (mPiclistener != null) {
+                mPiclistener.onPicClick(id, pos);
+            }
+        }
+    }
+    public void setOnPicClickListener(OnPicClickListener listener) {//自己写了一个方法，用上我们的接口
+        mPiclistener = listener;
+    }
+
+
+    public interface OnPicClickListener {//自己写了一个点击事件的接口
+
+        void onPicClick(String id, int position);
+    }
+
+    //给底部布局添加点击事件
+    public class ClickLLListener implements View.OnClickListener {//在这里我们重写了点击事件
+        private String id;
+        private int pos;
+
+        public ClickLLListener(String id, int postion) {
+            this.id = id;
+            this.pos = postion;
+        }
+
+        @Override
+        public void onClick(View view) {
+
+            if (mLLlistener != null) {
+                mLLlistener.onLLClick(id, pos);
+            }
+        }
+    }
+    public void setOnLLClickListener(OnLLClickListener listener) {//自己写了一个方法，用上我们的接口
+        mLLlistener = listener;
+    }
+
+
+    public interface OnLLClickListener {//自己写了一个点击事件的接口
+
+        void onLLClick(String id, int position);
     }
 }

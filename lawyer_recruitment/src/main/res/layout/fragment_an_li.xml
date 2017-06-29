@@ -4,6 +4,11 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="net.cpsec.zfwx.guodian.fragment.AnLiFragment">
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="8dp"
+        android:background="#f6f6f6"
+        ></View>
     <net.cpsec.zfwx.guodian.ui.YRecycleview
         android:id="@+id/yrv_sahre_anlimeiwen"
         android:layout_width="match_parent"

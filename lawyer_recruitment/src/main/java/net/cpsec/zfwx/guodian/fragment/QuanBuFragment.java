@@ -8,6 +8,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -60,7 +61,6 @@ private RelativeLayout rl_xiala;
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_quan_bu, container, false);
         initView(v);
-        initData();
         return v;
     }
 
@@ -96,33 +96,10 @@ private RelativeLayout rl_xiala;
         } else {
             adapter.notifyDataSetChanged();
         }
-
-//        adapter.setOnItemClickListener(new JiaoLiuAdapter.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(View view, int position) {
-////              //  Intent intent=new Intent(getActivity(), WenTiXiangQiActivity.class);
-//                infor=quanbuInfor.get(position-1);
-//                int  artical_id=infor.getId();
-//                Debugging.debugging("artical_id==================="+artical_id);
-////                Bundle bundle=new Bundle();
-////                bundle.putString("from","3");
-////                bundle.putString("username3",infor.getUsername().toString());
-////                bundle.putString("content3",infor.getContent());
-////                bundle.putString("time3",infor.getTime()+"");
-////                bundle.putString("title3",infor.getTitle());
-////                bundle.putString("image3",infor.getImage());
-////                bundle.putString("userpic3",infor.getUserpic());
-////                intent.putExtras(bundle);
-////               // startActivity(intent);
-////                Log.d("闯过去的图片地址", "getImage: "+infor.getImage());
-//
-//           }
-//        });
         adapter.setOnTitleClickListener(new JiaoLiuAdapter.OnTitleClickListener() {
             @Override
             public void onTitleClick(String id, int position) {
                 Intent intent = new Intent(getActivity(), TieZiDetailActivity.class);
-                Debugging.debugging("position+++++++++++++++++++++++" + position);
                 infor = quanbuInfor.get(position);
                 pos = infor.getId();
                 Bundle bundle = new Bundle();
@@ -154,6 +131,18 @@ private RelativeLayout rl_xiala;
                 startActivity(intent);
             }
         });
+        adapter.setOnLLClickListener(new JiaoLiuAdapter.OnLLClickListener() {
+            @Override
+            public void onLLClick(String id, int position) {
+                Intent intent = new Intent(getActivity(), TieZiDetailActivity.class);
+                infor = quanbuInfor.get(position);
+                pos = infor.getId();
+                Bundle bundle = new Bundle();
+                bundle.putString("artical_id", pos + "");
+                intent.putExtras(bundle);
+                startActivity(intent);
+            }
+        });
     }
 
     private void initView(View v) {
@@ -167,8 +156,27 @@ private RelativeLayout rl_xiala;
         yRecycleview = (YRecycleview) v.findViewById(R.id.yrv_jiaoliu_quanbu);
         yRecycleview.setLayoutManager(new LinearLayoutManager(getActivity()));
         yRecycleview.setRefreshAndLoadMoreListener(this);
-        rl_xiala= (RelativeLayout) v.findViewById(R.id.rl_tiezi_xiala);
-        rl_xiala.setOnClickListener(this);
+        yRecycleview.setOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+            }
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                if (dy<=0){
+                    ll_actionbar.setVisibility(View.VISIBLE);
+
+                }else {
+                    ll_actionbar.setVisibility(View.GONE);
+                   // ll_actionbar.setVisibility(View.VISIBLE);
+                }
+            }
+        });
+//        rl_xiala= (RelativeLayout) v.findViewById(R.id.rl_tiezi_xiala);
+//        rl_xiala.setOnClickListener(this);
+        initData();
     }
 
     @Override
@@ -210,21 +218,6 @@ private RelativeLayout rl_xiala;
                 }
                 break;
         }
-//        try {
-//            quanbuBean = JSON.parseObject(response, QuanBuBean.class);
-//            Debugging.debugging("position      =      " + (null == quanbuBean));
-//            if (isRefreshState) {
-//                yRecycleview.setReFreshComplete();
-//                quanbuInfor = quanbuBean.getInfor();
-//                Debugging.debugging("positionLists      =   " + (quanbuBean.getInfor().toString()));
-//            } else {
-//                morequanbuInfor = quanbuBean.getInfor();
-//                quanbuInfor.addAll(morequanbuInfor);
-//            }
-//            setAdapter();
-//        } catch (Exception e) {
-//            Toast.prompt(getActivity(), "数据异常");
-//        }
     }
 
     @Override
@@ -346,13 +339,13 @@ private RelativeLayout rl_xiala;
             case R.id.v_touch_paixu:
                 window.dismiss();
                 break;
-            case R.id.rl_tiezi_xiala:
-                if (ll_actionbar.getVisibility()==View.VISIBLE){
-                    ll_actionbar.setVisibility(View.GONE);
-                }else {
-                    ll_actionbar.setVisibility(View.VISIBLE);
-                }
-                break;
+//            case R.id.rl_tiezi_xiala:
+//                if (ll_actionbar.getVisibility()==View.VISIBLE){
+//                    ll_actionbar.setVisibility(View.GONE);
+//                }else {
+//                    ll_actionbar.setVisibility(View.VISIBLE);
+//                }
+//                break;
         }
     }
 
@@ -381,6 +374,9 @@ private RelativeLayout rl_xiala;
         }
     }
 
-
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+    }
 }
 

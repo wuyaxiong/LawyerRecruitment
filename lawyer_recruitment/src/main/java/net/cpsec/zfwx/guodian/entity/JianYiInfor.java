@@ -21,6 +21,15 @@ public class JianYiInfor implements Serializable {
     private String content;
     private String  comment;
     private int praise;
+    private int id;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getPhone() {
         return phone;

@@ -13,7 +13,8 @@ import com.alibaba.fastjson.JSON;
 import com.android.volley.manager.RequestMap;
 
 import net.cpsec.zfwx.guodian.R;
-import net.cpsec.zfwx.guodian.activity.WenTiXiangQiActivity;
+import net.cpsec.zfwx.guodian.activity.JianYiDetailActivity;
+import net.cpsec.zfwx.guodian.activity.XiangXiZiLiaoActivity;
 import net.cpsec.zfwx.guodian.adapter.JianYiAdapter;
 import net.cpsec.zfwx.guodian.entity.JianYiBean;
 import net.cpsec.zfwx.guodian.entity.JianYiInfor;
@@ -62,18 +63,50 @@ public class JianYiFragment extends BaseFragment implements YRecycleview.OnRefre
         } else {
             adapter.notifyDataSetChanged();
         }
-        adapter.setOnItemClickListener(     new JianYiAdapter.OnItemClickListener() {
+//        adapter.setOnItemClickListener(     new JianYiAdapter.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(View view, int position) {
+//                Intent intent=new Intent(getActivity(), JianYiDetailActivity.class);
+//                JianYiInfor infor=jianyiLists.get(position);
+//                Bundle bundle=new Bundle();
+//               // bundle.putString("from","2");
+//                bundle.putString("advice_id",infor.getId()+"");
+////                bundle.putString("content2",infor.getContent());
+////                bundle.putString("time2",infor.getTime()+"");
+////                bundle.putString("userpic2",infor.getUserpic());
+//                intent.putExtras(bundle);
+//                startActivity(intent);
+//            }
+//        });
+        adapter.setHeadClickListener(new JianYiAdapter.OnHeadClickListener() {
             @Override
-            public void onItemClick(View view, int position) {
-                Intent intent=new Intent(getActivity(), WenTiXiangQiActivity.class);
-                JianYiInfor infor=jianyiLists.get(position-1  );
+            public void onHeadClick(String id, int position) {
+                Intent intent=new Intent(getActivity(), XiangXiZiLiaoActivity.class);
+                JianYiInfor infor=jianyiLists.get(position);
                 Bundle bundle=new Bundle();
-                bundle.putString("from","2");
-                bundle.putString("username2",infor.getUsername().toString());
-                bundle.putString("content2",infor.getContent());
-                bundle.putString("time2",infor.getTime()+"");
-               // bundle.putString("image2",infor.getImage());
-                bundle.putString("userpic2",infor.getUserpic());
+                bundle.putString("phone",infor.getPhone());
+                intent.putExtras(bundle);
+                startActivity(intent);
+            }
+        });
+        adapter.setOnTitleClickListener(new JianYiAdapter.OnTitleClickListener() {
+            @Override
+            public void onTitleClick(String id, int position) {
+                Intent intent=new Intent(getActivity(), JianYiDetailActivity.class);
+                JianYiInfor infor=jianyiLists.get(position);
+                Bundle bundle=new Bundle();
+                bundle.putString("advice_id",infor.getId()+"");
+                intent.putExtras(bundle);
+                startActivity(intent);
+            }
+        });
+        adapter.setOnPicClickListener(new JianYiAdapter.OnPicClickListener() {
+            @Override
+            public void onPicClick(String id, int position) {
+                Intent intent=new Intent(getActivity(), JianYiDetailActivity.class);
+                JianYiInfor infor=jianyiLists.get(position);
+                Bundle bundle=new Bundle();
+                bundle.putString("advice_id",infor.getId()+"");
                 intent.putExtras(bundle);
                 startActivity(intent);
             }

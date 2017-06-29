@@ -1,8 +1,10 @@
 package net.cpsec.zfwx.guodian.fragment;
 
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -83,11 +85,14 @@ public class TongXunLuFragment extends BaseFragment implements View.OnClickListe
     private String[] groupName=new String[]{"未分组好友","本单位好友","兄弟单位好友","群组"};
     //    private int groupPos;
 //    private int childPos;
+    String uid;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // getActivity().requestWindowFeature(Window.FEATURE_NO_TITLE);
         v = inflater.inflate(R.layout.fragment_tong_xun_lu, container, false);
+        SharedPreferences sp = getActivity().getSharedPreferences("uid", Context.MODE_PRIVATE);
+        uid = sp.getString("uid", "");
         initView(v);
         initScachView();
         initData();
@@ -197,7 +202,7 @@ public class TongXunLuFragment extends BaseFragment implements View.OnClickListe
                                                 }
                                                 RequestMap map = new RequestMap();
                                                 //TODO uid
-                                                map.put("uid", "340");
+                                                map.put("uid", uid);
                                                 map.put("group_id", (which + 1) + "");
                                                 map.put("person_id", "" + person_id);
                                                 Log.e("123", "onClick: " + (which + 1) + ":" + person_id);
@@ -260,7 +265,7 @@ public class TongXunLuFragment extends BaseFragment implements View.OnClickListe
         //获取好友请求列表
         RequestMap    params= new RequestMap();
         // TODO 模拟uid
-        params.put("uid", "340");
+        params.put("uid", uid);
         setParams(NetUrl.GET_FRIEND_QUEUE, params, NEWFRIEND);
         listAdapter= new MyBaseExpandableListAdapter(gData, iData, getContext());
 
@@ -282,7 +287,7 @@ public class TongXunLuFragment extends BaseFragment implements View.OnClickListe
     public void requestGroupInfo(int friend_group_id){
         RequestMap params=new RequestMap();
         //TODO 模拟uid
-        params.put("uid", "340");
+        params.put("uid", uid);
         params.put("friend_group_id",friend_group_id+"");
         setParams(NetUrl.GET_FRIEND, params, friend_group_id);
     }
