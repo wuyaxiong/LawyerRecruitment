@@ -13,7 +13,7 @@ import com.makeramen.roundedimageview.RoundedImageView;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import net.cpsec.zfwx.guodian.R;
-import net.cpsec.zfwx.guodian.entity.QuanBuInfor;
+import net.cpsec.zfwx.guodian.entity.ReMenBean;
 import net.cpsec.zfwx.guodian.utils.DateUtil;
 import net.cpsec.zfwx.guodian.utils.LocalDisplay;
 
@@ -21,19 +21,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by szh on 2017/5/26.
+ * Created by szh on 2017/6/29.
  */
 
-public class JiaoLiuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements View.OnClickListener {
+public class ReMenHuiDaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements View.OnClickListener {
     private Context context;
-    private List<QuanBuInfor> quanBuInfors;
+    private List<ReMenBean.InforBean> quanBuInfors;
     private OnItemClickListener mOnItemClickListener = null;
     List<String> list;
     public OnTitleClickListener mListener;
     public OnHeadClickListener mHeadlistener;
     public OnPicClickListener mPiclistener;
     public OnLLClickListener mLLlistener;
-    public JiaoLiuAdapter(Context context, List<QuanBuInfor> quanBuInfors) {
+
+    public ReMenHuiDaAdapter(Context context, List<ReMenBean.InforBean> quanBuInfors) {
         this.context = context;
         this.quanBuInfors = quanBuInfors;
     }
@@ -51,28 +52,35 @@ public class JiaoLiuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         list = new ArrayList<String>();
         list.clear();
         String tupian = quanBuInfors.get(position).getImage();
-        if (tupian==null||tupian.isEmpty()) {
+        if (tupian == null || tupian.isEmpty()) {
             ((ViewHolder) holder).img_01.setVisibility(View.GONE);
-        }else {
-        String[] tupians = tupian.split(",");
-        for (String substr : tupians) {
-            list.add(substr);
-        }
-        //给图片添加点击事件
-        ((ViewHolder) holder).img_01.setOnClickListener(new ClickPicListener(String.valueOf(position), position));
-        if (!list.get(0).isEmpty()) {
-            ((ViewHolder) holder).img_01.setVisibility(View.VISIBLE);
-            ImageLoader.getInstance().displayImage("http://" + list.get(0), ((ViewHolder) holder).img_01);
         } else {
-            ((ViewHolder) holder).img_01.setVisibility(View.GONE);
-        }}
+            String[] tupians = tupian.split(",");
+            for (String substr : tupians) {
+                list.add(substr);
+            }
+            //给图片添加点击事件
+            ((ViewHolder) holder).img_01.setOnClickListener(new ClickPicListener(String.valueOf(position), position));
+            if (!list.get(0).isEmpty()) {
+                ((ViewHolder) holder).img_01.setVisibility(View.VISIBLE);
+                ImageLoader.getInstance().displayImage("http://" + list.get(0), ((ViewHolder) holder).img_01);
+            } else {
+                ((ViewHolder) holder).img_01.setVisibility(View.GONE);
+            }
+        }
         ImageLoader.getInstance().displayImage("http://" + quanBuInfors.get(position).getUserpic(), ((ViewHolder) holder).riv_avadar);
         ((ViewHolder) holder).tv_name.setText(quanBuInfors.get(position).getUsername());
         ((ViewHolder) holder).tv_title.setText(quanBuInfors.get(position).getTitle());
         ((ViewHolder) holder).tv_shijian.setText(DateUtil.converTime(quanBuInfors.get(position).getTime()));
         ((ViewHolder) holder).tv_label.setText(quanBuInfors.get(position).getName());
-        ((ViewHolder) holder).tv_dianzan.setText(quanBuInfors.get(position).getPraise()+"");
-        ((ViewHolder) holder).tv_huifu.setText(quanBuInfors.get(position).getComment()+"");
+        ((ViewHolder) holder).tv_dianzan.setText(quanBuInfors.get(position).getPraise() + "");
+        ((ViewHolder) holder).tv_huifu.setText(quanBuInfors.get(position).getComment() + "");
+        ((ViewHolder) holder).tv_jieda.setVisibility(View.VISIBLE);
+        if (quanBuInfors.get(position).getIs_ok()==0){
+            ((ViewHolder) holder).tv_jieda.setText("未解答");
+        }else {
+            ((ViewHolder) holder).tv_jieda.setText("已解答");
+        }
         int expert=quanBuInfors.get(position).getExpert();
         if (expert==1){
             ((ViewHolder) holder).iv_expert.setVisibility(View.VISIBLE);
@@ -105,10 +113,9 @@ public class JiaoLiuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     }
 
 
-
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private RoundedImageView riv_avadar;
-        private TextView tv_name, tv_title, tv_label, tv_shijian, tv_dianzan, tv_huifu;
+        private TextView tv_name, tv_title, tv_label, tv_shijian, tv_dianzan, tv_huifu,tv_jieda;
         private ImageView img_01,iv_expert;
         private LinearLayout linearLayout;
 
@@ -124,8 +131,10 @@ public class JiaoLiuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             tv_dianzan = (TextView) itemView.findViewById(R.id.tv_jiaoliu_dianzan);
             tv_huifu = (TextView) itemView.findViewById(R.id.tv_jiaoliu_huifu);
             img_01 = (ImageView) itemView.findViewById(R.id.img_jialiu_01);
-            linearLayout= (LinearLayout) itemView.findViewById(R.id.ll_bottom);
+            linearLayout = (LinearLayout) itemView.findViewById(R.id.ll_bottom);
+            tv_jieda= (TextView) itemView.findViewById(R.id.tv_jiaoliu_jieda);
             iv_expert= (ImageView) itemView.findViewById(R.id.iv_iszhuanjia);
+
         }
 
         @Override
@@ -254,6 +263,7 @@ public class JiaoLiuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             }
         }
     }
+
     public void setOnLLClickListener(OnLLClickListener listener) {//自己写了一个方法，用上我们的接口
         mLLlistener = listener;
     }

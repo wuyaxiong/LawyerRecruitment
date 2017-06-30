@@ -13,6 +13,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
@@ -48,14 +49,17 @@ public class QuanBuFragment extends BaseFragment implements YRecycleview.OnRefre
     int restult = 0;
     private YRecycleview yRecycleview;
     private JiaoLiuAdapter adapter;
-
     private boolean isRefreshState = true;//是否刷新
     private List<QuanBuInfor> quanbuInfor;
     private List<QuanBuInfor> morequanbuInfor;
     private QuanBuBean quanbuBean;
+    private boolean isSlidingToLast = false;
     QuanBuInfor infor;
     int pos;
-private RelativeLayout rl_xiala;
+    private LinearLayoutManager mLinearLayoutManager;
+    private RelativeLayout rl_xiala;
+    private ImageView iv_xinhao;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -68,30 +72,32 @@ private RelativeLayout rl_xiala;
         String ur;
         RequestMap params = new RequestMap();
         if (tv_paixu.getText().equals("按时间排序")) {
-            ur=NetUrl.QINGNIAN_JIJIAOLIU_SHIJIAN;
-          //  setParams(NetUrl.QINGNIAN_JIJIAOLIU_SHIJIAN, params, 1);
+            ur = NetUrl.QINGNIAN_JIJIAOLIU_SHIJIAN;
+            //  setParams(NetUrl.QINGNIAN_JIJIAOLIU_SHIJIAN, params, 1);
         } else {
-            ur=NetUrl.QINGNIAN_JIJIAOLIU_REDU;
-          //  setParams(NetUrl.QINGNIAN_JIJIAOLIU_REDU, params, 2);
+            ur = NetUrl.QINGNIAN_JIJIAOLIU_REDU;
+            //  setParams(NetUrl.QINGNIAN_JIJIAOLIU_REDU, params, 2);
         }
         setParams(ur, params, 1);
         //  setParams(NetUrl.QINGNIAN_JIJIAOLIU_QUANBU, params, 0);
     }
+
     private void initData1() {
         String url = null;
         RequestMap params = new RequestMap();
         if (tv_quanbu.getText().equals("只看本层级")) {
-           url=NetUrl.QINGNIAN_JIJIAOLIU_CENGJI;
-           // setParams(NetUrl.QINGNIAN_JIJIAOLIU_CENGJI, params, 3);
+            url = NetUrl.QINGNIAN_JIJIAOLIU_CENGJI;
+            // setParams(NetUrl.QINGNIAN_JIJIAOLIU_CENGJI, params, 3);
         } else {
-            url=NetUrl.QINGNIAN_JIJIAOLIU_DANWEI;
+            url = NetUrl.QINGNIAN_JIJIAOLIU_DANWEI;
         }
         setParams(url, params, 2);
     }
+
     private void setAdapter() {
         if (isRefreshState && null != quanbuInfor) {
             adapter = new JiaoLiuAdapter(getActivity(), quanbuInfor);
-            yRecycleview.setLayoutManager(new LinearLayoutManager(getActivity()));
+//            yRecycleview.setLayoutManager(new LinearLayoutManager(getActivity()));
             yRecycleview.setAdapter(adapter);
         } else {
             adapter.notifyDataSetChanged();
@@ -111,7 +117,7 @@ private RelativeLayout rl_xiala;
         adapter.setHeadClickListener(new JiaoLiuAdapter.OnHeadClickListener() {
             @Override
             public void onHeadClick(String id, int position) {
-              Intent intent = new Intent(getActivity(), XiangXiZiLiaoActivity.class);
+                Intent intent = new Intent(getActivity(), XiangXiZiLiaoActivity.class);
                 infor = quanbuInfor.get(position);
                 Bundle bundle = new Bundle();
                 bundle.putString("phone", infor.getPhone());
@@ -146,6 +152,7 @@ private RelativeLayout rl_xiala;
     }
 
     private void initView(View v) {
+        iv_xinhao = (ImageView) v.findViewById(R.id.iv_xinhao);
         tv_quanbu = (TextView) v.findViewById(R.id.tv_qunbu);
         tv_paixu = (TextView) v.findViewById(R.id.tv_paixu);
         rl_quanbu = (RelativeLayout) v.findViewById(R.id.rl_jiaoliu_quanbu);
@@ -154,24 +161,57 @@ private RelativeLayout rl_xiala;
         rl_paixu.setOnClickListener(this);
         ll_actionbar = (LinearLayout) v.findViewById(R.id.ll_quanbu_acationbar);
         yRecycleview = (YRecycleview) v.findViewById(R.id.yrv_jiaoliu_quanbu);
-        yRecycleview.setLayoutManager(new LinearLayoutManager(getActivity()));
+        mLinearLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
+        yRecycleview.setLayoutManager(mLinearLayoutManager);
         yRecycleview.setRefreshAndLoadMoreListener(this);
         yRecycleview.setOnScrollListener(new RecyclerView.OnScrollListener() {
+
+
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
+                //用来标记是否正在向最后一个滑动
+                if (newState == RecyclerView.SCROLL_STATE_DRAGGING || newState == RecyclerView.SCROLL_STATE_SETTLING) {
+                    if (isSlidingToLast) {
+                        ll_actionbar.setVisibility(View.GONE);
+                    } else {
+                        ll_actionbar.setVisibility(View.VISIBLE);
+                    }
+//                        int firstVisible = mLinearLayoutManager.findFirstVisibleItemPosition();
+//                        int lastVisible = mLinearLayoutManager.findLastVisibleItemPosition();
+//                        if (firstVisible == 0) {
+//                            // ll_actionbar.setVisibility(View.GONE);
+//                            ll_actionbar.setVisibility(View.VISIBLE);
+//
+//                        } else if (lastVisible >= adapter.getItemCount() - 1) {
+//                            ll_actionbar.setVisibility(View.VISIBLE);
+//                            //ll_actionbar.setVisibility(View.GONE);
+//                        } else {
+//                            // ll_actionbar.setVisibility(View.VISIBLE);
+//                            ll_actionbar.setVisibility(View.GONE);
+//                        }
+                }
             }
 
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
-                if (dy<=0){
-                    ll_actionbar.setVisibility(View.VISIBLE);
 
-                }else {
-                    ll_actionbar.setVisibility(View.GONE);
-                   // ll_actionbar.setVisibility(View.VISIBLE);
+//                if (Math.abs(dy)<=3){
+//                        return;
+//                    }
+                if (dy > 0) {
+                    //大于0表示正在向下滚动
+                    isSlidingToLast = true;
+//                    ll_actionbar.setVisibility(View.GONE);
+
+                } else if (dy < 0) {
+                    //小于等于0表示停止或向上滚动
+                    isSlidingToLast = false;
+                    //ll_actionbar.setVisibility(View.INVISIBLE);
+//                    ll_actionbar.setVisibility(View.VISIBLE);
                 }
+
             }
         });
 //        rl_xiala= (RelativeLayout) v.findViewById(R.id.rl_tiezi_xiala);
@@ -182,20 +222,26 @@ private RelativeLayout rl_xiala;
     @Override
     public void onSuccess(String response, Map<String, String> headers, String url, int actionId) {
         super.onSuccess(response, headers, url, actionId);
-        switch (actionId){
+        switch (actionId) {
             case 1:
                 try {
                     quanbuBean = JSON.parseObject(response, QuanBuBean.class);
-                    Debugging.debugging("position      =      " + (null == quanbuBean));
-                    if (isRefreshState) {
-                        yRecycleview.setReFreshComplete();
-                        quanbuInfor = quanbuBean.getInfor();
-                        Debugging.debugging("positionLists      =   " + (quanbuBean.getInfor().toString()));
+                    if (quanbuBean == null) {
+                        iv_xinhao.setVisibility(View.VISIBLE);
+                        yRecycleview.setVisibility(View.GONE);
                     } else {
-                        morequanbuInfor = quanbuBean.getInfor();
-                        quanbuInfor.addAll(morequanbuInfor);
+                        iv_xinhao.setVisibility(View.GONE);
+                        yRecycleview.setVisibility(View.VISIBLE);
+                        if (isRefreshState) {
+                            yRecycleview.setReFreshComplete();
+                            quanbuInfor = quanbuBean.getInfor();
+                            Debugging.debugging("positionLists      =   " + (quanbuBean.getInfor().toString()));
+                        } else {
+                            morequanbuInfor = quanbuBean.getInfor();
+                            quanbuInfor.addAll(morequanbuInfor);
+                        }
+                        setAdapter();
                     }
-                    setAdapter();
                 } catch (Exception e) {
                     Toast.prompt(getActivity(), "数据异常");
                 }
@@ -225,7 +271,6 @@ private RelativeLayout rl_xiala;
         isRefreshState = true;
         yRecycleview.setReFreshComplete();
         initData();
-        //    Toast.prompt(getActivity(), "刷新完成。测试阶段");
     }
 
     @Override
@@ -233,7 +278,6 @@ private RelativeLayout rl_xiala;
         isRefreshState = false;
         initData();
         yRecycleview.setNoMoreData(true);
-        //Toast.prompt(getActivity(), "没有更多数据。测试阶段");
     }
 
     @Override
@@ -266,7 +310,6 @@ private RelativeLayout rl_xiala;
                     pop_bencengji.setSelected(false);
                     pop_bendanwei.setSelected(true);
                 }
-                //mInflater = LayoutInflater.from(getContext());
                 setPopupWindow();
                 break;
             case R.id.ll_popupwindow_quanbu:
@@ -317,7 +360,6 @@ private RelativeLayout rl_xiala;
                     pop_redu.setSelected(true);
                     initData();
                 }
-                //mInflater = LayoutInflater.from(getContext());
                 setPopupWindow();
                 break;
             case R.id.ll_popupwindow_shijian:

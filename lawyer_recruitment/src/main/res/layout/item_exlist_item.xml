@@ -16,11 +16,21 @@
         app:riv_border_width="1dp"
         app:riv_corner_radius="15dp"
         app:riv_mutate_background="true"
+        android:layout_marginTop="10dp"
         app:riv_oval="true"
         android:layout_gravity="center_vertical"
         android:layout_marginLeft="20dp"
         app:riv_tile_mode="repeat"  />
-
+<ImageView
+    android:id="@+id/hat_img"
+    android:layout_height="wrap_content"
+    android:layout_width="wrap_content"
+    android:layout_alignLeft="@id/img_icon"
+    android:layout_alignRight="@id/img_icon"
+   android:scaleType="fitXY"
+ android:src="@drawable/aaa"
+    android:visibility="invisible"
+    />
     <TextView
         android:id="@+id/tv_name"
         android:layout_width="wrap_content"
@@ -47,7 +57,7 @@
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
         android:gravity="center"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="15dp"
         android:layout_alignParentRight="true"
         android:layout_marginRight="10dp"
         android:paddingLeft="10dp"

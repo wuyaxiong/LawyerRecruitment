@@ -69,8 +69,11 @@ public class CenterTieZiAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         ((ViewHolder) holder).tv_title.setText(inforBeen.get(position).getContent());
         ((ViewHolder) holder).tv_shijian.setText(DateUtil.converTime(inforBeen.get(position).getTime()));
         ((ViewHolder) holder).tv_label.setText(inforBeen.get(position).getName());
+        ((ViewHolder) holder).tv_dianzan.setText(inforBeen.get(position).getPraise()+"");
+        ((ViewHolder) holder).tv_huifu.setText(inforBeen.get(position).getComment()+"");
         ((ViewHolder) holder).tv_title.setOnClickListener(new ClickListener(String.valueOf(position), position));
         ((ViewHolder) holder).riv_avadar.setOnClickListener(new ClickHeadListener(String.valueOf(position), position));
+
         //给图片添加点击事件
         ((ViewHolder) holder).img_01.setOnClickListener(new ClickPicListener(String.valueOf(position), position));
         ((ViewHolder) holder).linearLayout.setOnClickListener(new ClickLLListener(String.valueOf(position), position));

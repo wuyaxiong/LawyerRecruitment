@@ -1,71 +1,172 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
+    <!--<FrameLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="74dp">-->
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="74dp">
+        <!--<ImageView-->
+            <!--android:id="@+id/iv_iszhuanjia"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="30dp"-->
+            <!--android:src="@drawable/aaa"-->
+           <!---->
+            <!--/>-->
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:orientation="horizontal">
+        <!--<com.makeramen.roundedimageview.RoundedImageView-->
+            <!--android:id="@+id/riv_jiaoliu_avater"-->
+            <!--android:layout_width="42dp"-->
+            <!--android:layout_height="40dp"-->
 
-            <com.makeramen.roundedimageview.RoundedImageView
-                android:id="@+id/riv_jiaoliu_avater"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="20dp"
-                android:clickable="true"
-                android:scaleType="center"
-                android:src="@drawable/bantouming"
-                app:riv_border_color="#bbbbbb"
-                app:riv_border_width="1dp"
-                app:riv_corner_radius="15dp"
-                app:riv_mutate_background="true"
-                app:riv_oval="true"
-                app:riv_tile_mode="repeat" />
+            <!--android:clickable="true"-->
+            <!--android:scaleType="center"-->
+            <!--android:src="@drawable/bantouming"-->
+            <!--app:layout_constraintHorizontal_bias="0.054"-->
+            <!--app:layout_constraintLeft_toLeftOf="parent"-->
+            <!--app:layout_constraintRight_toRightOf="parent"-->
+            <!--app:layout_constraintTop_toTopOf="@+id/iv_iszhuanjia"-->
+            <!--app:riv_border_color="#bbbbbb"-->
+            <!--app:riv_border_width="1dp"-->
+            <!--app:riv_corner_radius="15dp"-->
+            <!--app:riv_mutate_background="true"-->
+            <!--app:riv_oval="true"-->
+            <!--app:riv_tile_mode="repeat" />-->
 
-            <TextView
-                android:id="@+id/tv_jiaoliu_name"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="8dp"
-                android:layout_toRightOf="@id/riv_jiaoliu_avater"
-                android:layout_weight="1"
-                android:text="啦啦啦"
-                android:textColor="#4b4b4b"
-                android:textSize="16sp" />
+    <!--</FrameLayout>-->
+<android.support.constraint.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="74dp">
+    <com.makeramen.roundedimageview.RoundedImageView
+        android:id="@+id/riv_jiaoliu_avater"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:clickable="true"
+        android:scaleType="center"
+        android:layout_gravity="center_horizontal"
+        android:src="@drawable/bantouming"
+        app:riv_border_color="#bbbbbb"
+        app:riv_border_width="1dp"
+        app:riv_corner_radius="15dp"
+        app:riv_mutate_background="true"
+        app:riv_oval="true"
+        app:riv_tile_mode="repeat"
+        android:layout_marginRight="8dp"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/iv_iszhuanjia"
+        android:layout_marginTop="17dp"
+        app:layout_constraintHorizontal_bias="0.054"
+        />
+    <ImageView
+        android:id="@+id/iv_iszhuanjia"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:src="@drawable/aaa"
+        android:layout_marginRight="8dp"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintHorizontal_bias="0.025"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="-3dp"
+        android:visibility="gone"
+        />
 
-            <TextView
-                android:id="@+id/tv_jiaoliu_jieda"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="12dp"
-                android:layout_marginRight="32dp"
-                android:textColor="#4b4b4b"
-                android:textSize="16dp" />
-        </LinearLayout>
-    </RelativeLayout>
+    <TextView
+        android:id="@+id/tv_jiaoliu_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_toRightOf="@id/riv_jiaoliu_avater"
+        android:layout_weight="1"
+        android:text="啦啦啦"
+        android:textColor="#4b4b4b"
+        android:textSize="16sp"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="28dp"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginRight="8dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintHorizontal_bias="0.256" />
+
+    <TextView
+        android:id="@+id/tv_jiaoliu_jieda"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:text="未解答"
+        android:textColor="@color/color_1658ee"
+        android:textSize="16dp"
+        android:layout_marginRight="8dp"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="28dp"
+        app:layout_constraintHorizontal_bias="0.943"
+        android:visibility="gone"/>
+</android.support.constraint.ConstraintLayout>
+    <!--<LinearLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="74dp"-->
+        <!--android:orientation="vertical">-->
+       <!---->
+        <!--<LinearLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:orientation="horizontal">-->
+
+            <!--<FrameLayout-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_marginLeft="20dp"-->
+                <!--android:layout_gravity="center_vertical">-->
+                <!--<com.makeramen.roundedimageview.RoundedImageView-->
+                    <!--android:id="@+id/riv_jiaoliu_avater"-->
+                    <!--android:layout_width="40dp"-->
+                    <!--android:layout_height="40dp"-->
+                    <!--android:clickable="true"-->
+                    <!--android:scaleType="center"-->
+                    <!--android:layout_gravity="center_horizontal"-->
+                    <!--android:src="@drawable/bantouming"-->
+                    <!--app:riv_border_color="#bbbbbb"-->
+                    <!--app:riv_border_width="1dp"-->
+                    <!--app:riv_corner_radius="15dp"-->
+                    <!--app:riv_mutate_background="true"-->
+                    <!--app:riv_oval="true"-->
+                    <!--app:riv_tile_mode="repeat" />-->
+            <!--</FrameLayout>-->
+
+            <!--<TextView-->
+                <!--android:id="@+id/tv_jiaoliu_name"-->
+                <!--android:layout_width="0dp"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_gravity="center_vertical"-->
+                <!--android:layout_marginLeft="8dp"-->
+                <!--android:layout_toRightOf="@id/riv_jiaoliu_avater"-->
+                <!--android:layout_weight="1"-->
+                <!--android:text="啦啦啦"-->
+                <!--android:textColor="#4b4b4b"-->
+                <!--android:textSize="16sp" />-->
+
+        <!--</LinearLayout>-->
+    <!--</LinearLayout>-->
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:background="#f4f4f4f4">
+        android:layout_height="30dp">
 
         <TextView
             android:id="@+id/tv_jiaoliu_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:background="@drawable/selector_label"
             android:clickable="true"
             android:paddingLeft="16dp"
             android:paddingRight="16dp"
@@ -73,7 +174,7 @@
             android:text="锅炉的作用是什么？"
             android:textColor="#4b4b4b"
             android:textSize="16dp" />
-
+        <!--android:background="@drawable/selector_label"-->
     </LinearLayout>
 
     <LinearLayout
@@ -115,9 +216,9 @@
                 android:id="@+id/tv_jiaoliu_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
                 android:layout_marginLeft="8dp"
                 android:text="国电电力"
-                android:layout_gravity="center_vertical"
                 android:textColor="#919191"
                 android:textSize="16sp" />
         </LinearLayout>

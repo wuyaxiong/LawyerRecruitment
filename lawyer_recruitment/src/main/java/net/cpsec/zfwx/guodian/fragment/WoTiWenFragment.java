@@ -65,6 +65,7 @@ public class WoTiWenFragment extends BaseFragment implements YRecycleview.OnRefr
 
     private void setAdapter() {
         if (isRefreshState && null != inforBeen) {
+            adapter = new WenDaAdapter(getActivity(), inforBeen);
             yRecycleview.setLayoutManager(new LinearLayoutManager(getActivity()));
             yRecycleview.setAdapter(adapter);
         } else {
@@ -88,20 +89,28 @@ public class WoTiWenFragment extends BaseFragment implements YRecycleview.OnRefr
     public void onSuccess(String response, Map<String, String> headers, String url, int actionId) {
         super.onSuccess(response, headers, url, actionId);
         try {
-        if (!"200".equals(JSON.parseObject(response).getString("code"))) {
-            yRecycleview.setVisibility(View.GONE);
+        if ("-400".equals(JSON.parseObject(response).getString("code"))) {
             iv_wenda.setVisibility(View.VISIBLE);
+            yRecycleview.setVisibility(View.GONE);
         } else {
-            bean = JSON.parseObject(response, MyWenDaBean.class);
-            yRecycleview.setVisibility(View.VISIBLE);
             iv_wenda.setVisibility(View.GONE);
+            yRecycleview.setVisibility(View.VISIBLE);
+            bean = JSON.parseObject(response, MyWenDaBean.class);
             if (isRefreshState) {
                 yRecycleview.setReFreshComplete();
                 inforBeen = bean.getInfor();
+            }else {
+                inforBeen=bean.getInfor();
+            }
+            if (bean == null) {
+                yRecycleview.setVisibility(View.GONE);
+                iv_wenda.setVisibility(View.VISIBLE);
+            } else {
+                yRecycleview.setVisibility(View.VISIBLE);
+                iv_wenda.setVisibility(View.GONE);
+                setAdapter();
             }
         }
-        adapter = new WenDaAdapter(getActivity(), inforBeen);
-        setAdapter();
         } catch (Exception e) {
             Toast.prompt(getActivity(), "数据异常");
         }

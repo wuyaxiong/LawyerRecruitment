@@ -23,6 +23,15 @@ public class QuanBuInfor {
     private int comment;
     private int praise;
     private String phone;
+private int expert;
+
+    public int getExpert() {
+        return expert;
+    }
+
+    public void setExpert(int expert) {
+        this.expert = expert;
+    }
 
     public int getPraise() {
         return praise;

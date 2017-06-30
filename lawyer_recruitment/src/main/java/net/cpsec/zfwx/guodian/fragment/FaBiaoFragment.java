@@ -9,6 +9,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.alibaba.fastjson.JSON;
 import com.android.volley.manager.RequestMap;
@@ -38,12 +39,13 @@ public class FaBiaoFragment extends BaseFragment implements YRecycleview.OnRefre
     private ShouCangBean huiFuBean;
     ShouCangBean.InforBean infor;
     int pos;
-String uid;
+    String uid;
+private ImageView iv_fatie;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_fa_biao, container, false);
         SharedPreferences sp = getActivity().getSharedPreferences("uid", Context.MODE_PRIVATE);
-        uid= sp.getString("uid","");
+        uid = sp.getString("uid", "");
         initData();
         initView(v);
         return v;
@@ -52,6 +54,7 @@ String uid;
     private void initView(View v) {
         yRecycleview = (YRecycleview) v.findViewById(R.id.fb_tiezilist);
         yRecycleview.setRefreshAndLoadMoreListener(this);
+        iv_fatie= (ImageView) v.findViewById(R.id.iv_fatie);
     }
 
     private void initData() {
@@ -67,8 +70,14 @@ String uid;
         try {
             huiFuBean = JSON.parseObject(response, ShouCangBean.class);
             if (huiFuBean == null) {
-                Toast.prompt(getActivity(), "目前没有数据");
-            }
+                iv_fatie.setVisibility(View.VISIBLE);
+                yRecycleview.setVisibility(View.GONE);
+            }else {
+                iv_fatie.setVisibility(View.GONE);
+                yRecycleview.setVisibility(View.VISIBLE);
+//            if (huiFuBean == null) {
+//                Toast.prompt(getActivity(), "目前没有数据");
+//            }
             if (isRefreshState) {
                 yRecycleview.setReFreshComplete();
                 inforBeen = huiFuBean.getInfor();
@@ -76,7 +85,7 @@ String uid;
                 moreInforBean = huiFuBean.getInfor();
                 inforBeen.addAll(moreInforBean);
             }
-            setAdapter();
+            setAdapter();}
         } catch (Exception e) {
             Toast.prompt(getActivity(), "数据异常");
         }
@@ -142,6 +151,7 @@ String uid;
             }
         });
     }
+
     @Override
     public void onRefresh() {
         isRefreshState = true;

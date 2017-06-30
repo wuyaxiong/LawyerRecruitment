@@ -57,9 +57,17 @@ public class GetFriendQueueInfoBean {
         private String userpic;
         private String phone;
         private String name;
+        private int expert;
         private int id;
         private String appKey;
 
+        public int getExpert() {
+            return expert;
+        }
+
+        public void setExpert(int expert) {
+            this.expert = expert;
+        }
 
         public String getUsername() {
             return username;

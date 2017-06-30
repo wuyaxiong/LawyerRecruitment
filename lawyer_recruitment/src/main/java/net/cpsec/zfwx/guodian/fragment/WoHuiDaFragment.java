@@ -20,7 +20,6 @@ import net.cpsec.zfwx.guodian.activity.XiangXiZiLiaoActivity;
 import net.cpsec.zfwx.guodian.adapter.CenterTieZiAdapter;
 import net.cpsec.zfwx.guodian.entity.ShouCangBean;
 import net.cpsec.zfwx.guodian.ui.YRecycleview;
-import net.cpsec.zfwx.guodian.utils.Debugging;
 import net.cpsec.zfwx.guodian.utils.NetUrl;
 import net.cpsec.zfwx.guodian.utils.Toast;
 
@@ -64,7 +63,7 @@ public class WoHuiDaFragment extends BaseFragment implements YRecycleview.OnRefr
         yRecycleview.setRefreshAndLoadMoreListener(this);
         yRecycleview.setLayoutManager(new LinearLayoutManager(getActivity()));
         iv_wenda = (ImageView) v.findViewById(R.id.iv_wenda);
-      //  initData();
+        initData();
     }
 
     private void setAdapter() {
@@ -105,30 +104,30 @@ public class WoHuiDaFragment extends BaseFragment implements YRecycleview.OnRefr
     @Override
     public void onSuccess(String response, Map<String, String> headers, String url, int actionId) {
         super.onSuccess(response, headers, url, actionId);
-        try {
-            huiDaBean = JSON.parseObject(response, ShouCangBean.class);
-            if (!"200".equals(JSON.parseObject(response).getString("code"))){
-                yRecycleview.setVisibility(View.GONE);
-                iv_wenda.setVisibility(View.VISIBLE);
-            }
+        if ("-400".equals(JSON.parseObject(response).getString("code"))){
+            yRecycleview.setVisibility(View.GONE);
+            iv_wenda.setVisibility(View.VISIBLE);
+        }else {
+            try {
+                huiDaBean = JSON.parseObject(response, ShouCangBean.class);
 //            if (huiDaBean == null) {
 //                yRecycleview.setVisibility(View.GONE);
 //                iv_wenda.setVisibility(View.VISIBLE);
 //            }
-            else {
+
                 if (isRefreshState) {
                     yRecycleview.setReFreshComplete();
                     inforBeen = huiDaBean.getInfor();
-                    Debugging.debugging("positionLists      =   " + (huiDaBean.getInfor().toString()));
                 } else {
                     moreInforBean = huiDaBean.getInfor();
                     inforBeen.addAll(moreInforBean);
                 }
                 setAdapter();
+            } catch (Exception e) {
+                Toast.prompt(getActivity(), "数据异常");
             }
-        } catch (Exception e) {
-            Toast.prompt(getActivity(), "数据异常");
         }
+
     }
 
     @Override

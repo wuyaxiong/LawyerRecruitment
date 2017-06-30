@@ -135,42 +135,42 @@ public class TieZiDetailActivity extends BaseActivity {
                 }
         });
         ivRightToolBar = (ImageView) findViewById(R.id.ivRightToolBar);
-        final UMWeb web = new UMWeb("http://www.baidu.com");
-        web.setTitle("This is music title");//标题
-        web.setThumb(new UMEmoji(this,R.mipmap.ic_launcher));  //缩略图
-        web.setDescription("my description");//描述
-        ivRightToolBar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                new ShareAction(TieZiDetailActivity.this)  .withMedia(web)
-                        .setDisplayList(SHARE_MEDIA.SINA,SHARE_MEDIA.QQ,SHARE_MEDIA.WEIXIN)
-                        .setCallback(new UMShareListener() {
-                            @Override
-                            public void onStart(SHARE_MEDIA share_media) {
-
-                            }
-
-                            @Override
-                            public void onResult(SHARE_MEDIA share_media) {
-                                Toast.prompt(TieZiDetailActivity.this,share_media+"分享成功");
-
-                            }
-
-                            @Override
-                            public void onError(SHARE_MEDIA share_media, Throwable throwable) {
-                                Toast.prompt(TieZiDetailActivity.this,share_media+"分享失败"+throwable.getMessage());
-                                if(throwable!=null){
-                                    Log.d("throw","throw:"+throwable.getMessage());
-                                }
-                            }
-
-                            @Override
-                            public void onCancel(SHARE_MEDIA share_media) {
-                                Toast.prompt(TieZiDetailActivity.this,share_media+"分享取消");
-                            }
-                        }).open();
-            }
-        });
+//        final UMWeb web = new UMWeb("http://bbs.91huiban.com/public/share.html?id = "+artical_id+"&staus = 0");
+//        web.setTitle(title);//标题
+//        web.setThumb(new UMEmoji(this,R.mipmap.ic_launcher));  //缩略图
+//        web.setDescription(content);//描述
+//        ivRightToolBar.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                new ShareAction(TieZiDetailActivity.this) .withMedia(web)
+//                        .setDisplayList(SHARE_MEDIA.SINA,SHARE_MEDIA.QQ,SHARE_MEDIA.WEIXIN)
+//                        .setCallback(new UMShareListener() {
+//                            @Override
+//                            public void onStart(SHARE_MEDIA share_media) {
+//
+//                            }
+//
+//                            @Override
+//                            public void onResult(SHARE_MEDIA share_media) {
+//                                Toast.prompt(TieZiDetailActivity.this,share_media+"分享成功");
+//
+//                            }
+//
+//                            @Override
+//                            public void onError(SHARE_MEDIA share_media, Throwable throwable) {
+//                                Toast.prompt(TieZiDetailActivity.this,share_media+"分享失败"+throwable.getMessage());
+//                                if(throwable!=null){
+//                                    Log.d("throw","throw:"+throwable.getMessage());
+//                                }
+//                            }
+//
+//                            @Override
+//                            public void onCancel(SHARE_MEDIA share_media) {
+//                                Toast.prompt(TieZiDetailActivity.this,share_media+"分享取消");
+//                            }
+//                        }).open();
+//            }
+//        });
         initData();
     }
 
@@ -181,7 +181,6 @@ public class TieZiDetailActivity extends BaseActivity {
             case 0:
                 try {
                     tieZiDetailBean = JSON.parseObject(response, TieZiDetailBean.class);
-                    Debugging.debugging("position      =      " + (null == tieZiDetailBean));
                     String userpic = tieZiDetailBean.getInfor().getForum_info().getUserpic();
                     String username = tieZiDetailBean.getInfor().getForum_info().getUsername();
                     String title = tieZiDetailBean.getInfor().getForum_info().getTitle();
@@ -226,6 +225,42 @@ public class TieZiDetailActivity extends BaseActivity {
                     pinlunAdapter.notifyDataSetChanged();
                     list_image.setAdapter(adapter);
                     lv_pinglun.setAdapter(pinlunAdapter);
+                    final UMWeb web = new UMWeb("http://bbs.91huiban.com/public/share.html?id = "+artical_id+"&staus = 0");
+                    web.setTitle(title);//标题
+                    web.setThumb(new UMEmoji(this,R.mipmap.ic_launcher));  //缩略图
+                    web.setDescription(content);//描述
+                    ivRightToolBar.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            new ShareAction(TieZiDetailActivity.this) .withMedia(web)
+                                    .setDisplayList(SHARE_MEDIA.SINA,SHARE_MEDIA.QQ,SHARE_MEDIA.WEIXIN)
+                                    .setCallback(new UMShareListener() {
+                                        @Override
+                                        public void onStart(SHARE_MEDIA share_media) {
+
+                                        }
+
+                                        @Override
+                                        public void onResult(SHARE_MEDIA share_media) {
+                                            Toast.prompt(TieZiDetailActivity.this,share_media+"分享成功");
+
+                                        }
+
+                                        @Override
+                                        public void onError(SHARE_MEDIA share_media, Throwable throwable) {
+                                            Toast.prompt(TieZiDetailActivity.this,share_media+"分享失败"+throwable.getMessage());
+                                            if(throwable!=null){
+                                                Log.d("throw","throw:"+throwable.getMessage());
+                                            }
+                                        }
+
+                                        @Override
+                                        public void onCancel(SHARE_MEDIA share_media) {
+                                            Toast.prompt(TieZiDetailActivity.this,share_media+"分享取消");
+                                        }
+                                    }).open();
+                        }
+                    });
                 } catch (Exception e) {
                     Toast.prompt(this, "数据异常");
                 }

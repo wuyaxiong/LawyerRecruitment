@@ -9,7 +9,6 @@
         android:layout_width="match_parent"
         android:layout_height="35dp"
         android:layout_marginTop="10dp"
-        android:background="#f6f6f6"
         android:orientation="horizontal">
 
         <TextView
@@ -32,6 +31,7 @@
             android:layout_gravity="center_vertical"
             android:layout_marginRight="20dp"
             android:text="已解决"
+            android:textColor="@color/color_1658ee"
             android:textSize="16sp" />
     </LinearLayout>
 

@@ -82,6 +82,8 @@ public class ShouCangActivity extends BaseActivity implements View.OnClickListen
                 yRecycleview.setVisibility(View.GONE);
                 iv_NO.setVisibility(View.VISIBLE);
             } else {
+                yRecycleview.setVisibility(View.VISIBLE);
+                iv_NO.setVisibility(View.GONE);
                 shouCangBean = JSON.parseObject(response, ShouCangBean.class);
                 if (isRefreshState) {
                     yRecycleview.setReFreshComplete();

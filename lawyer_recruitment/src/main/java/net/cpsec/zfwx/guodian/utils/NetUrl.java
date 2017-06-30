@@ -21,8 +21,13 @@ public class NetUrl {
     public static final String QINGNIAN_JIJIAOLIU_QUANBU = "http://115.28.77.187/tp5/bbss/public/index.php/index/discuss/index";
     //青年交流--帖子详情
     public static final String TIEZI_DETAIL ="http://115.28.77.187/tp5/bbss/public/index.php/index/forum/articledetail";
+    //青年交流--获取热门问答帖子
+    public static final String TIEZI_REMENHUIDA ="http://115.28.77.187/tp5/bbss/public/index.php/index/discuss/articlehot";
+    //青年交流----所有没有回复的帖子
+    public static final String TIEZI_NOANSWER="http://115.28.77.187/tp5/bbss/public/index.php/index/discuss/noanswer" ;
     //青年交流---评论
     public static final String TIEZI_PINGLUN="http://115.28.77.187/tp5/bbss/public/index.php/index/discuss/comment";
+
     //青年交流---帖子收藏
     public static final String TIEZI_SHOUCANG="http://115.28.77.187/tp5/bbss/public/index.php/index/discuss/collection";
     //青年交流---帖子点赞

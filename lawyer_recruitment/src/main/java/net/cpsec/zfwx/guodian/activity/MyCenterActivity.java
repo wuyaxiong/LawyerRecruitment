@@ -147,6 +147,7 @@ String uid;
                 editor1.putString("isfirst", "0");
                 editor1.commit();
                 startActivity(new Intent(MyCenterActivity.this, LoginActivity.class));
+                finish();
                 break;
         }
     }

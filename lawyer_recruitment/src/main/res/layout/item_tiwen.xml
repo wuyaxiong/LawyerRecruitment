@@ -57,7 +57,6 @@
         android:layout_width="match_parent"
         android:layout_height="35dp"
         android:orientation="horizontal"
-        android:background="#f6f6f6"
         android:layout_marginTop="10dp">
 
         <TextView

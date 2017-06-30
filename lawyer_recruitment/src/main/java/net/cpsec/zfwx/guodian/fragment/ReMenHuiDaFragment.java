@@ -15,11 +15,9 @@ import com.android.volley.manager.RequestMap;
 import net.cpsec.zfwx.guodian.R;
 import net.cpsec.zfwx.guodian.activity.TieZiDetailActivity;
 import net.cpsec.zfwx.guodian.activity.XiangXiZiLiaoActivity;
-import net.cpsec.zfwx.guodian.adapter.JiaoLiuAdapter;
-import net.cpsec.zfwx.guodian.entity.QuanBuBean;
-import net.cpsec.zfwx.guodian.entity.QuanBuInfor;
+import net.cpsec.zfwx.guodian.adapter.ReMenHuiDaAdapter;
+import net.cpsec.zfwx.guodian.entity.ReMenBean;
 import net.cpsec.zfwx.guodian.ui.YRecycleview;
-import net.cpsec.zfwx.guodian.utils.Debugging;
 import net.cpsec.zfwx.guodian.utils.NetUrl;
 import net.cpsec.zfwx.guodian.utils.Toast;
 
@@ -31,13 +29,11 @@ import java.util.Map;
  */
 public class ReMenHuiDaFragment extends BaseFragment implements YRecycleview.OnRefreshAndLoadMoreListener {
     private YRecycleview yRecycleview;
-    private JiaoLiuAdapter adapter;
-
+    private ReMenHuiDaAdapter adapter;
     private boolean isRefreshState = true;//是否刷新
-    private List<QuanBuInfor> quanbuInfor;
-    private List<QuanBuInfor> morequanbuInfor;
-    private QuanBuBean quanbuBean;
-    QuanBuInfor infor;
+    private List<ReMenBean.InforBean> quanbuInfor;
+    private ReMenBean quanbuBean;
+    ReMenBean.InforBean infor;
     int pos;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -55,17 +51,28 @@ public class ReMenHuiDaFragment extends BaseFragment implements YRecycleview.OnR
     }
     private void initData() {
         RequestMap params = new RequestMap();
-        setParams(NetUrl.QINGNIAN_JIJIAOLIU_QUANBU, params, 0);
+        setParams(NetUrl.TIEZI_REMENHUIDA, params, 0);
     }
     private void setAdapter() {
         if (isRefreshState && null != quanbuInfor) {
-            adapter = new JiaoLiuAdapter(getActivity(), quanbuInfor);
+            adapter = new ReMenHuiDaAdapter(getActivity(), quanbuInfor);
             yRecycleview.setLayoutManager(new LinearLayoutManager(getActivity()));
             yRecycleview.setAdapter(adapter);
         } else {
             adapter.notifyDataSetChanged();
         }
-        adapter.setOnTitleClickListener(new JiaoLiuAdapter.OnTitleClickListener() {
+        adapter.setHeadClickListener(new ReMenHuiDaAdapter.OnHeadClickListener() {
+            @Override
+            public void onHeadClick(String id, int position) {
+                Intent intent = new Intent(getActivity(), XiangXiZiLiaoActivity.class);
+                infor = quanbuInfor.get(position);
+                Bundle bundle = new Bundle();
+                bundle.putString("phone", infor.getPhone());
+                intent.putExtras(bundle);
+                startActivity(intent);
+            }
+        });
+        adapter.setOnTitleClickListener(new ReMenHuiDaAdapter.OnTitleClickListener() {
             @Override
             public void onTitleClick(String id, int position) {
                 Intent intent = new Intent(getActivity(), TieZiDetailActivity.class);
@@ -77,18 +84,7 @@ public class ReMenHuiDaFragment extends BaseFragment implements YRecycleview.OnR
                 startActivity(intent);
             }
         });
-        adapter.setHeadClickListener(new JiaoLiuAdapter.OnHeadClickListener() {
-            @Override
-            public void onHeadClick(String id, int position) {
-                Intent intent = new Intent(getActivity(), XiangXiZiLiaoActivity.class);
-                infor = quanbuInfor.get(position);
-                Bundle bundle = new Bundle();
-                bundle.putString("phone", infor.getPhone());
-                intent.putExtras(bundle);
-                startActivity(intent);
-            }
-        });
-        adapter.setOnPicClickListener(new JiaoLiuAdapter.OnPicClickListener() {
+        adapter.setOnPicClickListener(new ReMenHuiDaAdapter.OnPicClickListener() {
             @Override
             public void onPicClick(String id, int position) {
                 Intent intent = new Intent(getActivity(), TieZiDetailActivity.class);
@@ -100,7 +96,7 @@ public class ReMenHuiDaFragment extends BaseFragment implements YRecycleview.OnR
                 startActivity(intent);
             }
         });
-        adapter.setOnLLClickListener(new JiaoLiuAdapter.OnLLClickListener() {
+        adapter.setOnLLClickListener(new ReMenHuiDaAdapter.OnLLClickListener() {
             @Override
             public void onLLClick(String id, int position) {
                 Intent intent = new Intent(getActivity(), TieZiDetailActivity.class);
@@ -118,15 +114,12 @@ public class ReMenHuiDaFragment extends BaseFragment implements YRecycleview.OnR
     public void onSuccess(String response, Map<String, String> headers, String url, int actionId) {
         super.onSuccess(response, headers, url, actionId);
         try {
-            quanbuBean = JSON.parseObject(response, QuanBuBean.class);
-            Debugging.debugging("position      =      " + (null == quanbuBean));
+            quanbuBean = JSON.parseObject(response, ReMenBean.class);
             if (isRefreshState) {
                 yRecycleview.setReFreshComplete();
                 quanbuInfor = quanbuBean.getInfor();
-                Debugging.debugging("positionLists      =   " + (quanbuInfor.size()));
             } else {
-                morequanbuInfor = quanbuBean.getInfor();
-                quanbuInfor.addAll(morequanbuInfor);
+               quanbuInfor=quanbuBean.getInfor();
             }
             setAdapter();
         } catch (Exception e) {

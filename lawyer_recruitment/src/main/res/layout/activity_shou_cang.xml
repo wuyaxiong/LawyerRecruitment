@@ -31,7 +31,11 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="#b2b2b2"/>
+        android:background="#f6f6f6"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="8dp"
+        android:background="#f6f6f6"></View>
     <net.cpsec.zfwx.guodian.ui.YRecycleview
         android:id="@+id/sc_tiezilist"
         android:layout_width="match_parent"

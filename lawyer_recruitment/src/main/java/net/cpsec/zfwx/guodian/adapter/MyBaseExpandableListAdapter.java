@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -114,6 +115,7 @@ public class MyBaseExpandableListAdapter extends BaseExpandableListAdapter {
             itemHolder.tv_name = (TextView) convertView.findViewById(R.id.tv_name);
             itemHolder.tv_phone = (TextView) convertView.findViewById(R.id.tv_phone);
             itemHolder.tv_accept = (TextView) convertView.findViewById(R.id.tv_accept);
+            itemHolder.hat_img = (ImageView) convertView.findViewById(R.id.hat_img);
             convertView.setTag(R.id.xxx01, groupPosition);
             convertView.setTag(R.id.xxx02, childPosition);
             convertView.setTag(itemHolder);
@@ -126,7 +128,7 @@ public class MyBaseExpandableListAdapter extends BaseExpandableListAdapter {
         if (iData.get(groupPosition).get(childPosition) instanceof FriendDataBean) {
             final FriendDataBean friendDataBean = (FriendDataBean) iData.get(groupPosition).get(childPosition);
             itemHolder.tv_accept.setVisibility(View.VISIBLE);
-            Picasso.with(mContext).load("http://"+friendDataBean.getUserpic()).placeholder(R.mipmap.ic_launcher).into(itemHolder.img_icon);
+            ImageLoader.getInstance().displayImage("http://" + friendDataBean.getUserpic(), itemHolder.img_icon);
             itemHolder.tv_name.setText(friendDataBean.getName());
             itemHolder.tv_phone.setText(friendDataBean.getPhone());
             if ("接受".equals(friendDataBean.getStatus())) {
@@ -177,11 +179,14 @@ public class MyBaseExpandableListAdapter extends BaseExpandableListAdapter {
             }
         }else if (iData.get(groupPosition).get(childPosition) instanceof GetFriendQueueInfoBean.InforBean){
             final GetFriendQueueInfoBean.InforBean DataBean = (GetFriendQueueInfoBean.InforBean) iData.get(groupPosition).get(childPosition);
-            ImageLoader.getInstance().displayImage("http://" + DataBean.getUserpic(), itemHolder.img_icon);
-           // Picasso.with(mContext).load("http://"+DataBean.getUserpic()).placeholder(R.mipmap.ic_launcher).into(itemHolder.img_icon);
+//            ImageLoader.getInstance().displayImage("http://" + DataBean.getUserpic(), itemHolder.img_icon);
+            Picasso.with(mContext).load("http://"+DataBean.getUserpic()).placeholder(R.mipmap.ic_launcher).into(itemHolder.img_icon);
             itemHolder.tv_name.setText(DataBean.getUsername());
             itemHolder.tv_phone.setText(DataBean.getPhone());
             itemHolder.tv_accept.setVisibility(View.GONE);
+            if (DataBean.getExpert()!=0) {
+                itemHolder.hat_img.setVisibility(View.VISIBLE);
+            }
         }
         return convertView;
     }
@@ -199,6 +204,7 @@ public class MyBaseExpandableListAdapter extends BaseExpandableListAdapter {
 
     private static class ViewHolderItem{
         private RoundedImageView img_icon;
+        private ImageView hat_img;
         private TextView tv_name;
         private TextView tv_phone;
         private TextView tv_accept;

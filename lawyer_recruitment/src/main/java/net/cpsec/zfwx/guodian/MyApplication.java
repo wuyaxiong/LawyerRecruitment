@@ -62,7 +62,7 @@ public class MyApplication extends Application {
         //其中yourclass_1是继承自IMConversationListUI的自定义类
         AdviceBinder.bindAdvice(PointCutEnum.CONVERSATION_FRAGMENT_UI_POINTCUT, ConversationListUICustomSample.class);
         UMShareAPI.get(this);
-        PlatformConfig.setWeixin("wx52258c82ee69f82e", "a8949735a4a54c73eb35b3c03dbd42a1");
+        PlatformConfig.setWeixin("wx829691df4bb7ecb4", "acfbe1dfb9ce67135641d6f89a81e2c0");
 
         PlatformConfig.setQQZone("1106238106", "jjoTfMsmC7efHU8Q");
         PlatformConfig.setSinaWeibo("3921700954", "04b48b094faeb16683c32669824ebdad", "http://sns.whalecloud.com");

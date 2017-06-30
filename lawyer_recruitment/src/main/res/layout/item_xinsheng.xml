@@ -51,7 +51,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#f4f4f4f4">
+        >
         <TextView
             android:id="@+id/tv_xinsheng_title"
             android:layout_width="match_parent"
@@ -61,7 +61,6 @@
             android:clickable="true"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
-            android:background="@drawable/selector_label"
             android:text="锅炉的作用是什么？"
             android:textColor="#4b4b4b"
             android:singleLine="true"
