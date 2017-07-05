@@ -36,6 +36,7 @@ repositories {
 
 
 dependencies {
+
     //可选，如果使用SDK的UI必须添加该依赖，如果不使用SDK的UI，完全自己开发UI则无需添加该依赖
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile project(':library')
@@ -43,6 +44,7 @@ dependencies {
     compile files('libs/MobTools-2016.1201.1839.jar')
     compile project(':menulibrary')
     // compile files('libs/android-async-http-1.4.9.jar')
+
     //64
     compile 'com.alibaba.mobileim:IMCore:2.0.2.1@aar'
     compile 'com.alibaba.mobileim:IMKit:2.0.2.1@aar'

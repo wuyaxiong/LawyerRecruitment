@@ -28,6 +28,7 @@ public class JianYiDetailActivity extends BaseActivity {
     private TextView tv_name, tv_time, tv_content, tv_huifutime, tv_huifu, tv_prise;
     String uid, advice_id;
     private JianYiDetailBean detail;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,7 +68,7 @@ public class JianYiDetailActivity extends BaseActivity {
     @Override
     public void onSuccess(String response, Map<String, String> headers, String url, int actionId) {
         super.onSuccess(response, headers, url, actionId);
-        switch (actionId){
+        switch (actionId) {
             case 1:
                 try {
                     detail = JSON.parseObject(response, JianYiDetailBean.class);
@@ -84,7 +85,7 @@ public class JianYiDetailActivity extends BaseActivity {
                     tv_time.setText(DateUtil.converTime(asktime));
                     tv_huifutime.setText(DateUtil.converTime(huifutime));
                     tv_huifu.setText(huifu);
-                    tv_prise.setText(prise_num+"");
+                    tv_prise.setText(prise_num + "");
 
                 } catch (Exception e) {
                     Toast.prompt(this, "数据异常");

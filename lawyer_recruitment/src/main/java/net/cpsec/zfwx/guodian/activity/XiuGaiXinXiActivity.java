@@ -99,16 +99,22 @@ public class XiuGaiXinXiActivity extends BaseActivity implements View.OnClickLis
         etaAddress.setText((intent.getStringExtra("address")));
          s=intent.getStringExtra("pic");
         ImageLoader.getInstance().displayImage("http://"+s,riv_header);
+        String sex=intent.getStringExtra("sex");
         rgender= (RadioGroup) findViewById(R.id.rg_gender);
+        if (sex=="0"){
+            rgender.check(R.id.rbt_man);
+        }else {
+            rgender.check(R.id.rbt_woman);
+        }
         rgender.setOnCheckedChangeListener(this);
         iv_back = (ImageView) findViewById(R.id.iv_back);
         iv_back.setOnClickListener(this);
         tv_complete = (TextView) findViewById(R.id.tv_xinxi_complete);
-        if (" 男".equals(gender)) {
-            sex=0+"";
-        } else {
-            sex=1+"";
-        }
+//        if (" 男".equals(gender)) {
+//            sex=0+"";
+//        } else {
+//            sex=1+"";
+//        }
         tv_complete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

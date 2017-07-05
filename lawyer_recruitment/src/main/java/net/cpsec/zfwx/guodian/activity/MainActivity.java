@@ -1,11 +1,13 @@
 package net.cpsec.zfwx.guodian.activity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
@@ -23,6 +25,7 @@ import net.cpsec.zfwx.guodian.fragment.JiaoLiuFragment;
 import net.cpsec.zfwx.guodian.fragment.ShareFragment;
 import net.cpsec.zfwx.guodian.fragment.ShengFragment;
 import net.cpsec.zfwx.guodian.fragment.TongXunLuFragment;
+import net.cpsec.zfwx.guodian.utils.Toast;
 
 import java.util.ArrayList;
 
@@ -39,35 +42,39 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Fragment xianshanghulianFragment;
     private   final static String userPhone = "18811103740";
     private String password = "1234";//手机收到的验证码
-//    private Fragment lianxirenFragment;
-//    private ImageView iv_left, iv_right;
-//    private TextView tv_title;
 
+public static Activity context;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+context=this;
         getWindow().setSoftInputMode
                 (WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN|
                         WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         setContentView(R.layout.activity_main);
-//        //透明状态栏
-//        getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-//        //透明导航栏
-//        getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
-//     for (int i = 0; i < ScreenManager.getScreenManager().activityStack.size() - 1; i++) {
-//          ScreenManager.getScreenManager().getActivityByIndex(i).finish();
-//       }
-//        MyApplication.FINISH_INDEX = true;
         fm = getSupportFragmentManager();
         initView();
         initFragment();
         tvJiaoLiu.setSelected(true);
         //  tv_title.setText("线上互联");
         fm.beginTransaction().add(R.id.fl_container, jiaoLiuFragment).commit();
-
-
         initAl();
+    }
+
+    private long exitTime = 0;
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if(keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN){
+            if((System.currentTimeMillis()-exitTime) > 2000){
+                Toast.prompt(this, "再按一次退出程序");
+                exitTime = System.currentTimeMillis();
+            } else {
+                finish();
+                System.exit(0);
+            }
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
     }
     public static YWIMKit getMyImKit(){
         //此实现不一定要放在Application onCreate中
@@ -77,11 +84,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         return YWAPI.getIMKitInstance(userPhone, "23893323");
     }
     private void initAl(){
-
-
         //开始登录
-
-
         IYWLoginService loginService = this.getMyImKit().getLoginService();
         YWLoginParam loginParam = YWLoginParam.createLoginParam(userPhone, password);
         loginService.login(loginParam, new IWxCallback() {
@@ -246,5 +249,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             listener.onTouchEvent(ev);
         }
         return super.dispatchTouchEvent(ev);
+    }
+
+    public static void quit(){
+        context.finish();
+        context=null;
     }
 }

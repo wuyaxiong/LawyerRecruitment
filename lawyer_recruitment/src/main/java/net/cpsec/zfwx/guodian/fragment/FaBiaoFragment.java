@@ -40,7 +40,8 @@ public class FaBiaoFragment extends BaseFragment implements YRecycleview.OnRefre
     ShouCangBean.InforBean infor;
     int pos;
     String uid;
-private ImageView iv_fatie;
+    private ImageView iv_fatie;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_fa_biao, container, false);
@@ -54,7 +55,7 @@ private ImageView iv_fatie;
     private void initView(View v) {
         yRecycleview = (YRecycleview) v.findViewById(R.id.fb_tiezilist);
         yRecycleview.setRefreshAndLoadMoreListener(this);
-        iv_fatie= (ImageView) v.findViewById(R.id.iv_fatie);
+        iv_fatie = (ImageView) v.findViewById(R.id.iv_fatie);
     }
 
     private void initData() {
@@ -72,25 +73,25 @@ private ImageView iv_fatie;
             if (huiFuBean == null) {
                 iv_fatie.setVisibility(View.VISIBLE);
                 yRecycleview.setVisibility(View.GONE);
-            }else {
+            } else {
                 iv_fatie.setVisibility(View.GONE);
                 yRecycleview.setVisibility(View.VISIBLE);
 //            if (huiFuBean == null) {
 //                Toast.prompt(getActivity(), "目前没有数据");
 //            }
-            if (isRefreshState) {
-                yRecycleview.setReFreshComplete();
-                inforBeen = huiFuBean.getInfor();
-            } else {
-                moreInforBean = huiFuBean.getInfor();
-                inforBeen.addAll(moreInforBean);
+                if (isRefreshState) {
+                    yRecycleview.setReFreshComplete();
+                    inforBeen = huiFuBean.getInfor();
+                } else {
+                    moreInforBean = huiFuBean.getInfor();
+                    inforBeen.addAll(moreInforBean);
+                }
+                setAdapter();
             }
-            setAdapter();}
         } catch (Exception e) {
             Toast.prompt(getActivity(), "数据异常");
         }
     }
-
 
     private void setAdapter() {
         if (isRefreshState && null != inforBeen) {
@@ -100,8 +101,6 @@ private ImageView iv_fatie;
         } else {
             adapter.notifyDataSetChanged();
         }
-
-
         adapter.setOnTitleClickListener(new CenterTieZiAdapter.OnTitleClickListener() {
             @Override
             public void onTitleClick(String id, int position) {
@@ -157,7 +156,7 @@ private ImageView iv_fatie;
         isRefreshState = true;
         yRecycleview.setReFreshComplete();
         initData();
-        //    Toast.prompt(getActivity(), "刷新完成。测试阶段");
+        //    Toast.prompt(getActivity(), "刷新完成。测试阶 吧段");
     }
 
     @Override
@@ -167,5 +166,4 @@ private ImageView iv_fatie;
         yRecycleview.setNoMoreData(true);
         //Toast.prompt(getActivity(), "没有更多数据。测试阶段");
     }
-
 }

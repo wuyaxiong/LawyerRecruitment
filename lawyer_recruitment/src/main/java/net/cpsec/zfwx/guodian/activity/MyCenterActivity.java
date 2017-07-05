@@ -116,7 +116,7 @@ String uid;
             case R.id.iv_myventer_bianjiziliao:
                 Intent intent = new Intent(MyCenterActivity.this, XiuGaiXinXiActivity.class);
                 intent.putExtra("username", myCenterBean.getInfor().getUsername());
-                intent.putExtra("sex", myCenterBean.getInfor().getSex());
+                intent.putExtra("sex", myCenterBean.getInfor().getSex()+"");
                 intent.putExtra("ins", myCenterBean.getInfor().getIntroduction());
                 intent.putExtra("birth", myCenterBean.getInfor().getBirth());
                 intent.putExtra("mianmao", myCenterBean.getInfor().getBackground());
@@ -124,6 +124,7 @@ String uid;
                 intent.putExtra("address", myCenterBean.getInfor().getAddress());
                 intent.putExtra("pic", myCenterBean.getInfor().getUserpic());
                 startActivity(intent);
+                finish();
                 break;
             //投票页面
             case R.id.rl_mycenter_toupiao:
@@ -148,6 +149,7 @@ String uid;
                 editor1.commit();
                 startActivity(new Intent(MyCenterActivity.this, LoginActivity.class));
                 finish();
+                MainActivity.quit();
                 break;
         }
     }

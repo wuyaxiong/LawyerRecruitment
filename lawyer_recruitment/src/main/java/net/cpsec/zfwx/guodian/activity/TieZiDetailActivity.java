@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -29,7 +30,6 @@ import net.cpsec.zfwx.guodian.entity.DianZanBean;
 import net.cpsec.zfwx.guodian.entity.TieZiComment_info;
 import net.cpsec.zfwx.guodian.entity.TieZiDetailBean;
 import net.cpsec.zfwx.guodian.utils.DateUtil;
-import net.cpsec.zfwx.guodian.utils.Debugging;
 import net.cpsec.zfwx.guodian.utils.NetUrl;
 import net.cpsec.zfwx.guodian.utils.Toast;
 import net.cpsec.zfwx.guodian.view.NoScrollListView;
@@ -55,7 +55,7 @@ public class TieZiDetailActivity extends BaseActivity {
     final ArrayList imageUrls = new ArrayList<String>();
     List<TieZiComment_info> coment_info;
     String uid;
-
+private FrameLayout fl_shoucang;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,18 +78,34 @@ public class TieZiDetailActivity extends BaseActivity {
     private void initView() {
         Intent intent = getIntent();
         artical_id = intent.getStringExtra("artical_id");
-        Debugging.debugging("artical_id" + artical_id);
+        fl_shoucang= (FrameLayout) findViewById(R.id.fl_shoucang);
         iv_yishoucang = (ImageView) findViewById(R.id.iv_tiezi_yishoucang);
         iv_shoucang = (ImageView) findViewById(R.id.iv_tiezi_shoucang);
-        iv_shoucang.setOnClickListener(new View.OnClickListener() {
+        fl_shoucang.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                RequestMap params = new RequestMap();
-                params.put("aid", artical_id);
-                params.put("uid", uid);
-                setParams(NetUrl.TIEZI_SHOUCANG, params, 2);
+                if (iv_yishoucang.getVisibility()==View.VISIBLE){
+                    RequestMap params = new RequestMap();
+                    params.put("aid", artical_id);
+                    params.put("uid", uid);
+                    setParams(NetUrl.TIEZI_QUXIAOSHOUCANG, params, 4);
+                }else {
+                    RequestMap params = new RequestMap();
+                    params.put("aid", artical_id);
+                    params.put("uid", uid);
+                    setParams(NetUrl.TIEZI_SHOUCANG, params, 2);
+                }
             }
         });
+//        iv_shoucang.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                RequestMap params = new RequestMap();
+//                params.put("aid", artical_id);
+//                params.put("uid", uid);
+//                setParams(NetUrl.TIEZI_SHOUCANG, params, 2);
+//            }
+//        });
         iv_dainzan = (ImageView) findViewById(R.id.iv_tiezi_dainzan);
         iv_dainzan.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -237,15 +253,11 @@ public class TieZiDetailActivity extends BaseActivity {
                                     .setCallback(new UMShareListener() {
                                         @Override
                                         public void onStart(SHARE_MEDIA share_media) {
-
                                         }
-
                                         @Override
                                         public void onResult(SHARE_MEDIA share_media) {
                                             Toast.prompt(TieZiDetailActivity.this,share_media+"分享成功");
-
                                         }
-
                                         @Override
                                         public void onError(SHARE_MEDIA share_media, Throwable throwable) {
                                             Toast.prompt(TieZiDetailActivity.this,share_media+"分享失败"+throwable.getMessage());
@@ -253,7 +265,6 @@ public class TieZiDetailActivity extends BaseActivity {
                                                 Log.d("throw","throw:"+throwable.getMessage());
                                             }
                                         }
-
                                         @Override
                                         public void onCancel(SHARE_MEDIA share_media) {
                                             Toast.prompt(TieZiDetailActivity.this,share_media+"分享取消");
@@ -284,10 +295,14 @@ public class TieZiDetailActivity extends BaseActivity {
                     if ("0".equals(JSON.parseObject(response).getString("infor"))) {
                         initData();
                         Toast.prompt(this, "收藏成功！");
-                        iv_shoucang.setImageResource(R.drawable.icon_collect);
+                        iv_yishoucang.setVisibility(View.VISIBLE);
+                        iv_shoucang.setVisibility(View.GONE);
+                       // iv_shoucang.setImageResource(R.drawable.icon_collect);
                     } else {
                         Toast.prompt(this, "帖子已收藏");
-                        iv_shoucang.setImageResource(R.drawable.icon_collect);
+                        iv_yishoucang.setVisibility(View.VISIBLE);
+                        iv_shoucang.setVisibility(View.GONE);
+                      //  iv_shoucang.setImageResource(R.drawable.icon_collect);
                     }
                 }
                 break;
@@ -295,7 +310,6 @@ public class TieZiDetailActivity extends BaseActivity {
                 try {
                     DianZanBean dianZanBean = JSON.parseObject(response, DianZanBean.class);
                     if (200 != dianZanBean.getCode()) {
-                        Debugging.debugging("dianZanBean.getCode(=============" + dianZanBean.getCode());
                         Toast.prompt(this, "点赞失败，稍后重试！");
                     } else if (0 == dianZanBean.getInfor().getRes()) {
                         initData();
@@ -306,6 +320,27 @@ public class TieZiDetailActivity extends BaseActivity {
                     }
                 } catch (Exception e) {
                     Toast.prompt(this, "数据异常");
+                }
+                break;
+            case 4:
+                if (!"200".equals(JSON.parseObject(response).getString("code"))) {
+                    Toast.prompt(this, "取消收藏失败，稍后重试！");
+                } else {
+                    Toast.prompt(this, "已取消收藏");
+                    iv_yishoucang.setVisibility(View.GONE);
+                       iv_shoucang.setVisibility(View.VISIBLE);
+//                    if ("0".equals(JSON.parseObject(response).getString("infor"))) {
+//                        initData();
+//                        Toast.prompt(this, "收藏成功！");
+//                        iv_yishoucang.setVisibility(View.VISIBLE);
+//                        iv_shoucang.setVisibility(View.GONE);
+//                        // iv_shoucang.setImageResource(R.drawable.icon_collect);
+//                    } else {
+//                        Toast.prompt(this, "帖子已收藏");
+//                        iv_yishoucang.setVisibility(View.VISIBLE);
+//                        iv_shoucang.setVisibility(View.GONE);
+//                        //  iv_shoucang.setImageResource(R.drawable.icon_collect);
+//                    }
                 }
                 break;
         }

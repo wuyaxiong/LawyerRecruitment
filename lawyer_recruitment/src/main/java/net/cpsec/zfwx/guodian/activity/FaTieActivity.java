@@ -1,5 +1,6 @@
 package net.cpsec.zfwx.guodian.activity;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
@@ -43,6 +44,7 @@ import net.cpsec.zfwx.guodian.utils.BitmapToBase64;
 import net.cpsec.zfwx.guodian.utils.FileUtils;
 import net.cpsec.zfwx.guodian.utils.ImageUtil;
 import net.cpsec.zfwx.guodian.utils.NetUrl;
+import net.cpsec.zfwx.guodian.utils.PermissionsChecker;
 import net.cpsec.zfwx.guodian.utils.PictureUtil;
 import net.cpsec.zfwx.guodian.utils.SelectPicPopupWindow;
 import net.cpsec.zfwx.guodian.utils.Toast;
@@ -70,6 +72,10 @@ public class FaTieActivity extends BaseActivity {
     private LabelGridAdapter labelGridAdapter;
     int label_id=1;
     String uid,eid;
+    //权限列表
+    String[] permissions = new String[]{
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.CAMERA
+    };
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,7 +85,6 @@ public class FaTieActivity extends BaseActivity {
         uid= sp.getString("uid","");
         //设置在activity启动的时候输入法默认是不开启的
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-
         ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(this)
                 .threadPriority(Thread.NORM_PRIORITY - 2)//设置当前线程的优先级
                 .denyCacheImageMultipleSizesInMemory()
@@ -90,7 +95,7 @@ public class FaTieActivity extends BaseActivity {
                 .build();
         //初始化操作
         ImageLoader.getInstance().init(config);
-
+        permissionsManager();
         initView();
     }
 
@@ -101,6 +106,11 @@ public class FaTieActivity extends BaseActivity {
 
     }
 
+    //android 6.0权限管理
+    public void permissionsManager(){
+        PermissionsChecker permissionsChecker = new PermissionsChecker(this);
+        permissionsChecker.lacksPermissions(permissions);
+    }
 
     private void initView() {
         tv_zhuanjia = (TextView) findViewById(R.id.zhuanjia_name);
@@ -234,7 +244,7 @@ public class FaTieActivity extends BaseActivity {
             // 拍照；
             case R.id.view_camero_rl_takephoto:
                 window.dismiss();
-                path = PictureUtil.paiZhao(window, this);
+                path = PictureUtil.paiZhao(window, (Activity) context);
                 break;
             // 从相册选择：
             case R.id.view_camero_rl_selectphoto:

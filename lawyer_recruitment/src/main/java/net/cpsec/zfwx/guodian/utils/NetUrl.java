@@ -30,6 +30,8 @@ public class NetUrl {
 
     //青年交流---帖子收藏
     public static final String TIEZI_SHOUCANG="http://115.28.77.187/tp5/bbss/public/index.php/index/discuss/collection";
+    //青年交流---取消帖子收藏
+    public static final String TIEZI_QUXIAOSHOUCANG="http://115.28.77.187/tp5/bbss/public/index.php/index/forum/deleteCollection";
     //青年交流---帖子点赞
     public static final String TIEZI_DIANZAN="http://115.28.77.187/tp5/bbss/public/index.php/index/discuss/clickpraise";
     //青年交流--按用户所在层级显示

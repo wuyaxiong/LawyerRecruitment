@@ -25,7 +25,6 @@ public class MyApplication extends Application {
     public static final Boolean isDebuggingState = true;
     // 对activity栈的处理
     public static Boolean FINISH_INDEX = false;
-
     @Override
     public void onCreate() {
         super.onCreate();
@@ -63,16 +62,18 @@ public class MyApplication extends Application {
         AdviceBinder.bindAdvice(PointCutEnum.CONVERSATION_FRAGMENT_UI_POINTCUT, ConversationListUICustomSample.class);
         UMShareAPI.get(this);
         PlatformConfig.setWeixin("wx829691df4bb7ecb4", "acfbe1dfb9ce67135641d6f89a81e2c0");
-
+      //  PlatformConfig.setWeixin("wx829691df4bb7ecb4", "acfbe1dfb9ce67135641d6f89a81e2c0");
         PlatformConfig.setQQZone("1106238106", "jjoTfMsmC7efHU8Q");
         PlatformConfig.setSinaWeibo("3921700954", "04b48b094faeb16683c32669824ebdad", "http://sns.whalecloud.com");
     }
 
     @Override
     protected void attachBaseContext(Context base) {
-        super.attachBaseContext(base);
+       super.attachBaseContext(base);
         MultiDex.install(this);
     }
-
+   // public static Context getAppContext() {
+     //   return MyApplication.context;
+    //}
 
 }

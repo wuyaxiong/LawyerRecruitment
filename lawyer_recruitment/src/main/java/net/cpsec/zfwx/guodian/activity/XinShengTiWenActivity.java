@@ -1,5 +1,6 @@
 package net.cpsec.zfwx.guodian.activity;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
@@ -38,6 +39,7 @@ import net.cpsec.zfwx.guodian.utils.BitmapToBase64;
 import net.cpsec.zfwx.guodian.utils.FileUtils;
 import net.cpsec.zfwx.guodian.utils.ImageUtil;
 import net.cpsec.zfwx.guodian.utils.NetUrl;
+import net.cpsec.zfwx.guodian.utils.PermissionsChecker;
 import net.cpsec.zfwx.guodian.utils.PictureUtil;
 import net.cpsec.zfwx.guodian.utils.SelectPicPopupWindow;
 import net.cpsec.zfwx.guodian.utils.Toast;
@@ -59,6 +61,10 @@ public class XinShengTiWenActivity extends BaseActivity {
 private CheckBox cb_tiwen;
     int pub;
     String uid;
+    String[] permissions = new String[]{
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.CAMERA
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,9 +84,14 @@ private CheckBox cb_tiwen;
                 .build();
         //初始化操作
         ImageLoader.getInstance().init(config);
+        permissionsManager();
         initView();
     }
-
+    //android 6.0权限管理
+    public void permissionsManager(){
+        PermissionsChecker permissionsChecker = new PermissionsChecker(this);
+        permissionsChecker.lacksPermissions(permissions);
+    }
     private void initView() {
         cb_tiwen= (CheckBox) findViewById(R.id.cb_tiwen);
         iv_addpic = (ImageView) findViewById(R.id.iv_tiwen_addtupian);

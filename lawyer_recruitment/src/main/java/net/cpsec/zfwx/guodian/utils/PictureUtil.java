@@ -28,12 +28,12 @@ public class PictureUtil {
 	public static String paiZhao(SelectPicPopupWindow window, Activity activity) {
 		window.dismiss();
 		String path = "";
-		Intent i = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-		File file = new File(Environment.getExternalStorageDirectory(),
-				System.currentTimeMillis() + ".jpg");
-		i.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(file));
-		path = file.getAbsolutePath();
-		activity.startActivityForResult(i, 2);
+            Intent i = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+            File file = new File(Environment.getExternalStorageDirectory(),
+                    System.currentTimeMillis() + ".jpg");
+            i.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(file));
+            path = file.getAbsolutePath();
+            activity.startActivityForResult(i, 2);
 		return path;
 	}
 
@@ -64,8 +64,8 @@ public class PictureUtil {
 		path = file.getAbsolutePath();
 		activity.startActivityForResult(intent, 3);
 	}
-	
-	
-	
+
+
+
 
 }
