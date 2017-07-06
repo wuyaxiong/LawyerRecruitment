@@ -18,7 +18,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -98,6 +97,7 @@ public class TongXunLuFragment extends BaseFragment implements View.OnClickListe
         v = inflater.inflate(R.layout.fragment_tong_xun_lu, container, false);
         SharedPreferences sp = getActivity().getSharedPreferences("uid", Context.MODE_PRIVATE);
         uid = sp.getString("uid", "");
+        Log.e("123", "onCreateView: "+uid );
         initView(v);
 
         initData();
@@ -336,7 +336,7 @@ public class TongXunLuFragment extends BaseFragment implements View.OnClickListe
             msgs.add(msg);
             if (msgs.size()>=4) {
                 msgs.clear();
-                setUseName();
+//                setUseName();
 
             }
         }

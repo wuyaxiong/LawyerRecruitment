@@ -120,7 +120,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                         android.widget.Toast.makeText(this, "登录成功", android.widget.Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(this, MainActivity.class);
                         String uid = JSON.parseObject(response).getString("infor");
-
                         SharedPreferences sp = getSharedPreferences("uid", Context.MODE_PRIVATE);
                         SharedPreferences sp1 = getSharedPreferences("isfirst", Context.MODE_PRIVATE);
                         SharedPreferences sp2 = getSharedPreferences("phone", Context.MODE_PRIVATE);

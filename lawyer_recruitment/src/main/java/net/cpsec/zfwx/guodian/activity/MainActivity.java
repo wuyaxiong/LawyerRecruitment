@@ -1,11 +1,14 @@
 package net.cpsec.zfwx.guodian.activity;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
@@ -13,25 +16,37 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSONObject;
 import com.alibaba.mobileim.IYWLoginService;
 import com.alibaba.mobileim.YWAPI;
 import com.alibaba.mobileim.YWIMKit;
 import com.alibaba.mobileim.YWLoginParam;
 import com.alibaba.mobileim.channel.event.IWxCallback;
+import com.alibaba.mobileim.contact.IYWContact;
+import com.alibaba.mobileim.contact.IYWContactService;
+import com.alibaba.mobileim.contact.IYWCrossContactProfileCallback;
+import com.alibaba.mobileim.lib.model.contact.Contact;
+import com.android.volley.manager.RequestMap;
+import com.google.gson.Gson;
 
 import net.cpsec.zfwx.guodian.R;
+import net.cpsec.zfwx.guodian.entity.GetFriendQueueInfoBean;
 import net.cpsec.zfwx.guodian.fragment.HuLilanFragment;
 import net.cpsec.zfwx.guodian.fragment.JiaoLiuFragment;
 import net.cpsec.zfwx.guodian.fragment.ShareFragment;
 import net.cpsec.zfwx.guodian.fragment.ShengFragment;
 import net.cpsec.zfwx.guodian.fragment.TongXunLuFragment;
+import net.cpsec.zfwx.guodian.utils.NetUrl;
 import net.cpsec.zfwx.guodian.utils.Toast;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import static net.cpsec.zfwx.guodian.R.id.tv_jiaoliu;
 
-public class  MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class  MainActivity extends BaseActivity implements View.OnClickListener {
     private TextView tvHuLian, tvTongXun, tvJiaoLiu, tvSheng, tvShare;
     private FragmentManager fm;
     private HuLilanFragment huLianFragment;
@@ -39,19 +54,29 @@ public class  MainActivity extends AppCompatActivity implements View.OnClickList
     private ShengFragment shengFragment;
     private ShareFragment shareFragment;
     private TongXunLuFragment tongXunLuFragment;
+    private List<GetFriendQueueInfoBean.InforBean> allDataList;
     private Fragment xianshanghulianFragment;
-    private   final static String userPhone = "18811103740";
-    private String password = "1234";//手机收到的验证码
-
-public static Activity context;
+    private static String userPhone ;
+    private String password = "1234";//百川密码
+    private final static int  NOTGROUP=1;
+    private final static int   THISWORK=2;
+    private final static int   OTHERWORK=3;
+    private final static int   GROUPED=4;
+    private String uid;
+    public static Activity context;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-context=this;
+        context=this;
         getWindow().setSoftInputMode
                 (WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN|
                         WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         setContentView(R.layout.activity_main);
+        SharedPreferences sp = getSharedPreferences("phone", Context.MODE_PRIVATE);
+        userPhone= sp.getString("phone","");
+        SharedPreferences sp1 = getSharedPreferences("uid", Context.MODE_PRIVATE);
+        uid = sp1.getString("uid", "");
+        Log.e("123", "onCreate: "+userPhone);
         fm = getSupportFragmentManager();
         initView();
         initFragment();
@@ -92,7 +117,7 @@ context=this;
             @Override
             public void onSuccess(Object... arg0) {
                 Log.e("123", "onError: "+ "onSuccess");
-
+                initNetData();
             }
 
             @Override
@@ -254,5 +279,134 @@ context=this;
     public static void quit(){
         context.finish();
         context=null;
+    }
+    public List<Message> msgs=new ArrayList<>();
+    public Handler myHandler=new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            msgs.add(msg);
+            if (msgs.size()>=4) {
+                msgs.clear();
+                setUseName();
+
+            }
+        }
+    };
+
+    private void initNetData() {
+        allDataList=new ArrayList<>();
+        allDataList.clear();
+        requestGroupInfo(NOTGROUP);
+        requestGroupInfo(THISWORK);
+        requestGroupInfo(OTHERWORK);
+        requestGroupInfo(GROUPED);
+    }
+    public void requestGroupInfo(int friend_group_id){
+        RequestMap params=new RequestMap();
+        //TODO 模拟uid
+        params.put("uid", uid);
+        params.put("friend_group_id",friend_group_id+"");
+        setParams(NetUrl.GET_FRIEND, params, friend_group_id);
+    }
+    @Override
+    public void onSuccess(String response, Map<String, String> headers, String url, int actionId) {
+        super.onSuccess(response, headers, url, actionId);
+        try{
+            JSONObject jsonObject = JSONObject.parseObject(response);
+            if (!"200".equals(jsonObject.getString("code"))){
+                Log.e("123", "onSuccesssssss: "+response );
+                myHandler.sendEmptyMessage(1);
+                return;
+            }
+
+        }catch (Exception e){
+            myHandler.sendEmptyMessage(1);
+        }
+        switch (actionId) {
+            case NOTGROUP:
+                Log.e("notGroupedList", "onSuccess: "+response );
+                try{
+
+                    GetFriendQueueInfoBean infoBean = new Gson().fromJson(response, GetFriendQueueInfoBean.class);
+                    List<GetFriendQueueInfoBean.InforBean> infor = infoBean.getInfor();
+                    allDataList.addAll(infor);
+
+                    myHandler.sendEmptyMessage(1);
+                }catch(Exception e){
+                    android.widget.Toast.makeText(MainActivity.this, "未分组解析错误", android.widget.Toast.LENGTH_SHORT).show();
+                    myHandler.sendEmptyMessage(1);
+                }
+                break;
+            case THISWORK:
+                Log.e("notGroupedList", "onSuccess: "+response );
+                try{
+                    GetFriendQueueInfoBean infoBean = new Gson().fromJson(response, GetFriendQueueInfoBean.class);
+                    allDataList.addAll(infoBean.getInfor());
+
+
+                    myHandler.sendEmptyMessage(1);
+                }catch(Exception e){
+                    android.widget.Toast.makeText(MainActivity.this, "本单位解析错误", android.widget.Toast.LENGTH_SHORT).show();
+                    myHandler.sendEmptyMessage(1);
+                }
+                break;
+            case OTHERWORK:
+                Log.e("notGroupedList", "onSuccess: "+response );
+                try{
+                    GetFriendQueueInfoBean infoBean = new Gson().fromJson(response, GetFriendQueueInfoBean.class);
+                    allDataList.addAll(infoBean.getInfor());
+
+                    myHandler.sendEmptyMessage(1);
+                }catch(Exception e){
+                    android.widget.Toast.makeText(MainActivity.this, "兄弟单位解析错误", android.widget.Toast.LENGTH_SHORT).show();
+                    myHandler.sendEmptyMessage(1);
+                }
+                break;
+            case GROUPED:
+                Log.e("notGroupedList", "onSuccess: "+response );
+                try{
+                    GetFriendQueueInfoBean infoBean = new Gson().fromJson(response, GetFriendQueueInfoBean.class);
+                    allDataList.addAll(infoBean.getInfor());
+
+                    myHandler.sendEmptyMessage(1);
+                }catch(Exception e){
+                    android.widget.Toast.makeText(MainActivity.this, "群组解析错误", android.widget.Toast.LENGTH_SHORT).show();
+                    myHandler.sendEmptyMessage(1);
+                }
+                break;
+
+        }
+    }
+    public void setUseName(){
+        final IYWContactService contactService = MainActivity.getMyImKit().getContactService();
+        contactService.setCrossContactProfileCallback(new IYWCrossContactProfileCallback() {
+
+            @Override
+            public Intent onShowProfileActivity(String userId, String appKey) {
+
+                //这里支持头像点击事件，需要开发者返回一个Intent
+                return null;
+            }
+
+            @Override
+            public void updateContactInfo(Contact contact) {
+                Map<String, String> map = new HashMap<String, String>();
+            }
+
+            @Override
+            public IYWContact onFetchContactInfo(String userId, final String appKey) {
+                if (allDataList!=null&&allDataList.size()>0) {
+                    for (int i = 0; i < allDataList.size(); i++) {
+                        GetFriendQueueInfoBean.InforBean inforBean = allDataList.get(i);
+                        if (inforBean.getPhone().equals(userId)) {
+                            return inforBean;
+                        }
+                    }
+                }
+                return null;
+
+            }
+        });
     }
 }
