@@ -31,7 +31,7 @@ import java.util.ArrayList;
 
 import static net.cpsec.zfwx.guodian.R.id.tv_jiaoliu;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class  MainActivity extends AppCompatActivity implements View.OnClickListener {
     private TextView tvHuLian, tvTongXun, tvJiaoLiu, tvSheng, tvShare;
     private FragmentManager fm;
     private HuLilanFragment huLianFragment;

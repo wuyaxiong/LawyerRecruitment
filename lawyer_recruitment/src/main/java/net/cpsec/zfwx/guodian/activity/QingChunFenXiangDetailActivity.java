@@ -5,15 +5,23 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.android.volley.manager.RequestMap;
+import com.umeng.socialize.ShareAction;
+import com.umeng.socialize.UMShareListener;
+import com.umeng.socialize.bean.SHARE_MEDIA;
+import com.umeng.socialize.media.UMEmoji;
+import com.umeng.socialize.media.UMWeb;
 
 import net.cpsec.zfwx.guodian.R;
 import net.cpsec.zfwx.guodian.adapter.ListImageAdapter;
@@ -47,6 +55,7 @@ public class QingChunFenXiangDetailActivity extends BaseActivity implements View
     private MeiWenPingLunInfor pinglunInfor;
     private boolean isRefreshState = true;//是否刷新
     private EditText et_pinglun;
+    private ImageView ivRightToolBar;
     private Button btn;
     String uid;
     private NoScrollListView list_image;
@@ -66,6 +75,7 @@ public class QingChunFenXiangDetailActivity extends BaseActivity implements View
 
     private void initView() {
         et_pinglun= (EditText) findViewById(R.id.et_meiwen_pinglun);
+        ivRightToolBar = (ImageView) findViewById(R.id.ivRightToolBar);
         btn= (Button) findViewById(R.id.btn_meiwen_pinglun);
         btn.setOnClickListener(this);
         list_image = (NoScrollListView) findViewById(R.id.lv_fengxiang_images);
@@ -125,9 +135,42 @@ public class QingChunFenXiangDetailActivity extends BaseActivity implements View
                             list_image.setVisibility(View.VISIBLE);
                         }
                     }
+
+                    PicCheck(list_image);
                     //初始化适配器
                     imageadapter= new ListImageAdapter(this, imageUrls);
                     list_image.setAdapter(imageadapter);
+                    final UMWeb web = new UMWeb("http://bbs.91huiban.com/public/share.html?id = "+gid+"&staus = 0");
+                    web.setTitle(good_artical.getTitle());//标题
+                    web.setThumb(new UMEmoji(this,R.mipmap.ic_launcher));  //缩略图
+                    web.setDescription(good_artical.getContent());//描述
+                    ivRightToolBar.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            new ShareAction(QingChunFenXiangDetailActivity.this) .withMedia(web)
+                                    .setDisplayList(SHARE_MEDIA.SINA,SHARE_MEDIA.QQ,SHARE_MEDIA.WEIXIN)
+                                    .setCallback(new UMShareListener() {
+                                        @Override
+                                        public void onStart(SHARE_MEDIA share_media) {
+                                        }
+                                        @Override
+                                        public void onResult(SHARE_MEDIA share_media) {
+                                            Toast.prompt(QingChunFenXiangDetailActivity.this,share_media+"分享成功");
+                                        }
+                                        @Override
+                                        public void onError(SHARE_MEDIA share_media, Throwable throwable) {
+                                            Toast.prompt(QingChunFenXiangDetailActivity.this,share_media+"分享失败"+throwable.getMessage());
+                                            if(throwable!=null){
+                                                Log.d("throw","throw:"+throwable.getMessage());
+                                            }
+                                        }
+                                        @Override
+                                        public void onCancel(SHARE_MEDIA share_media) {
+                                            Toast.prompt(QingChunFenXiangDetailActivity.this,share_media+"分享取消");
+                                        }
+                                    }).open();
+                        }
+                    });
                 } catch (Exception e) {
                     Toast.prompt(this, "数据异常");
                 }
@@ -175,7 +218,18 @@ public class QingChunFenXiangDetailActivity extends BaseActivity implements View
                 break;
         }
     }
-
+    public void PicCheck(ListView listView){
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent=new Intent(QingChunFenXiangDetailActivity.this,PicCheckActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("images", images);
+                intent.putExtras(bundle);
+                startActivity(intent);
+            }
+        });
+    }
     @Override
     public void onRefresh() {
         isRefreshState = true;

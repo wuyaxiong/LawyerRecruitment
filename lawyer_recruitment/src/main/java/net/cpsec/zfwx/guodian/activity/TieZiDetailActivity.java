@@ -7,10 +7,12 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
@@ -233,6 +235,8 @@ private FrameLayout fl_shoucang;
                             list_image.setVisibility(View.VISIBLE);
                         }
                     }
+
+                    PicCheck(list_image);
                     //初始化适配器
                     adapter = new WenTiXiangQingAdapter(this, imageUrls);
                     coment_info = tieZiDetailBean.getInfor().getComment_info();
@@ -344,5 +348,17 @@ private FrameLayout fl_shoucang;
                 }
                 break;
         }
+    }
+    public void PicCheck(ListView listView){
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                 Intent intent=new Intent(TieZiDetailActivity.this,PicCheckActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("images", images);
+                intent.putExtras(bundle);
+                startActivity(intent);
+            }
+        });
     }
 }

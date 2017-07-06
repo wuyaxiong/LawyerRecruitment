@@ -37,8 +37,10 @@ import com.google.gson.Gson;
 import net.cpsec.zfwx.guodian.R;
 import net.cpsec.zfwx.guodian.activity.MainActivity;
 import net.cpsec.zfwx.guodian.activity.MyCenterActivity;
+import net.cpsec.zfwx.guodian.activity.XiangXiZiLiaoActivity;
 import net.cpsec.zfwx.guodian.activity.ZhuzhijiagouActivity;
 import net.cpsec.zfwx.guodian.adapter.MyBaseExpandableListAdapter;
+import net.cpsec.zfwx.guodian.adapter.ScreenAdapter;
 import net.cpsec.zfwx.guodian.entity.GetFriendQueueInfoBean;
 import net.cpsec.zfwx.guodian.entity.GetNewFriendQueueInfoBean;
 import net.cpsec.zfwx.guodian.utils.NetUrl;
@@ -63,15 +65,16 @@ public class TongXunLuFragment extends BaseFragment implements View.OnClickListe
     private List<String> gData;
     private  List<List<Object>>  iData ;
     private MyBaseExpandableListAdapter listAdapter;
-    private ArrayAdapter<String> searchAdapter;
+    private ScreenAdapter searchAdapter;
     private List<Object> notGroupedList;
     private List<Object> thisWorkList;
     private List<Object> otherWorkList;
     private List<Object> GroupedList;
     private List<Object> newFriendList;
-    private List<String> allDataList;
-    private List<GetFriendQueueInfoBean.InforBean> setMameList;
-    private List<String> mBackData;
+
+    private List<GetFriendQueueInfoBean.InforBean> allDataList;
+    private List<GetFriendQueueInfoBean.InforBean> mBackData=new ArrayList<>();
+    private List<GetFriendQueueInfoBean.InforBean> middle=new ArrayList<>();
     private View v;
     private final static int  NOTGROUP=1;
     private final static int   THISWORK=2;
@@ -86,6 +89,8 @@ public class TongXunLuFragment extends BaseFragment implements View.OnClickListe
     //    private int groupPos;
 //    private int childPos;
     String uid;
+    private String filterText;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -94,9 +99,9 @@ public class TongXunLuFragment extends BaseFragment implements View.OnClickListe
         SharedPreferences sp = getActivity().getSharedPreferences("uid", Context.MODE_PRIVATE);
         uid = sp.getString("uid", "");
         initView(v);
-        initScachView();
-        initData();
 
+        initData();
+        initScachView();
 
         initListener();
         mListView.setOnItemLongClickListener(longClickListener);
@@ -130,14 +135,21 @@ public class TongXunLuFragment extends BaseFragment implements View.OnClickListe
     private void initScachView() {
         mSearchView = (SearchView) v.findViewById(R.id.sc_search);
         mSearchListView = (ListView) v.findViewById(R.id.lv_search);
-        allDataList=new ArrayList<>();
-        searchAdapter= new ArrayAdapter<String>(getContext(),android.R.layout.simple_list_item_2,allDataList);
+        mBackData.addAll(allDataList);
+        searchAdapter= new ScreenAdapter(getContext(),mBackData);
         TextView emptyView = new TextView(getContext());
         emptyView.setText("数据为空");
         mSearchListView.setEmptyView(emptyView);
-        mSearchListView.setAdapter(searchAdapter);
         mSearchListView.setFastScrollEnabled(true);
-
+        mSearchListView.setAdapter(searchAdapter);
+        mSearchListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(getActivity(), XiangXiZiLiaoActivity.class);
+                intent.putExtra("phone",mBackData.get(position).getPhone());
+                getActivity().startActivity(intent);
+            }
+        });
 
 
         // 设置该SearchView默认是否自动缩小为图标
@@ -157,18 +169,19 @@ public class TongXunLuFragment extends BaseFragment implements View.OnClickListe
             // 当搜索内容改变时触发该方法
             @Override
             public boolean onQueryTextChange(String newText) {
-                mBackData=allDataList;
+
 //                searchAdapter.notifyDataSetChanged();
 
                 if (TextUtils.isEmpty(newText)) {
                     // 清除ListView的过滤
-                    mSearchListView.clearTextFilter();
+
+                    mBackData.clear();
                     mSearchListView.setVisibility(View.GONE);
                     mSwipeLayout.setVisibility(View.VISIBLE);
                 } else {
                     mSearchListView.setVisibility(View.VISIBLE);
                     mSwipeLayout.setVisibility(View.GONE);
-                    mSearchListView.setFilterText(newText);
+                    setFilterText(newText);
                 }
                 return false;
             }
@@ -222,22 +235,30 @@ public class TongXunLuFragment extends BaseFragment implements View.OnClickListe
         clickListener = new ExpandableListView.OnChildClickListener() {
             @Override
             public boolean onChildClick(ExpandableListView expandableListView, View view, int i, int i1, long l) {
-                if (i >= 4 && down - up > 1000) {
+                final int groupPos = (int) view.getTag(R.id.xxx01);
+                final int childPos = (int) view.getTag(R.id.xxx02);
+                Log.e("123", "onChildClick: "+groupPos);
+
+                if (groupPos >3 ) {
                     return false;
                 }
-                final GetFriendQueueInfoBean.InforBean inforBean = (GetFriendQueueInfoBean.InforBean) iData.get(i).get(i1);
-                final String phone = inforBean
-                        .getPhone();//消息接收者ID
-                Intent intent = MainActivity.getMyImKit().getChattingActivityIntent(phone + "", "23893323");
+                if (groupPos<4&& down - up <1000) {
 
-                startActivity(intent);
+
+                    final GetFriendQueueInfoBean.InforBean inforBean = (GetFriendQueueInfoBean.InforBean) iData.get(i).get(i1);
+                    final String phone = inforBean
+                            .getPhone();//消息接收者ID
+                    Intent intent = MainActivity.getMyImKit().getChattingActivityIntent(phone + "", "23893323");
+
+                    startActivity(intent);
+                }
                 return true;
             }
         };
     }
 
     private void initData() {
-        setMameList=new ArrayList<>();
+        allDataList=new ArrayList<>();
         gData=new ArrayList<>();
         iData = new ArrayList<List<Object>>();
 
@@ -273,7 +294,8 @@ public class TongXunLuFragment extends BaseFragment implements View.OnClickListe
     }
 
     private void initNetData() {
-        setMameList.clear();
+
+        allDataList.clear();
         notGroupedList.clear();
         requestGroupInfo(NOTGROUP);
         thisWorkList.clear();
@@ -315,6 +337,7 @@ public class TongXunLuFragment extends BaseFragment implements View.OnClickListe
             if (msgs.size()>=4) {
                 msgs.clear();
                 setUseName();
+
             }
         }
     };
@@ -341,10 +364,8 @@ public class TongXunLuFragment extends BaseFragment implements View.OnClickListe
                     GetFriendQueueInfoBean infoBean = new Gson().fromJson(response, GetFriendQueueInfoBean.class);
                     List<GetFriendQueueInfoBean.InforBean> infor = infoBean.getInfor();
                     notGroupedList.addAll(infor);
-                    setMameList.addAll(infor);
-                    for (int i = 0; i < notGroupedList.size(); i++) {
-                        allDataList.add(((GetFriendQueueInfoBean.InforBean)notGroupedList.get(i)).getPhone());
-                    }
+                    allDataList.addAll(infor);
+
                     myHandler.sendEmptyMessage(1);
                     listAdapter.notifyDataSetChanged();
                 }catch(Exception e){
@@ -357,10 +378,9 @@ public class TongXunLuFragment extends BaseFragment implements View.OnClickListe
                 try{
                     GetFriendQueueInfoBean infoBean = new Gson().fromJson(response, GetFriendQueueInfoBean.class);
                     thisWorkList.addAll(infoBean.getInfor());
-                    setMameList.addAll(infoBean.getInfor());
-                    for (int i = 0; i < thisWorkList.size(); i++) {
-                        allDataList.add(((GetFriendQueueInfoBean.InforBean)thisWorkList.get(i)).getPhone());
-                    }
+                    allDataList.addAll(infoBean.getInfor());
+
+
                     myHandler.sendEmptyMessage(1);
                     listAdapter.notifyDataSetChanged();
                 }catch(Exception e){
@@ -373,10 +393,8 @@ public class TongXunLuFragment extends BaseFragment implements View.OnClickListe
                 try{
                     GetFriendQueueInfoBean infoBean = new Gson().fromJson(response, GetFriendQueueInfoBean.class);
                     otherWorkList.addAll(infoBean.getInfor());
-                    setMameList.addAll(infoBean.getInfor());
-                    for (int i = 0; i < otherWorkList.size(); i++) {
-                        allDataList.add(((GetFriendQueueInfoBean.InforBean)otherWorkList.get(i)).getPhone());
-                    }
+                    allDataList.addAll(infoBean.getInfor());
+
                     myHandler.sendEmptyMessage(1);
                     listAdapter.notifyDataSetChanged();
                 }catch(Exception e){
@@ -389,10 +407,8 @@ public class TongXunLuFragment extends BaseFragment implements View.OnClickListe
                 try{
                     GetFriendQueueInfoBean infoBean = new Gson().fromJson(response, GetFriendQueueInfoBean.class);
                     GroupedList.addAll(infoBean.getInfor());
-                    setMameList.addAll(infoBean.getInfor());
-                    for (int i = 0; i < GroupedList.size(); i++) {
-                        allDataList.add(((GetFriendQueueInfoBean.InforBean)GroupedList.get(i)).getPhone());
-                    }
+                    allDataList.addAll(infoBean.getInfor());
+
                     myHandler.sendEmptyMessage(1);
                     listAdapter.notifyDataSetChanged();
                 }catch(Exception e){
@@ -464,9 +480,9 @@ public class TongXunLuFragment extends BaseFragment implements View.OnClickListe
 
             @Override
             public IYWContact onFetchContactInfo(String userId, final String appKey) {
-                if (setMameList!=null&&setMameList.size()>0) {
-                    for (int i = 0; i < setMameList.size(); i++) {
-                        GetFriendQueueInfoBean.InforBean inforBean = setMameList.get(i);
+                if (allDataList!=null&&allDataList.size()>0) {
+                    for (int i = 0; i < allDataList.size(); i++) {
+                        GetFriendQueueInfoBean.InforBean inforBean = allDataList.get(i);
                         if (inforBean.getPhone().equals(userId)) {
                             return inforBean;
                         }
@@ -478,4 +494,20 @@ public class TongXunLuFragment extends BaseFragment implements View.OnClickListe
         });
     }
 
+    public void setFilterText(String filterText) {
+        middle.clear();
+
+        for (int i = 0; i < allDataList.size(); i++) {
+            GetFriendQueueInfoBean.InforBean inforBean = allDataList.get(i);
+            if (inforBean.getUsername().indexOf(filterText)!=-1) {
+                middle.add(inforBean);
+            }
+        }
+
+        if (middle.size()>0){
+            mBackData.clear();
+            mBackData.addAll(middle);
+            searchAdapter.notifyDataSetChanged();
+        }
+    }
 }

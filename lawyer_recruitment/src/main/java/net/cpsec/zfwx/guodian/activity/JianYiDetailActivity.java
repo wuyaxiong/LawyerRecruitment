@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -12,6 +13,11 @@ import com.alibaba.fastjson.JSON;
 import com.android.volley.manager.RequestMap;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.umeng.socialize.ShareAction;
+import com.umeng.socialize.UMShareListener;
+import com.umeng.socialize.bean.SHARE_MEDIA;
+import com.umeng.socialize.media.UMEmoji;
+import com.umeng.socialize.media.UMWeb;
 
 import net.cpsec.zfwx.guodian.R;
 import net.cpsec.zfwx.guodian.entity.JianYiDetailBean;
@@ -28,7 +34,7 @@ public class JianYiDetailActivity extends BaseActivity {
     private TextView tv_name, tv_time, tv_content, tv_huifutime, tv_huifu, tv_prise;
     String uid, advice_id;
     private JianYiDetailBean detail;
-
+    private ImageView ivRightToolBar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,6 +47,7 @@ public class JianYiDetailActivity extends BaseActivity {
     private void initView() {
         Intent intent = getIntent();
         advice_id = intent.getStringExtra("advice_id");
+        ivRightToolBar = (ImageView) findViewById(R.id.ivRightToolBar);
         Debugging.debugging("ask_id" + advice_id);
         iv_back = (ImageView) findViewById(R.id.iv_back);
         iv_back.setOnClickListener(new View.OnClickListener() {
@@ -86,7 +93,37 @@ public class JianYiDetailActivity extends BaseActivity {
                     tv_huifutime.setText(DateUtil.converTime(huifutime));
                     tv_huifu.setText(huifu);
                     tv_prise.setText(prise_num + "");
-
+                    final UMWeb web = new UMWeb("http://bbs.91huiban.com/public/share2.html?id ="+advice_id);
+                    web.setTitle(username);//标题
+                    web.setThumb(new UMEmoji(this,R.mipmap.ic_launcher));  //缩略图
+                    web.setDescription(content);//描述
+                    ivRightToolBar.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            new ShareAction(JianYiDetailActivity.this) .withMedia(web)
+                                    .setDisplayList(SHARE_MEDIA.SINA,SHARE_MEDIA.QQ,SHARE_MEDIA.WEIXIN)
+                                    .setCallback(new UMShareListener() {
+                                        @Override
+                                        public void onStart(SHARE_MEDIA share_media) {
+                                        }
+                                        @Override
+                                        public void onResult(SHARE_MEDIA share_media) {
+                                            Toast.prompt(JianYiDetailActivity.this,share_media+"分享成功");
+                                        }
+                                        @Override
+                                        public void onError(SHARE_MEDIA share_media, Throwable throwable) {
+                                            Toast.prompt(JianYiDetailActivity.this,share_media+"分享失败"+throwable.getMessage());
+                                            if(throwable!=null){
+                                                Log.d("throw","throw:"+throwable.getMessage());
+                                            }
+                                        }
+                                        @Override
+                                        public void onCancel(SHARE_MEDIA share_media) {
+                                            Toast.prompt(JianYiDetailActivity.this,share_media+"分享取消");
+                                        }
+                                    }).open();
+                        }
+                    });
                 } catch (Exception e) {
                     Toast.prompt(this, "数据异常");
                 }

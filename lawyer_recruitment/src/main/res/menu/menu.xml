@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:actionLayout="@layout/activity_action"
+
+    >
+    <item
+        android:id="@+id/add"
+     android:title="添加好友"
+        android:background="#ffffff"
+     app:showAsAction="never"/>
+
+  <item
+    android:id="@+id/creat"
+    android:title="创建群聊"
+      android:background="#ffffff"
+    app:showAsAction="never"/>
+
+</menu>

@@ -4,15 +4,23 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.android.volley.manager.RequestMap;
+import com.umeng.socialize.ShareAction;
+import com.umeng.socialize.UMShareListener;
+import com.umeng.socialize.bean.SHARE_MEDIA;
+import com.umeng.socialize.media.UMEmoji;
+import com.umeng.socialize.media.UMWeb;
 
 import net.cpsec.zfwx.guodian.R;
 import net.cpsec.zfwx.guodian.adapter.ListImageAdapter;
@@ -34,6 +42,7 @@ public class ZhengCeTongZhiDetailActivity extends BaseActivity implements View.O
     private NoScrollListView lv_images, lv_pinglun;
     private TongZhiPingLunAdapter pinlunAdapter;
     ListImageAdapter adapter;
+    private ImageView ivRightToolBar;
     String aid;
     String images;
     String uid;
@@ -52,12 +61,14 @@ public class ZhengCeTongZhiDetailActivity extends BaseActivity implements View.O
         uid = sp.getString("uid", "");
         Intent intent = getIntent();
         aid = intent.getExtras().getString("aid");
+        Log.e("1234", "onCreate: "+aid );
         initView();
     }
 
     private void initView() {
         et_pinglun = (EditText) findViewById(R.id.et_tongzhi_pinglun);
         btn = (Button) findViewById(R.id.btn_tongzhi_pinglun);
+        ivRightToolBar = (ImageView) findViewById(R.id.ivRightToolBar);
         btn.setOnClickListener(this);
         iv_back = (ImageView) findViewById(R.id.toolbar_nav_iv);
         tv_title = (TextView) findViewById(R.id.tv_tongzhi_title);
@@ -103,11 +114,44 @@ public class ZhengCeTongZhiDetailActivity extends BaseActivity implements View.O
                             lv_images.setVisibility(View.VISIBLE);
                         }
                     }
+                    PicCheck(lv_images);
+
                     adapter = new ListImageAdapter(this, imageUrls);
                     lv_images.setAdapter(adapter);
                     List<ZhengCeTongzhiDetailBean.InforBean.NoticeCommentBean> coment_info = pinglunBean.getInfor().getNotice_comment();
                     pinlunAdapter = new TongZhiPingLunAdapter(this, coment_info);
                     lv_pinglun.setAdapter(pinlunAdapter);
+                    final UMWeb web = new UMWeb("http://bbs.91huiban.com/public/share3.html?id ="+aid);
+                    web.setTitle(pinglunBean.getInfor().getNotice_info().getTitle());//标题
+                    web.setThumb(new UMEmoji(this,R.mipmap.ic_launcher));  //缩略图
+                    web.setDescription(pinglunBean.getInfor().getNotice_info().getComment());//描述
+                    ivRightToolBar.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            new ShareAction(ZhengCeTongZhiDetailActivity.this) .withMedia(web)
+                                    .setDisplayList(SHARE_MEDIA.SINA,SHARE_MEDIA.QQ,SHARE_MEDIA.WEIXIN)
+                                    .setCallback(new UMShareListener() {
+                                        @Override
+                                        public void onStart(SHARE_MEDIA share_media) {
+                                        }
+                                        @Override
+                                        public void onResult(SHARE_MEDIA share_media) {
+                                            Toast.prompt(ZhengCeTongZhiDetailActivity.this,share_media+"分享成功");
+                                        }
+                                        @Override
+                                        public void onError(SHARE_MEDIA share_media, Throwable throwable) {
+                                            Toast.prompt(ZhengCeTongZhiDetailActivity.this,share_media+"分享失败"+throwable.getMessage());
+                                            if(throwable!=null){
+                                                Log.d("throw","throw:"+throwable.getMessage());
+                                            }
+                                        }
+                                        @Override
+                                        public void onCancel(SHARE_MEDIA share_media) {
+                                            Toast.prompt(ZhengCeTongZhiDetailActivity.this,share_media+"分享取消");
+                                        }
+                                    }).open();
+                        }
+                    });
                 } catch (Exception e) {
                     Toast.prompt(this, "数据异常");
                 }
@@ -130,7 +174,18 @@ public class ZhengCeTongZhiDetailActivity extends BaseActivity implements View.O
         }
 
     }
-
+    public void PicCheck(ListView listView){
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent=new Intent(ZhengCeTongZhiDetailActivity.this,PicCheckActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("images", images);
+                intent.putExtras(bundle);
+                startActivity(intent);
+            }
+        });
+    }
     @Override
     public void onClick(View v) {
         switch (v.getId()) {

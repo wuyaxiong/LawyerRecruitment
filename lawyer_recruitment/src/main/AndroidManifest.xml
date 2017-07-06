@@ -160,7 +160,9 @@
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
         <activity android:name=".activity.XinShengDetailActivity" />
-        <activity android:name=".activity.JianYiDetailActivity"></activity>
+        <activity android:name=".activity.JianYiDetailActivity" />
+        <activity android:name=".activity.CreateGroupActivity" />
+        <activity android:name=".activity.PicCheckActivity"></activity>
     </application>
 
 </manifest>

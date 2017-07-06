@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -37,11 +36,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         setContentView(R.layout.activity_login);
         initView();
     }
-    @Override
-    protected void onDestroy() {
-        DingShiQiUtil.close();// 关闭定时器；
-        super.onDestroy();
-    }
 
     private void initView() {
         imageButton = (Button) findViewById(R.id.ib_login_button);
@@ -50,6 +44,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         etPhoneNumber = (EditText) findViewById(R.id.et_login_phonenumber);
         etVerificationCode = (EditText) findViewById(R.id.et_login_phonecode);
         btn_login.setOnClickListener(this);
+//        etPhoneNumber.setText("17600382402");
+//        etVerificationCode.setText("1234");
     }
 
     @Override
@@ -98,22 +94,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 setParams(NetUrl.LOGIN, params1, 1);
         }
     }
-    private long exitTime = 0;
-
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if(keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN){
-            if((System.currentTimeMillis()-exitTime) > 2000){
-                Toast.prompt(this, "再按一次退出程序");
-                exitTime = System.currentTimeMillis();
-            } else {
-                finish();
-                System.exit(0);
-            }
-            return true;
-        }
-        return super.onKeyDown(keyCode, event);
-    }
 
     @Override
     public void onSuccess(String response, Map<String, String> headers, String url, int actionId) {
@@ -140,16 +120,19 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                         android.widget.Toast.makeText(this, "登录成功", android.widget.Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(this, MainActivity.class);
                         String uid = JSON.parseObject(response).getString("infor");
+
                         SharedPreferences sp = getSharedPreferences("uid", Context.MODE_PRIVATE);
-                        SharedPreferences.Editor editor = sp.edit();
-                        editor.putString("uid", uid);
                         SharedPreferences sp1 = getSharedPreferences("isfirst", Context.MODE_PRIVATE);
-
+                        SharedPreferences sp2 = getSharedPreferences("phone", Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sp.edit();
                         SharedPreferences.Editor editor1 = sp1.edit();
-
+                        SharedPreferences.Editor editor2 = sp2.edit();
+                        editor.putString("uid", uid);
                         editor.commit();
                         editor1.putString("isfirst", "1");
                         editor1.commit();
+                        editor2.putString("phone",phoneNums );
+                        editor2.commit();
                         startActivity(intent);
                         finish();
                     }

@@ -184,7 +184,7 @@ public class MyBaseExpandableListAdapter extends BaseExpandableListAdapter {
             itemHolder.tv_name.setText(DataBean.getUsername());
             itemHolder.tv_phone.setText(DataBean.getPhone());
             itemHolder.tv_accept.setVisibility(View.GONE);
-            if (DataBean.getExpert()!=0) {
+            if (DataBean.getExpert()==1) {
                 itemHolder.hat_img.setVisibility(View.VISIBLE);
             }
         }

@@ -4,14 +4,22 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.android.volley.manager.RequestMap;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.umeng.socialize.ShareAction;
+import com.umeng.socialize.UMShareListener;
+import com.umeng.socialize.bean.SHARE_MEDIA;
+import com.umeng.socialize.media.UMEmoji;
+import com.umeng.socialize.media.UMWeb;
 
 import net.cpsec.zfwx.guodian.R;
 import net.cpsec.zfwx.guodian.adapter.ListImageAdapter;
@@ -32,6 +40,7 @@ public class XinShengDetailActivity extends BaseActivity {
     String uid, ask_id, images;
     private XinShengDetailBean detail;
     private NoScrollListView listview;
+    private ImageView ivRightToolBar;
     ListImageAdapter adapter;
     //初始化（模拟）数据
     final ArrayList imageUrls = new ArrayList<String>();
@@ -49,6 +58,7 @@ public class XinShengDetailActivity extends BaseActivity {
         Intent intent = getIntent();
         ask_id = intent.getStringExtra("ask_id");
         Debugging.debugging("ask_id" + ask_id);
+        ivRightToolBar = (ImageView) findViewById(R.id.ivRightToolBar);
         listview = (NoScrollListView) findViewById(R.id.list_xinshengdetail_tupian);
         iv_back = (ImageView) findViewById(R.id.iv_back);
         iv_back.setOnClickListener(new View.OnClickListener() {
@@ -104,12 +114,58 @@ public class XinShengDetailActivity extends BaseActivity {
                 listview.setVisibility(View.VISIBLE);
             }
         }
+
+        PicCheck(listview);
         //初始化适配器
         adapter = new ListImageAdapter(this, imageUrls);
         adapter.notifyDataSetChanged();
         listview.setAdapter(adapter);
+              final UMWeb web = new UMWeb("http://bbs.91huiban.com/public/share1.html?id ="+ask_id);
+              web.setTitle(username);//标题
+              web.setThumb(new UMEmoji(this,R.mipmap.ic_launcher));  //缩略图
+              web.setDescription(content);//描述
+              ivRightToolBar.setOnClickListener(new View.OnClickListener() {
+                  @Override
+                  public void onClick(View view) {
+                      new ShareAction(XinShengDetailActivity.this) .withMedia(web)
+                              .setDisplayList(SHARE_MEDIA.SINA,SHARE_MEDIA.QQ,SHARE_MEDIA.WEIXIN)
+                              .setCallback(new UMShareListener() {
+                                  @Override
+                                  public void onStart(SHARE_MEDIA share_media) {
+                                  }
+                                  @Override
+                                  public void onResult(SHARE_MEDIA share_media) {
+                                      Toast.prompt(XinShengDetailActivity.this,share_media+"分享成功");
+                                  }
+                                  @Override
+                                  public void onError(SHARE_MEDIA share_media, Throwable throwable) {
+                                      Toast.prompt(XinShengDetailActivity.this,share_media+"分享失败"+throwable.getMessage());
+                                      if(throwable!=null){
+                                          Log.d("throw","throw:"+throwable.getMessage());
+                                      }
+                                  }
+                                  @Override
+                                  public void onCancel(SHARE_MEDIA share_media) {
+                                      Toast.prompt(XinShengDetailActivity.this,share_media+"分享取消");
+                                  }
+                              }).open();
+                  }
+              });
         } catch (Exception e) {
             Toast.prompt(this, "数据异常");
         }
+    }
+
+    public void PicCheck(ListView listView){
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent=new Intent(XinShengDetailActivity.this,PicCheckActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("images", images);
+                intent.putExtras(bundle);
+                startActivity(intent);
+            }
+        });
     }
 }

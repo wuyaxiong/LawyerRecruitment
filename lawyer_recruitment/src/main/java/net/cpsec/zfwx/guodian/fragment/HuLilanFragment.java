@@ -7,6 +7,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -39,11 +40,13 @@ public class HuLilanFragment extends BaseFragment implements View.OnClickListene
     private Activity activity;
     private ImageView iv_action_left,iv_actionbar_right;
     private TextView tv_title;
-
+    private String phone;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v=inflater.inflate(R.layout.fragment_hu_lilan, container, false);
+        SharedPreferences sp = getActivity().getSharedPreferences("phone", Context.MODE_PRIVATE);
+        phone= sp.getString("phone","");
         initView(v);
         return v;
     }
@@ -61,7 +64,7 @@ public class HuLilanFragment extends BaseFragment implements View.OnClickListene
 
     @SuppressWarnings("deprecation")
     private void open(Bundle savedInstanceState) {
-        final String userid = "17600382402";//用户手机号
+        final String userid = phone;//用户手机号
         YWIMKit mIMKit = YWAPI.getIMKitInstance(userid, APP_KEY);
 
         mLocalActivityManager = new MyLocalActivityManager(getActivity(), true);
