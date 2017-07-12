@@ -25,11 +25,14 @@ import java.util.Map;
 
 public class MyCenterActivity extends BaseActivity implements View.OnClickListener {
     private ImageView iv_back, iv_bianjiziliao;
-    private RelativeLayout rl_fatie, rl_toupiao, rl_fankui, rl_shoucang, rl_wenda,rl_out;
+    private RelativeLayout rl_fatie, rl_toupiao, rl_fankui, rl_shoucang, rl_wenda, rl_out;
     private RoundedImageView riv_head;
     private TextView tv_name, tv_sex, tv_birth, tv_ins, tv_mianmao, tv_cname, tv_address;
     private MyCenterBean myCenterBean;
-String uid;
+    String uid;
+    int is_aite;
+    private RoundedImageView riv_isaite;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,42 +44,66 @@ String uid;
 ////        //透明导航栏
 //        getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
         SharedPreferences sp = getSharedPreferences("uid", Context.MODE_PRIVATE);
-        uid= sp.getString("uid","");
+        uid = sp.getString("uid", "");
         initView();
         initDatas();
+        Is_aite();
+    }
+
+    private void Is_aite() {
+        RequestMap params = new RequestMap();
+        params.put("uid", uid);
+        setParams(NetUrl.MY_CENTER_IS_AITE, params, 1);
     }
 
     private void initDatas() {
         RequestMap params = new RequestMap();
-        params.put("uid",uid);
+        params.put("uid", uid);
         setParams(NetUrl.MY_CENTER, params, 0);
     }
 
     @Override
     public void onSuccess(String response, Map<String, String> headers, String url, int actionId) {
         super.onSuccess(response, headers, url, actionId);
-        try {
-            if ("200".equals(JSON.parseObject(response).getString("code")))
-            myCenterBean = JSON.parseObject(response, MyCenterBean.class);
-            tv_name.setText(myCenterBean.getInfor().getUsername());
-            tv_cname.setText(myCenterBean.getInfor().getCname());
-            tv_birth.setText(myCenterBean.getInfor().getBirth());
-            tv_mianmao.setText(myCenterBean.getInfor().getBackground());
-            tv_address.setText(myCenterBean.getInfor().getAddress());
-            tv_ins.setText(myCenterBean.getInfor().getIntroduction());
-            int s = myCenterBean.getInfor().getSex();
-            if (s == 0) {
-                tv_sex.setText("男");
-            } else {
-                tv_sex.setText("女");
-            }
-            ImageLoader.getInstance().displayImage("http://" + myCenterBean.getInfor().getUserpic(), riv_head);
-        } catch (Exception e) {
-            Toast.prompt(this, "数据异常");
+        switch (actionId){
+            case 0:
+                try {
+                    if ("200".equals(JSON.parseObject(response).getString("code")))
+                        myCenterBean = JSON.parseObject(response, MyCenterBean.class);
+                    tv_name.setText(myCenterBean.getInfor().getUsername());
+                    tv_cname.setText(myCenterBean.getInfor().getCname());
+                    tv_birth.setText(myCenterBean.getInfor().getBirth());
+                    tv_mianmao.setText(myCenterBean.getInfor().getBackground());
+                    tv_address.setText(myCenterBean.getInfor().getAddress());
+                    tv_ins.setText(myCenterBean.getInfor().getIntroduction());
+                    int s = myCenterBean.getInfor().getSex();
+                    is_aite = myCenterBean.getIs_aite();
+
+                    if (s == 0) {
+                        tv_sex.setText("男");
+                    } else {
+                        tv_sex.setText("女");
+                    }
+                    ImageLoader.getInstance().displayImage("http://" + myCenterBean.getInfor().getUserpic(), riv_head);
+                } catch (Exception e) {
+                    Toast.prompt(this, "数据异常");
+                }
+                break;
+            case 1:
+                try {
+                    if ("1".equals(JSON.parseObject(response).getString("infor"))) {
+                            riv_isaite.setVisibility(View.VISIBLE);
+                    } else {
+                        riv_isaite.setVisibility(View.GONE);
+                    }
+                } catch (Exception e) {
+                    Toast.prompt(this, "数据异常");
+                }
+                break;
         }
     }
-
     private void initView() {
+        riv_isaite = (RoundedImageView) findViewById(R.id.riv_is_aite);
         iv_back = (ImageView) findViewById(R.id.iv_mycenter_back);
         rl_fatie = (RelativeLayout) findViewById(R.id.rl_mycenter_fatie);
         iv_bianjiziliao = (ImageView) findViewById(R.id.iv_myventer_bianjiziliao);
@@ -97,7 +124,7 @@ String uid;
         tv_mianmao = (TextView) findViewById(R.id.mCenter_tv_mianmao);
         tv_cname = (TextView) findViewById(R.id.mCenter_tv_cname);
         tv_address = (TextView) findViewById(R.id.mCenter_tv_address);
-        rl_out= (RelativeLayout) findViewById(R.id.rl_login_out);
+        rl_out = (RelativeLayout) findViewById(R.id.rl_login_out);
         rl_out.setOnClickListener(this);
     }
 
@@ -116,7 +143,7 @@ String uid;
             case R.id.iv_myventer_bianjiziliao:
                 Intent intent = new Intent(MyCenterActivity.this, XiuGaiXinXiActivity.class);
                 intent.putExtra("username", myCenterBean.getInfor().getUsername());
-                intent.putExtra("sex", myCenterBean.getInfor().getSex()+"");
+                intent.putExtra("sex", myCenterBean.getInfor().getSex() + "");
                 intent.putExtra("ins", myCenterBean.getInfor().getIntroduction());
                 intent.putExtra("birth", myCenterBean.getInfor().getBirth());
                 intent.putExtra("mianmao", myCenterBean.getInfor().getBackground());

@@ -46,7 +46,7 @@ import java.util.Map;
 
 import static net.cpsec.zfwx.guodian.R.id.tv_jiaoliu;
 
-public class  MainActivity extends BaseActivity implements View.OnClickListener {
+public class MainActivity extends BaseActivity implements View.OnClickListener {
     private TextView tvHuLian, tvTongXun, tvJiaoLiu, tvSheng, tvShare;
     private FragmentManager fm;
     private HuLilanFragment huLianFragment;
@@ -56,27 +56,28 @@ public class  MainActivity extends BaseActivity implements View.OnClickListener 
     private TongXunLuFragment tongXunLuFragment;
     private List<GetFriendQueueInfoBean.InforBean> allDataList;
     private Fragment xianshanghulianFragment;
-    private static String userPhone ;
+    private static String userPhone;
     private String password = "1234";//百川密码
-    private final static int  NOTGROUP=1;
-    private final static int   THISWORK=2;
-    private final static int   OTHERWORK=3;
-    private final static int   GROUPED=4;
+    private final static int NOTGROUP = 1;
+    private final static int THISWORK = 2;
+    private final static int OTHERWORK = 3;
+    private final static int GROUPED = 4;
     private String uid;
     public static Activity context;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        context=this;
+        context = this;
         getWindow().setSoftInputMode
-                (WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN|
+                (WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN |
                         WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         setContentView(R.layout.activity_main);
         SharedPreferences sp = getSharedPreferences("phone", Context.MODE_PRIVATE);
-        userPhone= sp.getString("phone","");
+        userPhone = sp.getString("phone", "");
         SharedPreferences sp1 = getSharedPreferences("uid", Context.MODE_PRIVATE);
         uid = sp1.getString("uid", "");
-        Log.e("123", "onCreate: "+userPhone);
+        Log.e("123", "onCreate: " + userPhone);
         fm = getSupportFragmentManager();
         initView();
         initFragment();
@@ -87,10 +88,11 @@ public class  MainActivity extends BaseActivity implements View.OnClickListener 
     }
 
     private long exitTime = 0;
+
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if(keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN){
-            if((System.currentTimeMillis()-exitTime) > 2000){
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
+            if ((System.currentTimeMillis() - exitTime) > 2000) {
                 Toast.prompt(this, "再按一次退出程序");
                 exitTime = System.currentTimeMillis();
             } else {
@@ -101,14 +103,16 @@ public class  MainActivity extends BaseActivity implements View.OnClickListener 
         }
         return super.onKeyDown(keyCode, event);
     }
-    public static YWIMKit getMyImKit(){
+
+    public static YWIMKit getMyImKit() {
         //此实现不一定要放在Application onCreate中
 
         //此对象获取到后，保存为全局对象，供APP使用
         //此对象跟用户相关，如果切换了用户，需要重新获取
         return YWAPI.getIMKitInstance(userPhone, "23893323");
     }
-    private void initAl(){
+
+    private void initAl() {
         //开始登录
         IYWLoginService loginService = this.getMyImKit().getLoginService();
         YWLoginParam loginParam = YWLoginParam.createLoginParam(userPhone, password);
@@ -116,20 +120,20 @@ public class  MainActivity extends BaseActivity implements View.OnClickListener 
 
             @Override
             public void onSuccess(Object... arg0) {
-                Log.e("123", "onError: "+ "onSuccess");
+                Log.e("123", "onError: " + "onSuccess");
                 initNetData();
             }
 
             @Override
             public void onProgress(int arg0) {
                 // TODO Auto-generated method stub
-                Log.e("123", "onError: "+ "onProgress");
+                Log.e("123", "onError: " + "onProgress");
             }
 
             @Override
             public void onError(int errCode, String description) {
                 //如果登录失败，errCode为错误码,description是错误的具体描述信息
-                Log.e("123", "onError: "+description );
+                Log.e("123", "onError: " + description);
             }
         });
         //获取最近回话列表
@@ -236,21 +240,23 @@ public class  MainActivity extends BaseActivity implements View.OnClickListener 
         fm.beginTransaction().hide(tongXunLuFragment).commit();
         fm.beginTransaction().hide(shareFragment).commit();
         fm.beginTransaction().hide(shengFragment).commit();
-
         tvHuLian.setSelected(false);
         tvTongXun.setSelected(false);
         tvSheng.setSelected(false);
         tvJiaoLiu.setSelected(false);
         tvShare.setSelected(false);
     }
+
     public interface MyTouchListener {
         public void onTouchEvent(MotionEvent event);
     }
+
     // 保存MyTouchListener接口的列表
     private ArrayList<MyTouchListener> myTouchListeners = new ArrayList<MainActivity.MyTouchListener>();
 
     /**
      * 提供给Fragment通过getActivity()方法来注册自己的触摸事件的方法
+     *
      * @param listener
      */
     public void registerMyTouchListener(MyTouchListener listener) {
@@ -259,10 +265,11 @@ public class  MainActivity extends BaseActivity implements View.OnClickListener 
 
     /**
      * 提供给Fragment通过getActivity()方法来取消注册自己的触摸事件的方法
+     *
      * @param listener
      */
     public void unRegisterMyTouchListener(MyTouchListener listener) {
-        myTouchListeners.remove( listener );
+        myTouchListeners.remove(listener);
     }
 
     /**
@@ -276,17 +283,19 @@ public class  MainActivity extends BaseActivity implements View.OnClickListener 
         return super.dispatchTouchEvent(ev);
     }
 
-    public static void quit(){
+    //从个人中心页面退出登录，调用时让主页面销毁的方法
+    public static void quit() {
         context.finish();
-        context=null;
+        context = null;
     }
-    public List<Message> msgs=new ArrayList<>();
-    public Handler myHandler=new Handler(){
+
+    public List<Message> msgs = new ArrayList<>();
+    public Handler myHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             msgs.add(msg);
-            if (msgs.size()>=4) {
+            if (msgs.size() >= 4) {
                 msgs.clear();
                 setUseName();
 
@@ -295,82 +304,84 @@ public class  MainActivity extends BaseActivity implements View.OnClickListener 
     };
 
     private void initNetData() {
-        allDataList=new ArrayList<>();
+        allDataList = new ArrayList<>();
         allDataList.clear();
         requestGroupInfo(NOTGROUP);
         requestGroupInfo(THISWORK);
         requestGroupInfo(OTHERWORK);
         requestGroupInfo(GROUPED);
     }
-    public void requestGroupInfo(int friend_group_id){
-        RequestMap params=new RequestMap();
+
+    public void requestGroupInfo(int friend_group_id) {
+        RequestMap params = new RequestMap();
         //TODO 模拟uid
         params.put("uid", uid);
-        params.put("friend_group_id",friend_group_id+"");
+        params.put("friend_group_id", friend_group_id + "");
         setParams(NetUrl.GET_FRIEND, params, friend_group_id);
     }
+
     @Override
     public void onSuccess(String response, Map<String, String> headers, String url, int actionId) {
         super.onSuccess(response, headers, url, actionId);
-        try{
+        try {
             JSONObject jsonObject = JSONObject.parseObject(response);
-            if (!"200".equals(jsonObject.getString("code"))){
-                Log.e("123", "onSuccesssssss: "+response );
+            if (!"200".equals(jsonObject.getString("code"))) {
+                Log.e("123", "onSuccesssssss: " + response);
                 myHandler.sendEmptyMessage(1);
                 return;
             }
 
-        }catch (Exception e){
+        } catch (Exception e) {
             myHandler.sendEmptyMessage(1);
         }
         switch (actionId) {
             case NOTGROUP:
-                Log.e("notGroupedList", "onSuccess: "+response );
-                try{
+                Log.e("notGroupedList", "onSuccess: " + response);
+                try {
 
                     GetFriendQueueInfoBean infoBean = new Gson().fromJson(response, GetFriendQueueInfoBean.class);
                     List<GetFriendQueueInfoBean.InforBean> infor = infoBean.getInfor();
                     allDataList.addAll(infor);
 
                     myHandler.sendEmptyMessage(1);
-                }catch(Exception e){
+                } catch (Exception e) {
                     android.widget.Toast.makeText(MainActivity.this, "未分组解析错误", android.widget.Toast.LENGTH_SHORT).show();
                     myHandler.sendEmptyMessage(1);
                 }
                 break;
             case THISWORK:
-                Log.e("notGroupedList", "onSuccess: "+response );
-                try{
+                Log.e("notGroupedList", "onSuccess: " + response);
+                try {
                     GetFriendQueueInfoBean infoBean = new Gson().fromJson(response, GetFriendQueueInfoBean.class);
                     allDataList.addAll(infoBean.getInfor());
 
 
                     myHandler.sendEmptyMessage(1);
-                }catch(Exception e){
+                } catch (Exception e) {
                     android.widget.Toast.makeText(MainActivity.this, "本单位解析错误", android.widget.Toast.LENGTH_SHORT).show();
                     myHandler.sendEmptyMessage(1);
                 }
                 break;
             case OTHERWORK:
-                Log.e("notGroupedList", "onSuccess: "+response );
-                try{
+                Log.e("notGroupedList", "onSuccess: " + response);
+                try {
                     GetFriendQueueInfoBean infoBean = new Gson().fromJson(response, GetFriendQueueInfoBean.class);
                     allDataList.addAll(infoBean.getInfor());
 
                     myHandler.sendEmptyMessage(1);
-                }catch(Exception e){
+                } catch (Exception e) {
                     android.widget.Toast.makeText(MainActivity.this, "兄弟单位解析错误", android.widget.Toast.LENGTH_SHORT).show();
                     myHandler.sendEmptyMessage(1);
                 }
                 break;
             case GROUPED:
-                Log.e("notGroupedList", "onSuccess: "+response );
-                try{
+                Log.e("notGroupedList", "onSuccess: " + response);
+                try {
                     GetFriendQueueInfoBean infoBean = new Gson().fromJson(response, GetFriendQueueInfoBean.class);
                     allDataList.addAll(infoBean.getInfor());
 
                     myHandler.sendEmptyMessage(1);
-                }catch(Exception e){
+                } catch (Exception e) {
                     android.widget.Toast.makeText(MainActivity.this, "群组解析错误", android.widget.Toast.LENGTH_SHORT).show();
                     myHandler.sendEmptyMessage(1);
                 }
@@ -378,7 +389,8 @@ public class  MainActivity extends BaseActivity implements View.OnClickListener 
 
         }
     }
-    public void setUseName(){
+
+    public void setUseName() {
         final IYWContactService contactService = MainActivity.getMyImKit().getContactService();
         contactService.setCrossContactProfileCallback(new IYWCrossContactProfileCallback() {
 
@@ -396,7 +408,7 @@ public class  MainActivity extends BaseActivity implements View.OnClickListener 
 
             @Override
             public IYWContact onFetchContactInfo(String userId, final String appKey) {
-                if (allDataList!=null&&allDataList.size()>0) {
+                if (allDataList != null && allDataList.size() > 0) {
                     for (int i = 0; i < allDataList.size(); i++) {
                         GetFriendQueueInfoBean.InforBean inforBean = allDataList.get(i);
                         if (inforBean.getPhone().equals(userId)) {

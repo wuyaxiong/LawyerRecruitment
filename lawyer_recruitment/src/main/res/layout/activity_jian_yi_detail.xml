@@ -11,7 +11,7 @@
     <LinearLayout
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="45dp"
+        android:layout_height="53dp"
         android:background="@color/color_while"
         android:orientation="horizontal">
 
@@ -20,7 +20,7 @@
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_gravity="center_vertical"
-            android:layout_marginLeft="20dp"
+            android:layout_marginLeft="16dp"
             android:src="@drawable/back_icon" />
 
         <TextView
@@ -35,7 +35,7 @@
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_gravity="center"
-            android:layout_marginRight="20dp"
+            android:layout_marginRight="16dp"
             android:src="@drawable/icon_share" />
     </LinearLayout>
 
@@ -82,7 +82,7 @@
             android:layout_marginRight="8dp"
             android:layout_marginStart="21dp"
             android:layout_marginTop="8dp"
-            android:text="用户姓名"
+            android:text=""
             android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintHorizontal_bias="0.23"
@@ -114,18 +114,18 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
                 android:layout_marginTop="8dp"
-                android:text="发帖内容"
+                android:text=""
                 android:textSize="16sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="20dp"
                 android:layout_marginBottom="6dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
                 android:layout_marginTop="6dp"
                 android:orientation="horizontal">
 
@@ -138,13 +138,31 @@
                     android:text="1分钟前"
                     android:textColor="#bebebe"
                     android:textSize="14sp" />
+                <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical">
 
-                <ImageView
-                    android:id="@+id/iv_tiezi_dainzan"
-                    android:layout_width="14dp"
-                    android:layout_height="14dp"
-                    android:layout_gravity="center_vertical"
-                    android:src="@drawable/icon_zan" />
+                    <ImageView
+                        android:id="@+id/iv_quxiao_dianzan"
+                        android:layout_width="14dp"
+                        android:layout_height="14dp"
+                        android:src="@drawable/icon_zan"
+                        android:visibility="gone"/>
+
+                    <ImageView
+                        android:id="@+id/iv_tiezi_dainzan"
+                        android:layout_width="14dp"
+                        android:layout_height="14dp"
+                        android:layout_gravity="center_vertical"
+                        android:src="@drawable/iv_zan_hui" />
+                </FrameLayout>
+                <!--<ImageView-->
+                    <!--android:id="@+id/iv_tiezi_dainzan"-->
+                    <!--android:layout_width="14dp"-->
+                    <!--android:layout_height="14dp"-->
+                    <!--android:layout_gravity="center_vertical"-->
+                    <!--android:src="@drawable/icon_zan" />-->
 
                 <TextView
                     android:id="@+id/tv_xinshengdetail_dianzan"
@@ -152,7 +170,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="8dp"
-                    android:text="100"
+                    android:text=""
                     android:textColor="#1c7cea"
                     android:textSize="14sp" />
 
@@ -221,7 +239,7 @@
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
             android:layout_marginTop="42dp"
-            android:text="1分钟前"
+            android:text=""
             android:textSize="16sp"
             app:layout_constraintHorizontal_bias="0.247"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -233,10 +251,10 @@
         android:id="@+id/tv_xinshengdetail_huifucontent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
         android:layout_marginTop="5dp"
-        android:text="回复"
+        android:text=""
         android:textSize="14sp" />
 
 </LinearLayout>

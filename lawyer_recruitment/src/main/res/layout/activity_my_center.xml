@@ -294,13 +294,38 @@
                 android:layout_marginLeft="16dp"/>
 
             <TextView
+                android:id="@+id/tv_wenda_1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_toEndOf="@+id/imageView3"
                 android:layout_toRightOf="@+id/imageView3"
                 android:text="问答" />
-
+            <com.makeramen.roundedimageview.RoundedImageView
+                android:id="@+id/riv_is_aite"
+                android:layout_width="10dp"
+                android:layout_height="10dp"
+                android:clickable="true"
+                android:scaleType="center"
+                android:layout_gravity="center_horizontal"
+                android:background="@color/color_ff3000"
+                app:riv_border_color="#bbbbbb"
+                app:riv_border_width="1dp"
+                app:riv_corner_radius="5dp"
+                app:riv_mutate_background="true"
+                app:riv_oval="true"
+                app:riv_tile_mode="repeat"
+                android:layout_marginRight="8dp"
+                app:layout_constraintRight_toRightOf="parent"
+                android:layout_marginLeft="8dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/tv_wenda_1"
+                android:layout_marginTop="5dp"
+                app:layout_constraintHorizontal_bias="0.054"
+                android:layout_toEndOf="@+id/tv_wenda_1"
+                android:layout_toRightOf="@+id/tv_wenda_1"
+                android:visibility="gone"
+                />
             <ImageView
                 android:layout_width="20dp"
                 android:layout_height="20dp"
@@ -493,8 +518,8 @@
             android:layout_height="wrap_content"
             android:text="退出登录"
             android:layout_centerVertical="true"
-            android:layout_marginStart="20dp"
-            android:layout_marginLeft="20dp" />
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="16dp" />
         <ImageView
             android:layout_width="20dp"
             android:layout_height="20dp"

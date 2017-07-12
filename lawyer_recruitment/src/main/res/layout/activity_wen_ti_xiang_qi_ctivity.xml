@@ -30,8 +30,8 @@
                 android:id="@+id/tv_xiangqing_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
                 android:layout_marginTop="8dp"
                 android:text="锅炉的作用是什么"
                 android:textSize="18sp" />
@@ -116,15 +116,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp" />
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp" />
 
             <TextView
                 android:id="@+id/tv_xiangqing_content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
                 android:layout_marginTop="8dp"
                 android:text="发帖内容"
                 android:textSize="16sp" />

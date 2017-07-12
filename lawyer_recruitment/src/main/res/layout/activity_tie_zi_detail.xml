@@ -21,7 +21,7 @@
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_gravity="center_vertical"
-            android:layout_marginLeft="20dp"
+            android:layout_marginLeft="16dp"
             android:src="@drawable/back_icon" />
 
         <TextView
@@ -36,7 +36,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginRight="20dp">
+            android:layout_marginRight="16dp">
 
             <ImageView
                 android:id="@+id/iv_tiezi_shoucang"
@@ -57,7 +57,7 @@
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_gravity="center"
-            android:layout_marginRight="20dp"
+            android:layout_marginRight="16dp"
             android:src="@drawable/icon_share" />
     </LinearLayout>
 
@@ -104,7 +104,7 @@
             android:layout_marginRight="8dp"
             android:layout_marginStart="21dp"
             android:layout_marginTop="8dp"
-            android:text="用户姓名"
+            android:text=""
             android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintHorizontal_bias="0.23"
@@ -136,10 +136,10 @@
                 android:id="@+id/tv_tiezixiangqing_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
                 android:layout_marginTop="8dp"
-                android:text="锅炉的作用是什么"
+                android:text=""
                 android:textSize="18sp" />
 
             <TextView
@@ -147,18 +147,18 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
                 android:layout_marginTop="8dp"
-                android:text="发帖内容"
+                android:text=""
                 android:textSize="16sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="20dp"
                 android:layout_marginBottom="6dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
                 android:layout_marginTop="6dp"
                 android:orientation="horizontal">
 
@@ -170,13 +170,34 @@
                     android:layout_weight="1"
                     android:textColor="#bebebe"
                     android:textSize="14sp" />
-
-                <ImageView
-                    android:id="@+id/iv_tiezi_dainzan"
-                    android:layout_width="14dp"
-                    android:layout_height="14dp"
+                <TextView
+                    android:id="@+id/tv_tiezixiangqing_jubao"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:src="@drawable/icon_zan" />
+                    android:text="举报"
+                    android:textColor="#bebebe"
+                    android:layout_marginRight="16dp"
+                    android:textSize="14sp" />
+                <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical">
+
+                    <ImageView
+                        android:id="@+id/iv_quxiao_dianzan"
+                        android:layout_width="14dp"
+                        android:layout_height="14dp"
+                        android:src="@drawable/icon_zan"
+                        android:visibility="gone"/>
+
+                    <ImageView
+                        android:id="@+id/iv_tiezi_dainzan"
+                        android:layout_width="14dp"
+                        android:layout_height="14dp"
+                        android:layout_gravity="center_vertical"
+                        android:src="@drawable/iv_zan_hui" />
+                </FrameLayout>
 
                 <TextView
                     android:id="@+id/tv_tiezi_dianzan"
@@ -184,7 +205,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="8dp"
-                    android:text="100"
+                    android:text=""
                     android:textColor="#1c7cea"
                     android:textSize="14sp" />
 
@@ -192,7 +213,7 @@
                     android:layout_width="14dp"
                     android:layout_height="14dp"
                     android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="20dp"
+                    android:layout_marginLeft="16dp"
                     android:src="@drawable/icon_pinglun" />
 
                 <TextView
@@ -201,7 +222,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="8dp"
-                    android:text="100"
+                    android:text=""
                     android:textColor="#1c7cea"
                     android:textSize="14sp" />
             </LinearLayout>
@@ -219,16 +240,18 @@
                 android:layout_marginBottom="8dp" />
 
             <View
+                android:id="@+id/view2"
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="#DDDDDD" />
+                android:layout_height="0.5dp"
+                android:background="#DDDDDD"
+                android:visibility="gone" />
 
             <net.cpsec.zfwx.guodian.view.NoScrollListView
                 android:id="@+id/lv_tiezi_pinglun"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"></net.cpsec.zfwx.guodian.view.NoScrollListView>
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"></net.cpsec.zfwx.guodian.view.NoScrollListView>
         </LinearLayout>
     </ScrollView>
 

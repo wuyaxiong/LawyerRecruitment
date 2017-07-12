@@ -29,7 +29,7 @@
             app:riv_mutate_background="true"
             app:riv_oval="true"
             android:layout_gravity="center_vertical"
-            android:layout_marginLeft="20dp"
+            android:layout_marginLeft="16dp"
             app:riv_tile_mode="repeat"  />
         <TextView
             android:id="@+id/tv_xinsheng_name"
@@ -45,8 +45,8 @@
         android:id="@+id/tv_xinsheng_question"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
         android:layout_marginTop="8dp"
         android:text="锅炉的作用是什么？"
         android:singleLine="true"
@@ -67,22 +67,22 @@
             android:textColor="#919191"
             android:layout_gravity="center_vertical"
             android:singleLine="true"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
             />
     </LinearLayout>
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="#bebebe"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
         android:layout_marginTop="6dp"></View>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="36dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
         android:layout_marginTop="6dp"
         android:orientation="horizontal">
         <TextView

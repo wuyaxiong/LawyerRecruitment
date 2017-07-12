@@ -29,7 +29,7 @@ import net.cpsec.zfwx.guodian.utils.Toast;
 import java.util.Map;
 
 public class JianYiDetailActivity extends BaseActivity {
-    private ImageView iv_back;
+    private ImageView iv_back,iv_dainzan, iv_quxiaodainzan;
     private RoundedImageView head;
     private TextView tv_name, tv_time, tv_content, tv_huifutime, tv_huifu, tv_prise;
     String uid, advice_id;
@@ -64,11 +64,34 @@ public class JianYiDetailActivity extends BaseActivity {
         tv_huifu = (TextView) findViewById(R.id.tv_xinshengdetail_huifucontent);
         tv_prise = (TextView) findViewById(R.id.tv_xinshengdetail_dianzan);
         initData();
+        iv_quxiaodainzan= (ImageView) findViewById(R.id.iv_quxiao_dianzan);
+        iv_quxiaodainzan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.prompt(JianYiDetailActivity.this,"已经点赞，不能重复点赞");
+//                RequestMap params = new RequestMap();
+//                params.put("notice_id", ask_id);
+//                params.put("uid", uid);
+//                setParams(NetUrl.TIEZI_DIANZAN, params, 3);
+            }
+        });
+        iv_dainzan = (ImageView) findViewById(R.id.iv_tiezi_dainzan);
+        iv_dainzan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                RequestMap params = new RequestMap();
+                params.put("aid", advice_id);
+                params.put("uid", uid);
+                setParams(NetUrl.JIANYI_DETAIL_DIANZAN, params, 2);
+            }
+        });
+
     }
 
     private void initData() {
         RequestMap params = new RequestMap();
         params.put("advice_id", advice_id);
+        params.put("uid", uid);
         setParams(NetUrl.JIANYI_DETAIL, params, 1);
     }
 
@@ -79,13 +102,22 @@ public class JianYiDetailActivity extends BaseActivity {
             case 1:
                 try {
                     detail = JSON.parseObject(response, JianYiDetailBean.class);
-                    String userpic = (String) detail.getInfor().get(0).getUserpic();
-                    String username = detail.getInfor().get(0).getUsername();
-                    String content = detail.getInfor().get(0).getContent();
-                    String huifu = detail.getInfor().get(0).getComment();
-                    long asktime = detail.getInfor().get(0).getAsktime();
-                    long huifutime = detail.getInfor().get(0).getTime();
-                    int prise_num = detail.getInfor().get(0).getPraise();
+                    String userpic = (String) detail.getInfor().getAdvice_detail().get(0).getUserpic();
+                    String username = detail.getInfor().getAdvice_detail().get(0).getUsername();
+                    String content = detail.getInfor().getAdvice_detail().get(0).getContent();
+                    String huifu = detail.getInfor().getAdvice_detail().get(0).getComment();
+                    long asktime = detail.getInfor().getAdvice_detail().get(0).getAsktime();
+                    long huifutime = detail.getInfor().getAdvice_detail().get(0).getTime();
+                    int prise_num = detail.getInfor().getAdvice_detail().get(0).getPraise();
+                    int is_praise = detail.getInfor().getIs_praise();
+                    Debugging.debugging("praise=================="+is_praise);
+                    if (is_praise == 0) {
+                        iv_dainzan.setVisibility(View.VISIBLE);
+                        iv_quxiaodainzan.setVisibility(View.GONE);
+                    } else {
+                        iv_dainzan.setVisibility(View.GONE);
+                        iv_quxiaodainzan.setVisibility(View.VISIBLE);
+                    }
                     ImageLoader.getInstance().displayImage("http://" + userpic, head);
                     tv_name.setText(username);
                     tv_content.setText(content);
@@ -126,6 +158,14 @@ public class JianYiDetailActivity extends BaseActivity {
                     });
                 } catch (Exception e) {
                     Toast.prompt(this, "数据异常");
+                }
+                break;
+            case 2:
+                if (!"200".equals(JSON.parseObject(response).getString("code"))) {
+                    Toast.prompt(this, "点赞失败，稍后重试!");
+                } else {
+                    Toast.prompt(this, "点赞成功!");
+                    initData();
                 }
                 break;
         }

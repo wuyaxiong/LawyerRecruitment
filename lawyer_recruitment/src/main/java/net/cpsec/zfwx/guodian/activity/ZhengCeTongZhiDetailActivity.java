@@ -10,6 +10,7 @@ import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -27,7 +28,6 @@ import net.cpsec.zfwx.guodian.adapter.ListImageAdapter;
 import net.cpsec.zfwx.guodian.adapter.TongZhiPingLunAdapter;
 import net.cpsec.zfwx.guodian.entity.ZhengCeTongzhiDetailBean;
 import net.cpsec.zfwx.guodian.utils.DateUtil;
-import net.cpsec.zfwx.guodian.utils.Debugging;
 import net.cpsec.zfwx.guodian.utils.NetUrl;
 import net.cpsec.zfwx.guodian.utils.Toast;
 import net.cpsec.zfwx.guodian.view.NoScrollListView;
@@ -38,9 +38,11 @@ import java.util.Map;
 
 public class ZhengCeTongZhiDetailActivity extends BaseActivity implements View.OnClickListener {
     private TextView tv_title, tv_name, tv_time, tv_content;
-    private ImageView iv_back;
+    private ImageView iv_back,iv_shoucang,iv_yishoucang;
+    private FrameLayout fl_shoucang;
     private NoScrollListView lv_images, lv_pinglun;
     private TongZhiPingLunAdapter pinlunAdapter;
+    private View view;
     ListImageAdapter adapter;
     private ImageView ivRightToolBar;
     String aid;
@@ -61,11 +63,11 @@ public class ZhengCeTongZhiDetailActivity extends BaseActivity implements View.O
         uid = sp.getString("uid", "");
         Intent intent = getIntent();
         aid = intent.getExtras().getString("aid");
-        Log.e("1234", "onCreate: "+aid );
         initView();
     }
 
     private void initView() {
+        view=findViewById(R.id.view2);
         et_pinglun = (EditText) findViewById(R.id.et_tongzhi_pinglun);
         btn = (Button) findViewById(R.id.btn_tongzhi_pinglun);
         ivRightToolBar = (ImageView) findViewById(R.id.ivRightToolBar);
@@ -79,10 +81,32 @@ public class ZhengCeTongZhiDetailActivity extends BaseActivity implements View.O
         lv_pinglun = (NoScrollListView) findViewById(R.id.lv_tongzhi_pinglun);
         iv_back.setOnClickListener(this);
         initData();
+        fl_shoucang= (FrameLayout) findViewById(R.id.fl_shoucang);
+        iv_yishoucang = (ImageView) findViewById(R.id.iv_tiezi_yishoucang);
+        iv_shoucang = (ImageView) findViewById(R.id.iv_tiezi_shoucang);
+        fl_shoucang.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (iv_yishoucang.getVisibility()==View.VISIBLE){
+                    Toast.prompt(ZhengCeTongZhiDetailActivity.this, "已收藏，不能重复收藏");
+//                    RequestMap params = new RequestMap();
+//                    params.put("notice_id", aid);
+//                    params.put("uid", uid);
+//                    setParams(NetUrl.QINCHUN_ZHENGCETONGZHI_SHOUCANG, params, 3);
+                }else {
+                    RequestMap params = new RequestMap();
+                    params.put("notice_id", aid);
+                    params.put("uid", uid);
+                    setParams(NetUrl.QINCHUN_ZHENGCETONGZHI_SHOUCANG, params, 2);
+                }
+            }
+        });
+
     }
 
     private void initData() {
         RequestMap params = new RequestMap();
+        params.put("uid", uid + "");
         params.put("aid", aid + "");
         setParams(NetUrl.QINCHUN_ZHENGCETONGZHI_DETAIL, params, 0);
     }
@@ -98,24 +122,32 @@ public class ZhengCeTongZhiDetailActivity extends BaseActivity implements View.O
             case 0:
                 try {
                     pinglunBean = JSON.parseObject(response, ZhengCeTongzhiDetailBean.class);
-                    Debugging.debugging("position      =      " + (null == pinglunBean));
                     tv_title.setText(pinglunBean.getInfor().getNotice_info().getTitle());
                     tv_name.setText(pinglunBean.getInfor().getNotice_info().getCname());
                     tv_time.setText(DateUtil.converTime(pinglunBean.getInfor().getNotice_info().getTime()));
                     tv_content.setText(pinglunBean.getInfor().getNotice_info().getComment());
+                    int is_collection=pinglunBean.getInfor().getIs_collection();
+                    if (is_collection==0){
+                        iv_shoucang.setVisibility(View.VISIBLE);
+                        iv_yishoucang.setVisibility(View.GONE);
+                    }else {
+                        iv_shoucang.setVisibility(View.GONE);
+                        iv_yishoucang.setVisibility(View.VISIBLE);
+                    }
                     images = pinglunBean.getInfor().getNotice_info().getImage();
                     imageUrls.clear();
                     if (images == null || images.isEmpty()) {
                         lv_images.setVisibility(View.GONE);
+                        view.setVisibility(View.GONE);
                     } else {
                         String[] tupians = images.split(",");
                         for (String substr : tupians) {
                             imageUrls.add("http://" + substr);
                             lv_images.setVisibility(View.VISIBLE);
+                            view.setVisibility(View.VISIBLE);
                         }
                     }
                     PicCheck(lv_images);
-
                     adapter = new ListImageAdapter(this, imageUrls);
                     lv_images.setAdapter(adapter);
                     List<ZhengCeTongzhiDetailBean.InforBean.NoticeCommentBean> coment_info = pinglunBean.getInfor().getNotice_comment();
@@ -171,6 +203,24 @@ public class ZhengCeTongZhiDetailActivity extends BaseActivity implements View.O
                     Toast.prompt(this, "数据异常");
                 }
                 break;
+            case 2:
+                if (!"200".equals(JSON.parseObject(response).getString("code"))) {
+                    Toast.prompt(this, "收藏失败，稍后重试！");
+                } else {
+                    Toast.prompt(this, "收藏成功!");
+                    iv_yishoucang.setVisibility(View.VISIBLE);
+                    iv_shoucang.setVisibility(View.GONE);
+                }
+                break;
+//            case 4:
+//                if (!"200".equals(JSON.parseObject(response).getString("code"))) {
+//                    Toast.prompt(this, "取消收藏失败，稍后重试!");
+//                } else {
+//                    Toast.prompt(this, "已取消收藏");
+//                    iv_yishoucang.setVisibility(View.GONE);
+//                    iv_shoucang.setVisibility(View.VISIBLE);
+//                }
+//                break;
         }
 
     }

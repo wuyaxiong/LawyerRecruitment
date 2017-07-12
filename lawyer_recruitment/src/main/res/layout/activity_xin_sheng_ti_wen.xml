@@ -19,7 +19,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:layout_marginLeft="20dp"
+            android:layout_marginLeft="16dp"
             android:text="取消"
             android:textColor="#575757"
             android:textSize="20sp" />
@@ -39,7 +39,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:layout_marginRight="20dp"
+            android:layout_marginRight="16dp"
             android:text="发布"
             android:textColor="#1c7cea"
             android:textSize="20sp" />
@@ -65,8 +65,8 @@
         android:layout_height="wrap_content"
         android:background="#FFFFFF"
         android:layout_marginTop="8dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
         android:hint="提问内容"
         android:textSize="18sp"
         android:gravity="top"
@@ -84,7 +84,7 @@
             android:id="@+id/cb_tiwen"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
+            android:layout_marginLeft="16dp"
             android:text="公开"
             android:textColor="#575757"
             android:textSize="20sp" />
@@ -98,24 +98,24 @@
             android:id="@+id/iv_tiwen_addtupian"
             android:layout_width="25dp"
             android:layout_height="25dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
             android:src="@drawable/icon_shangchuan" />
     </LinearLayout>
 
     <View
     android:layout_width="match_parent"
-    android:layout_height="1dp"
-    android:layout_marginLeft="20dp"
-    android:layout_marginRight="20dp"
+    android:layout_height="0.5dp"
+    android:layout_marginLeft="16dp"
+    android:layout_marginRight="16dp"
     android:background="#b2b2b2"/>
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginBottom="20dp">
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="16dp">
         <GridView
             android:id="@+id/gridview_tiwen"
             android:layout_width="match_parent"

@@ -19,7 +19,7 @@
         android:layout_marginTop="10dp"
         app:riv_oval="true"
         android:layout_gravity="center_vertical"
-        android:layout_marginLeft="20dp"
+        android:layout_marginLeft="16dp"
         app:riv_tile_mode="repeat"  />
 <ImageView
     android:id="@+id/hat_img"
@@ -47,7 +47,7 @@
        android:layout_height="wrap_content"
        android:layout_width="wrap_content"
        android:textSize="13sp"
-       android:layout_marginLeft="20dp"
+       android:layout_marginLeft="16dp"
        android:layout_marginTop="5dp"
        android:layout_toRightOf="@id/img_icon"
        android:layout_below="@id/tv_name"

@@ -9,5 +9,6 @@
     android:text="火电技术"
     android:padding="6dp"
     android:gravity="center"
+    android:background="@drawable/search_selector"
     />
 </LinearLayout>

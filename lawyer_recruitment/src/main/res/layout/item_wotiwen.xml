@@ -16,8 +16,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
             android:layout_weight="1"
             android:singleLine="true"
             android:text="锅炉的作用是什么？"
@@ -29,7 +29,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:layout_marginRight="20dp"
+            android:layout_marginRight="16dp"
             android:text="已解决"
             android:textColor="@color/color_1658ee"
             android:textSize="16sp" />
@@ -38,8 +38,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="36dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
         android:layout_marginTop="6dp"
         android:orientation="horizontal">
 
@@ -73,7 +73,7 @@
             android:layout_width="14dp"
             android:layout_height="14dp"
             android:layout_gravity="center_vertical"
-            android:layout_marginLeft="20dp"
+            android:layout_marginLeft="16dp"
             android:src="@drawable/icon_pinglun" />
 
         <TextView
@@ -81,7 +81,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
-            android:layout_marginRight="20dp"
+            android:layout_marginRight="16dp"
             android:layout_gravity="center_vertical"
             android:text="100"
             android:textColor="#1c7cea"

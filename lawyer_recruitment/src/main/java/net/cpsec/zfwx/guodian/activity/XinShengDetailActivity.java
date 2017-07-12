@@ -34,7 +34,7 @@ import java.util.ArrayList;
 import java.util.Map;
 
 public class XinShengDetailActivity extends BaseActivity {
-    private ImageView iv_back;
+    private ImageView iv_back, iv_dainzan, iv_quxiaodainzan;
     private RoundedImageView head;
     private TextView tv_name, tv_time, tv_content, tv_huifutime, tv_huifu, tv_prise;
     String uid, ask_id, images;
@@ -52,6 +52,7 @@ public class XinShengDetailActivity extends BaseActivity {
         SharedPreferences sp = getSharedPreferences("uid", Context.MODE_PRIVATE);
         uid = sp.getString("uid", "");
         initView();
+        initData();
     }
 
     private void initView() {
@@ -74,11 +75,34 @@ public class XinShengDetailActivity extends BaseActivity {
         tv_huifutime = (TextView) findViewById(R.id.tv_xinshengdetail_huifutime);
         tv_huifu = (TextView) findViewById(R.id.tv_xinshengdetail_huifucontent);
         tv_prise = (TextView) findViewById(R.id.tv_xinshengdetail_dianzan);
-        initData();
+        iv_dainzan = (ImageView) findViewById(R.id.iv_tiezi_dainzan);
+        iv_quxiaodainzan = (ImageView) findViewById(R.id.iv_quxiao_dianzan);
+        iv_quxiaodainzan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.prompt(XinShengDetailActivity.this,"已经点赞，不能重复点赞");
+//                RequestMap params = new RequestMap();
+//                params.put("notice_id", ask_id);
+//                params.put("uid", uid);
+//                setParams(NetUrl.TIEZI_DIANZAN, params, 3);
+            }
+        });
+        iv_dainzan = (ImageView) findViewById(R.id.iv_tiezi_dainzan);
+        iv_dainzan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                RequestMap params = new RequestMap();
+                params.put("ask_id", ask_id);
+                params.put("uid", uid);
+                setParams(NetUrl.XINSHENG_DIANZAN, params, 2);
+            }
+        });
+
     }
 
     private void initData() {
         RequestMap params = new RequestMap();
+        params.put("uid", uid);
         params.put("ask_id", ask_id);
         setParams(NetUrl.XINSHENG_DETAIL, params, 1);
     }
@@ -86,81 +110,104 @@ public class XinShengDetailActivity extends BaseActivity {
     @Override
     public void onSuccess(String response, Map<String, String> headers, String url, int actionId) {
         super.onSuccess(response, headers, url, actionId);
-          try {
-        detail = JSON.parseObject(response, XinShengDetailBean.class);
-        String userpic = detail.getInfor().getUserpic();
-        String username = detail.getInfor().getUsername();
-        String content = detail.getInfor().getContent();
-        String huifu = detail.getInfor().getComment();
-        long asktime = detail.getInfor().getAsktime();
-        long huifutime = detail.getInfor().getTime();
-        int prise_num = detail.getInfor().getPraise();
-        ImageLoader.getInstance().displayImage("http://" + userpic, head);
-        tv_name.setText(username);
-        tv_content.setText(content);
-        tv_time.setText(DateUtil.converTime(asktime));
-        tv_huifutime.setText(DateUtil.converTime(huifutime));
-        tv_huifu.setText(huifu);
-        tv_prise.setText(prise_num+"");
-        images = detail.getInfor().getImage().toString();
-        if (images.isEmpty() || images == null) {
-            listview.setVisibility(View.GONE);
-        } else {
-            String[] tupians = images.split(",");
-            //每次刷新前清空图片列表
-            imageUrls.clear();
-            for (String substr : tupians) {
-                imageUrls.add("http://" + substr);
-                listview.setVisibility(View.VISIBLE);
-            }
+        switch (actionId){
+            case 1:
+                try {
+                    detail = JSON.parseObject(response, XinShengDetailBean.class);
+                    String userpic = detail.getInfor().getResult1().getUserpic();
+                    String username = detail.getInfor().getResult1().getUsername();
+                    String content = detail.getInfor().getResult1().getContent();
+                    String huifu = detail.getInfor().getResult1().getComment();
+                    long asktime = detail.getInfor().getResult1().getAsktime();
+                    long huifutime = detail.getInfor().getResult1().getTime();
+                    int prise_num = detail.getInfor().getResult1().getPraise();
+                    ImageLoader.getInstance().displayImage("http://" + userpic, head);
+                    tv_name.setText(username);
+                    tv_content.setText(content);
+                    tv_time.setText(DateUtil.converTime(asktime));
+                    tv_huifutime.setText(DateUtil.converTime(huifutime));
+                    tv_huifu.setText(huifu);
+                    tv_prise.setText(prise_num + "");
+                    images = detail.getInfor().getResult1().getImage().toString();
+                    if (images.isEmpty() || images == null) {
+                        listview.setVisibility(View.GONE);
+                    } else {
+                        String[] tupians = images.split(",");
+                        //每次刷新前清空图片列表
+                        imageUrls.clear();
+                        for (String substr : tupians) {
+                            imageUrls.add("http://" + substr);
+                            listview.setVisibility(View.VISIBLE);
+                        }
+                    }
+                    int is_praise = detail.getInfor().getIs_praise();
+                    if (is_praise == 0) {
+                        iv_dainzan.setVisibility(View.VISIBLE);
+                        iv_quxiaodainzan.setVisibility(View.GONE);
+                    } else {
+                        iv_dainzan.setVisibility(View.GONE);
+                        iv_quxiaodainzan.setVisibility(View.VISIBLE);
+                    }
+                    PicCheck(listview);
+                    //初始化适配器
+                    adapter = new ListImageAdapter(this, imageUrls);
+                    adapter.notifyDataSetChanged();
+                    listview.setAdapter(adapter);
+                    final UMWeb web = new UMWeb("http://bbs.91huiban.com/public/share1.html?id =" + ask_id);
+                    web.setTitle(username);//标题
+                    web.setThumb(new UMEmoji(this, R.mipmap.ic_launcher));  //缩略图
+                    web.setDescription(content);//描述
+                    ivRightToolBar.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            new ShareAction(XinShengDetailActivity.this).withMedia(web)
+                                    .setDisplayList(SHARE_MEDIA.SINA, SHARE_MEDIA.QQ, SHARE_MEDIA.WEIXIN)
+                                    .setCallback(new UMShareListener() {
+                                        @Override
+                                        public void onStart(SHARE_MEDIA share_media) {
+                                        }
+
+                                        @Override
+                                        public void onResult(SHARE_MEDIA share_media) {
+                                            Toast.prompt(XinShengDetailActivity.this, share_media + "分享成功");
+                                        }
+
+                                        @Override
+                                        public void onError(SHARE_MEDIA share_media, Throwable throwable) {
+                                            Toast.prompt(XinShengDetailActivity.this, share_media + "分享失败" + throwable.getMessage());
+                                            if (throwable != null) {
+                                                Log.d("throw", "throw:" + throwable.getMessage());
+                                            }
+                                        }
+
+                                        @Override
+                                        public void onCancel(SHARE_MEDIA share_media) {
+                                            Toast.prompt(XinShengDetailActivity.this, share_media + "分享取消");
+                                        }
+                                    }).open();
+                        }
+                    });
+                } catch (Exception e) {
+                    Toast.prompt(this, "数据异常");
+                }
+                break;
+            case 2:
+                if (!"200".equals(JSON.parseObject(response).getString("code"))) {
+                    Toast.prompt(this, "点赞失败，稍后重试!");
+                } else {
+                    Toast.prompt(this, "点赞成功!");
+                    initData();
+                }
+                break;
         }
 
-        PicCheck(listview);
-        //初始化适配器
-        adapter = new ListImageAdapter(this, imageUrls);
-        adapter.notifyDataSetChanged();
-        listview.setAdapter(adapter);
-              final UMWeb web = new UMWeb("http://bbs.91huiban.com/public/share1.html?id ="+ask_id);
-              web.setTitle(username);//标题
-              web.setThumb(new UMEmoji(this,R.mipmap.ic_launcher));  //缩略图
-              web.setDescription(content);//描述
-              ivRightToolBar.setOnClickListener(new View.OnClickListener() {
-                  @Override
-                  public void onClick(View view) {
-                      new ShareAction(XinShengDetailActivity.this) .withMedia(web)
-                              .setDisplayList(SHARE_MEDIA.SINA,SHARE_MEDIA.QQ,SHARE_MEDIA.WEIXIN)
-                              .setCallback(new UMShareListener() {
-                                  @Override
-                                  public void onStart(SHARE_MEDIA share_media) {
-                                  }
-                                  @Override
-                                  public void onResult(SHARE_MEDIA share_media) {
-                                      Toast.prompt(XinShengDetailActivity.this,share_media+"分享成功");
-                                  }
-                                  @Override
-                                  public void onError(SHARE_MEDIA share_media, Throwable throwable) {
-                                      Toast.prompt(XinShengDetailActivity.this,share_media+"分享失败"+throwable.getMessage());
-                                      if(throwable!=null){
-                                          Log.d("throw","throw:"+throwable.getMessage());
-                                      }
-                                  }
-                                  @Override
-                                  public void onCancel(SHARE_MEDIA share_media) {
-                                      Toast.prompt(XinShengDetailActivity.this,share_media+"分享取消");
-                                  }
-                              }).open();
-                  }
-              });
-        } catch (Exception e) {
-            Toast.prompt(this, "数据异常");
-        }
     }
 
-    public void PicCheck(ListView listView){
+    public void PicCheck(ListView listView) {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent=new Intent(XinShengDetailActivity.this,PicCheckActivity.class);
+                Intent intent = new Intent(XinShengDetailActivity.this, PicCheckActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putString("images", images);
                 intent.putExtras(bundle);

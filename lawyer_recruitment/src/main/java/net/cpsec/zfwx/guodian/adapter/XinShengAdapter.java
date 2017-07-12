@@ -66,6 +66,7 @@ public class XinShengAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         ImageLoader.getInstance().displayImage("http://" + shengList.get(position).getUserpic(), ((ViewHolder) holder).riv_avadar);
         ((ViewHolder) holder).tv_name.setText(shengList.get(position).getUsername());
         ((ViewHolder) holder).tv_title.setText(shengList.get(position).getContent());
+        ((ViewHolder) holder).tv_dianzan.setText(shengList.get(position).getPraise()+"");
         ((ViewHolder) holder).tv_shijian.setText(DateUtil.converTime(shengList.get(position).getAsktime()));
         ((ViewHolder) holder).tv_title.setOnClickListener(new ClickListener(String.valueOf(position), position));
         ((ViewHolder) holder).riv_avadar.setOnClickListener(new ClickHeadListener(String.valueOf(position), position));
@@ -101,7 +102,7 @@ public class XinShengAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             tv_name = (TextView) itemView.findViewById(R.id.tv_xinsheng_name);
             tv_title = (TextView) itemView.findViewById(R.id.tv_xinsheng_title);
             tv_shijian = (TextView) itemView.findViewById(R.id.tv_xinsheng_time);
-            tv_dianzan = (TextView) itemView.findViewById(R.id.tv_xinsheng_dainzxan);
+            tv_dianzan = (TextView) itemView.findViewById(R.id.tv_xinshengdetail_dainzan);
             img_01 = (ImageView) itemView.findViewById(R.id.img_xinsheng_01);
             linearLayout= (LinearLayout) itemView.findViewById(R.id.ll_xinsheng_bottom);
         }

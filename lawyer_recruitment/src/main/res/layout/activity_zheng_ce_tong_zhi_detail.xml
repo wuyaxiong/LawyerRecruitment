@@ -8,7 +8,59 @@
     android:fitsSystemWindows="true"
     android:orientation="vertical"
     tools:context="net.cpsec.zfwx.guodian.activity.ZhengCeTongZhiDetailActivity">
-    <include layout="@layout/toolbar" />
+    <!--<include layout="@layout/toolbar" />-->
+    <LinearLayout
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@color/color_while"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/toolbar_nav_iv"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="16dp"
+            android:src="@drawable/back_icon" />
+
+        <TextView
+            android:id="@+id/toolbar_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1" />
+
+        <FrameLayout
+            android:id="@+id/fl_shoucang"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginRight="16dp">
+
+            <ImageView
+                android:id="@+id/iv_tiezi_shoucang"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/icon_shoucang" />
+
+            <ImageView
+                android:id="@+id/iv_tiezi_yishoucang"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/icon_collect"
+                android:visibility="gone" />
+        </FrameLayout>
+
+        <ImageView
+            android:id="@+id/ivRightToolBar"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_gravity="center"
+            android:layout_marginRight="16dp"
+            android:src="@drawable/icon_share" />
+    </LinearLayout>
+
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
@@ -17,30 +69,27 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:fillViewport="true">
-
+        android:layout_height="match_parent"
+        >
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-
             <TextView
                 android:id="@+id/tv_tongzhi_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
                 android:layout_marginTop="8dp"
                 android:textSize="18sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
                 android:layout_marginTop="8dp"
                 android:orientation="horizontal">
 
@@ -76,8 +125,8 @@
                 android:id="@+id/tv_tongzhi_content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
                 android:layout_marginTop="8dp"
                 />
 
@@ -93,20 +142,22 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
                 android:layout_marginBottom="8dp"
                 android:visibility="gone"/>
             <View
+                android:id="@+id/view2"
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
+                android:layout_height="0.5dp"
+                android:visibility="gone"
                 android:background="#DDDDDD" />
             <net.cpsec.zfwx.guodian.view.NoScrollListView
                 android:id="@+id/lv_tongzhi_pinglun"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"></net.cpsec.zfwx.guodian.view.NoScrollListView>
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"></net.cpsec.zfwx.guodian.view.NoScrollListView>
         </LinearLayout>
     </ScrollView>
     <LinearLayout

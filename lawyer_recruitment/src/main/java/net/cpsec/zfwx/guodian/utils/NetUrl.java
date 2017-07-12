@@ -7,6 +7,8 @@ public class NetUrl {
     public static final String LOGIN = "http://115.28.77.187/tp5/bbss/public/index.php/index/login/login";
     //个人中心
     public static final String MY_CENTER = "http://115.28.77.187/tp5/bbss/public/index.php/index/center/editUser";
+    //是否被@
+    public static final String MY_CENTER_IS_AITE = "http://115.28.77.187/tp5/bbss/public/index.php/index/forum/circle";
     //发表帖子
     public static final String FABIAO_TIEZI = "http://115.28.77.187/tp5/bbss/public/index.php/index/forum/postInfo";
     //获取所有标签
@@ -27,11 +29,14 @@ public class NetUrl {
     public static final String TIEZI_NOANSWER="http://115.28.77.187/tp5/bbss/public/index.php/index/discuss/noanswer" ;
     //青年交流---评论
     public static final String TIEZI_PINGLUN="http://115.28.77.187/tp5/bbss/public/index.php/index/discuss/comment";
-
     //青年交流---帖子收藏
     public static final String TIEZI_SHOUCANG="http://115.28.77.187/tp5/bbss/public/index.php/index/discuss/collection";
     //青年交流---取消帖子收藏
     public static final String TIEZI_QUXIAOSHOUCANG="http://115.28.77.187/tp5/bbss/public/index.php/index/forum/deleteCollection";
+   // 青年交流---举报
+   public static final String TIEZI_JUBAO="http://115.28.77.187/tp5/bbss/public/index.php/index/discuss/report";
+    //青年交流---取消帖子点赞
+    public static final String TIEZI_QUXIAODIANZAN="http://115.28.77.187/tp5/bbss/public/index.php/index/forum/deletePraise";
     //青年交流---帖子点赞
     public static final String TIEZI_DIANZAN="http://115.28.77.187/tp5/bbss/public/index.php/index/discuss/clickpraise";
     //青年交流--按用户所在层级显示
@@ -50,8 +55,13 @@ public class NetUrl {
     public static final String QINCHUN_MEIWEN = "http://115.28.77.187/tp5/bbss/public/index.php/index/share/goodsarticle";
     //青春分享----案例美文详情页
     public static final String QINCHUN_MEIWEN_DETAIL = "http://115.28.77.187/tp5/bbss/public/index.php/index/share/goodsarticledetail ";
+   // 青春分享---案例美文、活动分享收藏
+
+    public static final String QINCHUN_MEIWEN_DETAIL_SHOUCANG="http://115.28.77.187/tp5/bbss/public/index.php/index/share/collection_all";
     //青春分享----政策通知详情页
     public static final String QINCHUN_ZHENGCETONGZHI_DETAIL = "http://115.28.77.187/tp5/bbss/public/index.php/index/share/noticeDetail";
+    //青春分享---- 政策通知收藏和取消收藏
+    public static final String QINCHUN_ZHENGCETONGZHI_SHOUCANG="http://115.28.77.187/tp5/bbss/public/index.php/index/share/collection_notice";
    // 青春分享--政策通知评论
    public static final String QINCHUN_ZHENGCETONGZHI_PINGLUN = "http://115.28.77.187/tp5/bbss/public/index.php/index/share/replynotice";
     //青春分享----案例美文评论
@@ -86,9 +96,11 @@ public class NetUrl {
     //个人中心------我发布的帖子
     public static final String CENTER_FABU="http://115.28.77.187/tp5/bbss/public/index.php/index/center/mypost ";
     //个人中心------我收藏的帖子
-    public static final String CENTER_SHOUCANG="http://115.28.77.187/tp5/bbss/public/index.php/index/center/mycollection";
+    public static final String CENTER_SHOUCANG="http://115.28.77.187/tp5/bbss/public/index.php/index/center/mycollection2";
     //个人中心------专家等待回答的帖子
     public static final String CENTER_ZHUAJIAHUIDA="http://115.28.77.187/tp5/bbss/public/index.php/index/center/mynoask";
+    //个人中心------我回答
+    public static final String CENTER_WOHUIDA="http://115.28.77.187/tp5/bbss/public/index.php/index/center/articlelist_expert";
     //个人中心------获取所有我@专家的提问
     public static final String CENTER_TIWEN="http://115.28.77.187/tp5/bbss/public/index.php/index/center/allMyAsk";
     //接受好友添加申请
@@ -123,6 +135,10 @@ public class NetUrl {
     public static final String WAIBU_ZHUANJIA ="http://115.28.77.187/tp5/bbss/public/index.php/index/forum/outExpert";
     //青年心声详情页面
     public static final String XINSHENG_DETAIL ="http://115.28.77.187/tp5/bbss/public/index.php/index/voice/youngAskdetail" ;
+    //青年心声点赞+1功能
+    public static final String XINSHENG_DIANZAN="http://115.28.77.187/tp5/bbss/public/index.php/index/voice/youngAsk_praise";
     //合理化建议详情页面
     public static final String JIANYI_DETAIL ="http://115.28.77.187/tp5/bbss/public/index.php/index/voice/adviceDetail " ;
+    //青年之声---合理化建议---点赞及+1功能
+    public static final String JIANYI_DETAIL_DIANZAN= "http://115.28.77.187/tp5/bbss/public/index.php/index/voice/advice_clickpraise";
 }

@@ -17,8 +17,8 @@ import com.android.volley.manager.RequestMap;
 import net.cpsec.zfwx.guodian.R;
 import net.cpsec.zfwx.guodian.activity.TieZiDetailActivity;
 import net.cpsec.zfwx.guodian.activity.XiangXiZiLiaoActivity;
-import net.cpsec.zfwx.guodian.adapter.CenterTieZiAdapter;
-import net.cpsec.zfwx.guodian.entity.ShouCangBean;
+import net.cpsec.zfwx.guodian.adapter.WoHuiDaAdapter;
+import net.cpsec.zfwx.guodian.entity.WoHuiDaBean;
 import net.cpsec.zfwx.guodian.ui.YRecycleview;
 import net.cpsec.zfwx.guodian.utils.NetUrl;
 import net.cpsec.zfwx.guodian.utils.Toast;
@@ -31,12 +31,11 @@ import java.util.Map;
  */
 public class WoHuiDaFragment extends BaseFragment implements YRecycleview.OnRefreshAndLoadMoreListener {
     private YRecycleview yRecycleview;
-    private CenterTieZiAdapter adapter;
+    private WoHuiDaAdapter adapter;
     private boolean isRefreshState = true;//是否刷新
-    private List<ShouCangBean.InforBean> inforBeen;
-    private List<ShouCangBean.InforBean> moreInforBean;
-    private ShouCangBean huiDaBean;
-    ShouCangBean.InforBean infor;
+    private List<List<WoHuiDaBean.InforBean>> inforBeen;
+    private WoHuiDaBean huiDaBean;
+   // WoHuiDaBean.InforBean infor;
     int pos;
     String uid;
     private ImageView iv_wenda;
@@ -54,7 +53,7 @@ public class WoHuiDaFragment extends BaseFragment implements YRecycleview.OnRefr
     private void initData() {
         RequestMap params = new RequestMap();
         params.put("uid", uid);
-        setParams(NetUrl.CENTER_ZHUAJIAHUIDA, params, 0);
+        setParams(NetUrl.CENTER_WOHUIDA, params, 0);
 
     }
 
@@ -67,19 +66,20 @@ public class WoHuiDaFragment extends BaseFragment implements YRecycleview.OnRefr
     }
 
     private void setAdapter() {
-        if (isRefreshState && null != inforBeen) {
-            adapter = new CenterTieZiAdapter(getActivity(), inforBeen);
+        if (isRefreshState && null != huiDaBean) {
+            adapter = new WoHuiDaAdapter(getActivity(), huiDaBean);
             yRecycleview.setLayoutManager(new LinearLayoutManager(getActivity()));
             yRecycleview.setAdapter(adapter);
         } else {
             adapter.notifyDataSetChanged();
         }
-        adapter.setOnTitleClickListener(new CenterTieZiAdapter.OnTitleClickListener() {
+        adapter.setOnTitleClickListener(new WoHuiDaAdapter.OnTitleClickListener() {
             @Override
             public void onTitleClick(String id, int position) {
                 Intent intent = new Intent(getActivity(), TieZiDetailActivity.class);
-                infor = inforBeen.get(position);
-                pos = infor.getId();
+               // infor = inforBeen.get(position).get(position);
+                //pos = infor.getId();
+                pos=huiDaBean.getInfor().get(position).get(0).getId();
                 Bundle bundle = new Bundle();
                 bundle.putString("artical_id", pos + "");
                 intent.putExtras(bundle);
@@ -87,13 +87,39 @@ public class WoHuiDaFragment extends BaseFragment implements YRecycleview.OnRefr
             }
         });
 
-        adapter.setHeadClickListener(new CenterTieZiAdapter.OnHeadClickListener() {
+        adapter.setHeadClickListener(new WoHuiDaAdapter.OnHeadClickListener() {
             @Override
             public void onHeadClick(String id, int position) {
                 Intent intent = new Intent(getActivity(), XiangXiZiLiaoActivity.class);
-                infor = inforBeen.get(position);
+               // infor = inforBeen.get(position).get(position);
                 Bundle bundle = new Bundle();
-                bundle.putString("phone", infor.getPhone());
+                bundle.putString("phone", huiDaBean.getInfor().get(position).get(0).getPhone());
+                intent.putExtras(bundle);
+                startActivity(intent);
+            }
+        });
+        adapter.setOnLLClickListener(new WoHuiDaAdapter.OnLLClickListener() {
+            @Override
+            public void onLLClick(String id, int position) {
+                Intent intent = new Intent(getActivity(), TieZiDetailActivity.class);
+                // infor = inforBeen.get(position).get(position);
+                //pos = infor.getId();
+                pos=huiDaBean.getInfor().get(position).get(0).getId();
+                Bundle bundle = new Bundle();
+                bundle.putString("artical_id", pos + "");
+                intent.putExtras(bundle);
+                startActivity(intent);
+            }
+        });
+        adapter.setOnPicClickListener(new WoHuiDaAdapter.OnPicClickListener() {
+            @Override
+            public void onPicClick(String id, int position) {
+                Intent intent = new Intent(getActivity(), TieZiDetailActivity.class);
+                // infor = inforBeen.get(position).get(position);
+                //pos = infor.getId();
+                pos=huiDaBean.getInfor().get(position).get(0).getId();
+                Bundle bundle = new Bundle();
+                bundle.putString("artical_id", pos + "");
                 intent.putExtras(bundle);
                 startActivity(intent);
             }
@@ -109,18 +135,16 @@ public class WoHuiDaFragment extends BaseFragment implements YRecycleview.OnRefr
             iv_wenda.setVisibility(View.VISIBLE);
         }else {
             try {
-                huiDaBean = JSON.parseObject(response, ShouCangBean.class);
-//            if (huiDaBean == null) {
-//                yRecycleview.setVisibility(View.GONE);
-//                iv_wenda.setVisibility(View.VISIBLE);
-//            }
-
+                huiDaBean = JSON.parseObject(response, WoHuiDaBean.class);
+            if (huiDaBean == null) {
+                yRecycleview.setVisibility(View.GONE);
+                iv_wenda.setVisibility(View.VISIBLE);
+            }
                 if (isRefreshState) {
                     yRecycleview.setReFreshComplete();
-                    inforBeen = huiDaBean.getInfor();
+                   // inforBeen = huiDaBean.getInfor().get();
                 } else {
-                    moreInforBean = huiDaBean.getInfor();
-                    inforBeen.addAll(moreInforBean);
+                   // inforBeen = huiDaBean.getInfor();
                 }
                 setAdapter();
             } catch (Exception e) {

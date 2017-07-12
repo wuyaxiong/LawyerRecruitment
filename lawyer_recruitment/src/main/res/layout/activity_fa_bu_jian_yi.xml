@@ -10,7 +10,7 @@
     tools:context="net.cpsec.zfwx.guodian.activity.FaBuJianYIActivity">
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="45dp"
+        android:layout_height="53dp"
         android:orientation="horizontal">
 
         <TextView
@@ -18,10 +18,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:layout_marginLeft="20dp"
+            android:layout_marginLeft="16dp"
             android:text="取消"
             android:textColor="#575757"
-            android:textSize="20sp" />
+            android:textSize="17sp" />
 
         <TextView
             android:layout_width="0dp"
@@ -31,19 +31,34 @@
             android:gravity="center"
             android:text="发布建议"
             android:textColor="#575757"
-            android:textSize="22sp" />
+            android:textSize="17sp" />
 
         <TextView
             android:id="@+id/tv_jianyi_complete"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:layout_marginRight="20dp"
+            android:layout_marginRight="16dp"
             android:text="发布"
             android:textColor="#1c7cea"
-            android:textSize="20sp" />
+            android:textSize="17sp" />
 
     </LinearLayout>
+
+    <EditText
+        android:id="@+id/et_jianyi_zhengwen"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/shape_search"
+        android:gravity="top"
+        android:hint="建议内容"
+        android:lines="10"
+        android:maxLines="10"
+        android:padding="5dp"
+        android:textSize="16sp" />
 
     <View
         android:layout_width="match_parent"
@@ -58,21 +73,6 @@
     <!--android:layout_marginTop="10dp"-->
     <!--android:hint="标题(可选)"-->
     <!--android:textSize="20sp"/>-->
-    <EditText
-        android:id="@+id/et_jianyi_zhengwen"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/shape_search"
-        android:layout_marginTop="8dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:hint="建议内容"
-        android:textSize="18sp"
-        android:gravity="top"
-        android:lines="10"
-        android:maxLines="10"
-        android:padding="5dp"
-        />
 
     <!--<LinearLayout-->
         <!--android:layout_width="match_parent"-->

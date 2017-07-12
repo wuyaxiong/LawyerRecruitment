@@ -11,7 +11,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="45dp"
+        android:layout_height="53dp"
         android:orientation="horizontal">
 
         <TextView
@@ -19,10 +19,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:layout_marginLeft="20dp"
+            android:layout_marginLeft="16dp"
             android:text="取消"
             android:textColor="#575757"
-            android:textSize="20sp" />
+            android:textSize="17sp" />
 
         <TextView
             android:layout_width="0dp"
@@ -32,17 +32,17 @@
             android:gravity="center"
             android:text="发帖"
             android:textColor="#575757"
-            android:textSize="23sp" />
+            android:textSize="17sp" />
 
         <TextView
             android:id="@+id/tv_fatie_complete"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:layout_marginRight="20dp"
+            android:layout_marginRight="16dp"
             android:text="发布"
             android:textColor="#1c7cea"
-            android:textSize="20sp" />
+            android:textSize="17sp" />
 
     </LinearLayout>
 
@@ -55,8 +55,8 @@
         android:id="@+id/et_fatie_biaoti"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
         android:layout_marginTop="10dp"
         android:hint="标题"
         android:textSize="20sp" />
@@ -65,8 +65,8 @@
         android:id="@+id/et_fatie_zhengwen"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
         android:layout_marginTop="8dp"
         android:background="#FFFFFF"
         android:gravity="top"
@@ -109,16 +109,16 @@
             android:id="@+id/iv_fatie_addtupian"
             android:layout_width="25dp"
             android:layout_height="25dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
             android:src="@drawable/icon_shangchuan" />
     </LinearLayout>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
         android:background="#b2b2b2" />
 
     <LinearLayout
@@ -131,7 +131,7 @@
         <ImageView
             android:layout_width="18dp"
             android:layout_height="18dp"
-            android:layout_marginLeft="20dp"
+            android:layout_marginLeft="16dp"
             android:src="@drawable/icon_tag" />
 
         <TextView
@@ -157,8 +157,8 @@
                 android:id="@+id/gv_fatie_label1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
                 android:layout_marginTop="8dp"
                 android:numColumns="4"
                 android:visibility="gone"
@@ -184,8 +184,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
         android:horizontalSpacing="20dp"
         android:listSelector="#00000000"
         android:numColumns="3"

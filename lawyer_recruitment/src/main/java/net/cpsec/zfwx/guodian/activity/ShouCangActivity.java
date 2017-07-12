@@ -4,39 +4,39 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 
 import com.alibaba.fastjson.JSON;
 import com.android.volley.manager.RequestMap;
 
 import net.cpsec.zfwx.guodian.R;
-import net.cpsec.zfwx.guodian.adapter.CenterTieZiAdapter;
-import net.cpsec.zfwx.guodian.entity.ShouCangBean;
-import net.cpsec.zfwx.guodian.ui.YRecycleview;
-import net.cpsec.zfwx.guodian.utils.Debugging;
+import net.cpsec.zfwx.guodian.adapter.ShouCangMeiWenAdapter;
+import net.cpsec.zfwx.guodian.adapter.ShouCangTieZiAdapter;
+import net.cpsec.zfwx.guodian.adapter.ShouCangTongZhiAdapter;
+import net.cpsec.zfwx.guodian.entity.ShouCang;
 import net.cpsec.zfwx.guodian.utils.NetUrl;
 import net.cpsec.zfwx.guodian.utils.Toast;
+import net.cpsec.zfwx.guodian.view.NoScrollListView;
 
-import java.util.List;
 import java.util.Map;
+
+import static net.cpsec.zfwx.guodian.R.id.iv_wenda;
 
 /**
  * 我收藏的帖子页面
  */
-public class ShouCangActivity extends BaseActivity implements View.OnClickListener, YRecycleview.OnRefreshAndLoadMoreListener {
+public class ShouCangActivity extends BaseActivity implements View.OnClickListener {
     private ImageView iv_back;
-    private YRecycleview yRecycleview;
-    private CenterTieZiAdapter adapter;
-    private boolean isRefreshState = true;//是否刷新
-    private List<ShouCangBean.InforBean> inforBeen;
-    private List<ShouCangBean.InforBean> moreInforBean;
-    private ShouCangBean shouCangBean;
-    ShouCangBean.InforBean infor;
     int pos;
     String uid;
     private ImageView iv_NO;
+    private NoScrollListView lv_tiezi, lv_tongzhi, lv_meiwen;
+    private ShouCangTieZiAdapter adapterTiezi;
+    private ShouCangTongZhiAdapter adapterTongzhi;
+    private ShouCangMeiWenAdapter adapterMeiWen;
+    private ShouCang infor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,9 +51,10 @@ public class ShouCangActivity extends BaseActivity implements View.OnClickListen
     private void initView() {
         iv_back = (ImageView) findViewById(R.id.iv_back);
         iv_back.setOnClickListener(this);
-        yRecycleview = (YRecycleview) findViewById(R.id.sc_tiezilist);
-        yRecycleview.setRefreshAndLoadMoreListener(this);
-        iv_NO = (ImageView) findViewById(R.id.iv_wenda);
+        iv_NO = (ImageView) findViewById(iv_wenda);
+        lv_tiezi = (NoScrollListView) findViewById(R.id.nolv_tiezi);
+        lv_tongzhi = (NoScrollListView) findViewById(R.id.nolv_tongzhi);
+        lv_meiwen = (NoScrollListView) findViewById(R.id.nolv_meiwen);
     }
 
     @Override
@@ -79,101 +80,75 @@ public class ShouCangActivity extends BaseActivity implements View.OnClickListen
         super.onSuccess(response, headers, url, actionId);
         try {
             if (!"200".equals(JSON.parseObject(response).getString("code"))) {
-                yRecycleview.setVisibility(View.GONE);
-                iv_NO.setVisibility(View.VISIBLE);
-            } else {
-                yRecycleview.setVisibility(View.VISIBLE);
                 iv_NO.setVisibility(View.GONE);
-                shouCangBean = JSON.parseObject(response, ShouCangBean.class);
-                if (isRefreshState) {
-                    yRecycleview.setReFreshComplete();
-                    inforBeen = shouCangBean.getInfor();
-                    Debugging.debugging("positionLists      =   " + (shouCangBean.getInfor().toString()));
-                } else {
-                    moreInforBean = shouCangBean.getInfor();
-                    inforBeen.addAll(moreInforBean);
+            } else {
+                infor = JSON.parseObject(response, ShouCang.class);
+                if (infor.getInfor().getArticlelist() == null && infor.getInfor().getNoticelist() == null && infor.getInfor().getGoodslist() == null) {
+                    lv_tiezi.setVisibility(View.GONE);
+                    lv_tongzhi.setVisibility(View.GONE);
+                    lv_tongzhi.setVisibility(View.GONE);
+                    iv_NO.setVisibility(View.GONE);
+                }else {
+                    iv_NO.setVisibility(View.GONE);
+                    if (infor.getInfor().getArticlelist() == null) {
+                        lv_tiezi.setVisibility(View.GONE);
+                    } else {
+                        lv_tiezi.setVisibility(View.VISIBLE);
+                        adapterTiezi = new ShouCangTieZiAdapter(this, infor.getInfor());
+                        lv_tiezi.setAdapter(adapterTiezi);
+                        lv_tiezi.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                Intent intent = new Intent(ShouCangActivity.this, TieZiDetailActivity.class);
+                                pos = infor.getInfor().getArticlelist().get(position).get(0).getId();
+                                Bundle bundle = new Bundle();
+                                bundle.putString("artical_id", pos + "");
+                                intent.putExtras(bundle);
+                                startActivity(intent);
+                            }
+                        });
+                    }
+                    if (infor.getInfor().getNoticelist() == null) {
+                        lv_tongzhi.setVisibility(View.GONE);
+                    } else {
+                        lv_tongzhi.setVisibility(View.VISIBLE);
+                        adapterTongzhi = new ShouCangTongZhiAdapter(this, infor.getInfor());
+                        lv_tongzhi.setAdapter(adapterTongzhi);
+                        lv_tongzhi.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                Intent intent = new Intent(ShouCangActivity.this, ZhengCeTongZhiDetailActivity.class);
+                                Bundle bundle = new Bundle();
+                                bundle.putString("from", "1");
+                                bundle.putString("aid", infor.getInfor().getNoticelist().get(position).get(0).getId() + "");
+                                intent.putExtras(bundle);
+                                startActivity(intent);
+                            }
+                        });
+                    }
+                    if (infor.getInfor().getGoodslist() == null) {
+                        lv_meiwen.setVisibility(View.GONE);
+                    } else {
+                        lv_meiwen.setVisibility(View.VISIBLE);
+                        adapterMeiWen = new ShouCangMeiWenAdapter(this, infor.getInfor());
+                        lv_meiwen.setAdapter(adapterMeiWen);
+                        lv_meiwen.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                Intent intent = new Intent(ShouCangActivity.this, QingChunFenXiangDetailActivity.class);
+                                //  AnLiMeiWenInfor infor=anLiMeiWenInfors.get(position-1);
+                                Bundle bundle = new Bundle();
+                                bundle.putString("from", "1");
+                                bundle.putString("gid", infor.getInfor().getGoodslist().get(position).get(0).getId() + "");
+                                intent.putExtras(bundle);
+                                startActivity(intent);
+                            }
+                        });
+                    }
                 }
-                setAdapter();
             }
         } catch (Exception e) {
             Toast.prompt(this, "数据异常");
         }
-    }
-
-
-    private void setAdapter() {
-        if (isRefreshState && null != inforBeen) {
-            adapter = new CenterTieZiAdapter(this, inforBeen);
-            yRecycleview.setLayoutManager(new LinearLayoutManager(this));
-            yRecycleview.setAdapter(adapter);
-        } else {
-            adapter.notifyDataSetChanged();
-        }
-
-
-        adapter.setOnTitleClickListener(new CenterTieZiAdapter.OnTitleClickListener() {
-            @Override
-            public void onTitleClick(String id, int position) {
-                Intent intent = new Intent(ShouCangActivity.this, TieZiDetailActivity.class);
-                infor = inforBeen.get(position);
-                pos = infor.getId();
-                Bundle bundle = new Bundle();
-                bundle.putString("artical_id", pos + "");
-                intent.putExtras(bundle);
-                startActivity(intent);
-            }
-        });
-
-        adapter.setHeadClickListener(new CenterTieZiAdapter.OnHeadClickListener() {
-            @Override
-            public void onHeadClick(String id, int position) {
-                Intent intent = new Intent(ShouCangActivity.this, XiangXiZiLiaoActivity.class);
-                infor = inforBeen.get(position);
-                Bundle bundle = new Bundle();
-                bundle.putString("phone", infor.getPhone());
-                intent.putExtras(bundle);
-                startActivity(intent);
-            }
-        });
-        adapter.setOnPicClickListener(new CenterTieZiAdapter.OnPicClickListener() {
-            @Override
-            public void onPicClick(String id, int position) {
-                Intent intent = new Intent(ShouCangActivity.this, TieZiDetailActivity.class);
-                infor = inforBeen.get(position);
-                pos = infor.getId();
-                Bundle bundle = new Bundle();
-                bundle.putString("artical_id", pos + "");
-                intent.putExtras(bundle);
-                startActivity(intent);
-            }
-        });
-        adapter.setOnLLClickListener(new CenterTieZiAdapter.OnLLClickListener() {
-            @Override
-            public void onLLClick(String id, int position) {
-                Intent intent = new Intent(ShouCangActivity.this, TieZiDetailActivity.class);
-                infor = inforBeen.get(position);
-                pos = infor.getId();
-                Bundle bundle = new Bundle();
-                bundle.putString("artical_id", pos + "");
-                intent.putExtras(bundle);
-                startActivity(intent);
-            }
-        });
-    }
-
-    @Override
-    public void onRefresh() {
-        isRefreshState = true;
-        yRecycleview.setReFreshComplete();
-        initData();
-    }
-
-    //上拉加载
-    @Override
-    public void onLoadMore() {
-        isRefreshState = false;
-        initData();
-        //刷新之后在最底下
-        yRecycleview.setNoMoreData(true);
     }
 }

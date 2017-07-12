@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="net.cpsec.zfwx.guodian"
-    android:versionCode="5"
-    android:versionName="1.0.5">
+    android:versionCode="10"
+    android:versionName="1.1.0">
 
     <!-- net.cpsec.zfwx.lawyer_recruitment -->
     <!-- 通用权限 -->

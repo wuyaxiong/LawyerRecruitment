@@ -10,8 +10,8 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
         android:text="锅炉的作用是什么？"
         android:textColor="#4b4b4b"
         android:textSize="18dp" />
@@ -21,7 +21,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginLeft="20dp"
+        android:layout_marginLeft="16dp"
         android:layout_marginTop="14dp">
         <ImageView
             android:layout_width="16dp"
@@ -39,14 +39,14 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="#bebebe"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
         android:layout_marginTop="14dp"></View>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="36dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
         android:layout_marginTop="10dp"
         android:orientation="horizontal">
         <TextView
@@ -74,7 +74,7 @@
             android:layout_width="14dp"
             android:layout_height="14dp"
             android:layout_gravity="center_vertical"
-            android:layout_marginLeft="20dp"
+            android:layout_marginLeft="16dp"
             android:src="@drawable/icon_pinglun"/>
         <TextView
             android:layout_width="14sp"

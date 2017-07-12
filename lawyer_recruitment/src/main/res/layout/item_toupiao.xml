@@ -30,8 +30,8 @@
             android:layout_alignParentBottom="true"
             android:layout_toLeftOf="@+id/item_mytoupiao_num"
             android:layout_toStartOf="@+id/item_mytoupiao_num"
-            android:layout_marginRight="20dp"
-            android:layout_marginEnd="20dp" />
+            android:layout_marginRight="16dp"
+            android:layout_marginEnd="16dp" />
 
         <TextView
             android:id="@+id/item_mytoupiao_num"
@@ -51,7 +51,7 @@
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:text="人参与"
-            android:layout_marginRight="20dp"/>
+            android:layout_marginRight="16dp"/>
 
     </RelativeLayout>
     <View

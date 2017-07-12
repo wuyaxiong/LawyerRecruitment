@@ -25,8 +25,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="国电集团"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="16dp"
                 android:textColor="@color/aliwx_color_blue"
                 />
             <net.cpsec.zfwx.guodian.utils.MyGridView
@@ -40,8 +40,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="二级单位"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="16dp"
                 android:textColor="@color/aliwx_color_blue"
                 />
             <net.cpsec.zfwx.guodian.utils.MyGridView
@@ -55,8 +55,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="三级部门"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="16dp"
                 android:textColor="@color/aliwx_color_blue"
                 />
             <net.cpsec.zfwx.guodian.utils.MyGridView

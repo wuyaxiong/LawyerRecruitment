@@ -11,6 +11,7 @@ import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -44,7 +45,9 @@ import java.util.Map;
 
 public class QingChunFenXiangDetailActivity extends BaseActivity implements View.OnClickListener, YRecycleview.OnRefreshAndLoadMoreListener {
     private TextView tv_title, tv_name, tv_time, tv_content;
-    private ImageView iv_back;
+    private ImageView iv_back,iv_shoucang,iv_yishoucang;
+    private FrameLayout fl_shoucang;
+    private View view;
     private YRecycleview yrv_list;
     private PingLunAdapter adapter;
     String gid,images;
@@ -74,6 +77,7 @@ public class QingChunFenXiangDetailActivity extends BaseActivity implements View
     }
 
     private void initView() {
+        view=findViewById(R.id.view2);
         et_pinglun= (EditText) findViewById(R.id.et_meiwen_pinglun);
         ivRightToolBar = (ImageView) findViewById(R.id.ivRightToolBar);
         btn= (Button) findViewById(R.id.btn_meiwen_pinglun);
@@ -90,11 +94,32 @@ public class QingChunFenXiangDetailActivity extends BaseActivity implements View
         Intent intent = getIntent();
         gid = intent.getExtras().getString("gid");
         initData();
+        fl_shoucang= (FrameLayout) findViewById(R.id.fl_shoucang);
+        iv_yishoucang = (ImageView) findViewById(R.id.iv_tiezi_yishoucang);
+        iv_shoucang = (ImageView) findViewById(R.id.iv_tiezi_shoucang);
+        fl_shoucang.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (iv_yishoucang.getVisibility()==View.VISIBLE){
+                    Toast.prompt(QingChunFenXiangDetailActivity.this, "已收藏，不能重复收藏");
+//                    RequestMap params = new RequestMap();
+//                    params.put("notice_id", aid);
+//                    params.put("uid", uid);
+//                    setParams(NetUrl.QINCHUN_ZHENGCETONGZHI_SHOUCANG, params, 3);
+                }else {
+                    RequestMap params = new RequestMap();
+                    params.put("goods_article_id", gid);
+                    params.put("uid", uid);
+                    setParams(NetUrl.QINCHUN_MEIWEN_DETAIL_SHOUCANG, params, 2);
+                }
+            }
+        });
     }
 
     private void initData() {
         RequestMap params = new RequestMap();
         params.put("gid", gid + "");
+        params.put("uid", uid + "");
         setParams(NetUrl.QINCHUN_MEIWEN_DETAIL, params, 0);
     }
 
@@ -123,9 +148,18 @@ public class QingChunFenXiangDetailActivity extends BaseActivity implements View
                     tv_name.setText(good_artical.getUsername());
                     tv_time.setText(DateUtil.converTime(good_artical.getTime()));
                     tv_content.setText(good_artical.getContent());
+                    int is_collection=pinglunBean.getInfor().getIs_collection();
+                    if (is_collection==0){
+                        iv_shoucang.setVisibility(View.VISIBLE);
+                        iv_yishoucang.setVisibility(View.GONE);
+                    }else {
+                        iv_shoucang.setVisibility(View.GONE);
+                        iv_yishoucang.setVisibility(View.VISIBLE);
+                    }
                    images = pinglunBean.getInfor().getGoods_article_all().getImage();
                     if (images == null|| images.isEmpty() ) {
                         list_image.setVisibility(View.GONE);
+                        view.setVisibility(View.GONE);
                     } else {
                         String[] tupians = images.split(",");
                         //每次刷新前清空图片列表
@@ -133,6 +167,7 @@ public class QingChunFenXiangDetailActivity extends BaseActivity implements View
                         for (String substr : tupians) {
                             imageUrls.add("http://" + substr);
                             list_image.setVisibility(View.VISIBLE);
+                            view.setVisibility(View.VISIBLE);
                         }
                     }
 
@@ -140,7 +175,7 @@ public class QingChunFenXiangDetailActivity extends BaseActivity implements View
                     //初始化适配器
                     imageadapter= new ListImageAdapter(this, imageUrls);
                     list_image.setAdapter(imageadapter);
-                    final UMWeb web = new UMWeb("http://bbs.91huiban.com/public/share.html?id = "+gid+"&staus = 0");
+                    final UMWeb web = new UMWeb("http://bbs.91huiban.com/public/share4.html?id = "+gid);
                     web.setTitle(good_artical.getTitle());//标题
                     web.setThumb(new UMEmoji(this,R.mipmap.ic_launcher));  //缩略图
                     web.setDescription(good_artical.getContent());//描述
@@ -191,6 +226,15 @@ public class QingChunFenXiangDetailActivity extends BaseActivity implements View
                     }
                 } catch (Exception e) {
                     Toast.prompt(this, "数据异常");
+                }
+                break;
+            case 2:
+                if (!"200".equals(JSON.parseObject(response).getString("code"))) {
+                    Toast.prompt(this, "收藏失败，稍后重试！");
+                } else {
+                    Toast.prompt(this, "收藏成功!");
+                    iv_yishoucang.setVisibility(View.VISIBLE);
+                    iv_shoucang.setVisibility(View.GONE);
                 }
                 break;
         }

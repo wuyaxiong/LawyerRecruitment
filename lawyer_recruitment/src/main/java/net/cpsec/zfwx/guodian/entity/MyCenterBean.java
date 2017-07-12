@@ -20,6 +20,15 @@ public class MyCenterBean {
     private int code;
     private String msg;
     private InforBean infor;
+private int is_aite;
+
+    public int getIs_aite() {
+        return is_aite;
+    }
+
+    public void setIs_aite(int is_aite) {
+        this.is_aite = is_aite;
+    }
 
     public int getCode() {
         return code;

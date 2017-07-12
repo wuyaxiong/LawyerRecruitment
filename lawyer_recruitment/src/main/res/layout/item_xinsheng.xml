@@ -31,7 +31,7 @@
                 app:riv_mutate_background="true"
                 app:riv_oval="true"
                 android:layout_gravity="center_vertical"
-                android:layout_marginLeft="20dp"
+                android:layout_marginLeft="16dp"
                 app:riv_tile_mode="repeat"
                 android:clickable="true"/>
 
@@ -43,7 +43,7 @@
                 android:layout_marginLeft="16dp"
                 android:layout_toRightOf="@id/riv_jiaoliu_avater"
                 android:layout_weight="1"
-                android:text="啦啦啦"
+                android:text=""
                 android:textColor="#4b4b4b"
                 android:textSize="16sp" />
         </LinearLayout>
@@ -52,18 +52,19 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         >
+
         <TextView
             android:id="@+id/tv_xinsheng_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp"
+            android:clickable="true"
             android:paddingLeft="16dp"
             android:paddingRight="16dp"
-            android:clickable="true"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
-            android:text="锅炉的作用是什么？"
-            android:textColor="#4b4b4b"
             android:singleLine="true"
+            android:text=""
+            android:textColor="#4b4b4b"
             android:textSize="16dp" />
 
     </LinearLayout>
@@ -95,8 +96,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_weight="1"
-            android:text="一分钟前"
-            android:layout_marginLeft="20dp"
+            android:text=""
+            android:layout_marginLeft="16dp"
             android:textColor="#bebebe"
             android:textSize="14sp" />
 
@@ -107,13 +108,13 @@
             android:src="@drawable/icon_zan" />
 
         <TextView
-            android:id="@+id/tv_xinsheng_dianzan"
-            android:layout_width="14sp"
-            android:layout_height="14sp"
+            android:id="@+id/tv_xinshengdetail_dainzan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="8dp"
-            android:text="100"
-            android:layout_marginRight="20dp"
+            android:text=""
+            android:layout_marginRight="16dp"
             android:textColor="#1c7cea"
             android:textSize="14sp" />
 

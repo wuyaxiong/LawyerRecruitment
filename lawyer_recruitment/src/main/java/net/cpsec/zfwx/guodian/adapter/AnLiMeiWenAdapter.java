@@ -31,7 +31,6 @@ public class AnLiMeiWenAdapter  extends RecyclerView.Adapter<RecyclerView.ViewHo
         this.context = context;
         this.quanBuInfors = quanBuInfors;
     }
-
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(context).inflate(R.layout.item_meiwen, null);

@@ -23,7 +23,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_marginRight="16dp"
-                android:layout_marginLeft="20dp"
+                android:layout_marginLeft="16dp"
                 android:text="全部"
                 android:textColor="@drawable/selector_recommend_text"
                 android:textSize="16sp" />
@@ -48,7 +48,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_marginRight="16dp"
-                android:layout_marginLeft="20dp"
+                android:layout_marginLeft="16dp"
                 android:text="只看本层级"
                 android:textColor="@drawable/selector_recommend_text"
                 android:textSize="16sp" />
@@ -72,7 +72,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_marginRight="16dp"
-                android:layout_marginLeft="20dp"
+                android:layout_marginLeft="16dp"
                 android:text="只看本单位"
                 android:textColor="@drawable/selector_recommend_text"
                 android:textSize="16sp" />

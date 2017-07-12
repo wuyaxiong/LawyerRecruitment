@@ -4,8 +4,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.GridView;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
@@ -13,29 +15,61 @@ import com.android.volley.manager.RequestMap;
 
 import net.cpsec.zfwx.guodian.R;
 import net.cpsec.zfwx.guodian.adapter.JiaoLiuAdapter;
+import net.cpsec.zfwx.guodian.adapter.LabelGridAdapter;
+import net.cpsec.zfwx.guodian.entity.Label;
+import net.cpsec.zfwx.guodian.entity.LabelBean;
 import net.cpsec.zfwx.guodian.entity.QuanBuBean;
 import net.cpsec.zfwx.guodian.ui.YRecycleview;
 import net.cpsec.zfwx.guodian.utils.Debugging;
 import net.cpsec.zfwx.guodian.utils.NetUrl;
 import net.cpsec.zfwx.guodian.utils.Toast;
 
+import java.util.List;
 import java.util.Map;
 
 public class SouSuoTieZiActivity extends BaseActivity implements YRecycleview.OnRefreshAndLoadMoreListener {
-private TextView tv_back;
-    private Button btn1,btn2,btn3;
+    private TextView tv_back;
+    private Button btn1, btn2, btn3;
     private EditText editText;
     private boolean isRefreshState = true;//是否刷新
-   // private SearchTieZiBean tieZiBean;
+    // private SearchTieZiBean tieZiBean;
     private QuanBuBean tieziBean;
     private YRecycleview yRecycleview;
     private JiaoLiuAdapter adapter;
     int pos;
+    private GridView gridView_label;
+    private List<Label> labelList;
+    private LabelBean labelBean;
+    private LabelGridAdapter labelGridAdapter;
+    int label_id;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sou_suo);
         initView();
+        initLabel();
+    }
+
+    private void initLabel() {
+        gridView_label = (GridView) findViewById(R.id.gv_fatie_label1);
+        RequestMap params = new RequestMap();
+        setParams(NetUrl.LABEL, params, 3);
+    }
+    private void setLabelAdapter() {
+        labelGridAdapter = new LabelGridAdapter(this, labelList);
+        gridView_label.setAdapter(labelGridAdapter);
+        gridView_label.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                label_id = labelList.get(position).getLabel_id();
+                gridView_label.setSelector(R.color.color_51a0fc);
+                RequestMap params = new RequestMap();
+                params.put("label_id", label_id+"");
+                setParams(NetUrl.SEARCH_LABEL, params, 4);
+            }
+        });
+
     }
     private void setAdapter() {
         if (isRefreshState && null != tieziBean.getInfor()) {
@@ -49,7 +83,6 @@ private TextView tv_back;
             @Override
             public void onTitleClick(String id, int position) {
                 Intent intent = new Intent(SouSuoTieZiActivity.this, TieZiDetailActivity.class);
-                Debugging.debugging("position+++++++++++++++++++++++" + position);
                 pos = tieziBean.getInfor().get(position).getId();
                 Bundle bundle = new Bundle();
                 bundle.putString("artical_id", pos + "");
@@ -61,7 +94,7 @@ private TextView tv_back;
             @Override
             public void onHeadClick(String id, int position) {
                 Intent intent = new Intent(SouSuoTieZiActivity.this, XiangXiZiLiaoActivity.class);
-            //    pos = tieziBean.getInfor().get(position).getId();
+                //    pos = tieziBean.getInfor().get(position).getId();
                 Bundle bundle = new Bundle();
                 bundle.putString("phone", tieziBean.getInfor().get(position).getPhone());
                 intent.putExtras(bundle);
@@ -69,24 +102,25 @@ private TextView tv_back;
             }
         });
     }
+
     private void initView() {
-        yRecycleview= (YRecycleview) findViewById(R.id.yrv_search_tiezi);
+        yRecycleview = (YRecycleview) findViewById(R.id.yrv_search_tiezi);
         yRecycleview.setRefreshAndLoadMoreListener(this);
-        tv_back= (TextView) findViewById(R.id.tv_sousuo_back);
+        tv_back = (TextView) findViewById(R.id.tv_sousuo_back);
         tv_back.setOnClickListener(this);
-        btn1= (Button) findViewById(R.id.btn_search01);
+        btn1 = (Button) findViewById(R.id.btn_search01);
         btn1.setOnClickListener(this);
-        btn2= (Button) findViewById(R.id.btn_search02);
+        btn2 = (Button) findViewById(R.id.btn_search02);
         btn2.setOnClickListener(this);
-        btn3= (Button) findViewById(R.id.btn_search03);
-        btn3.setOnClickListener(this);
-        editText= (EditText) findViewById(R.id.et_search);
+//        btn3= (Button) findViewById(R.id.btn_search03);
+//        btn3.setOnClickListener(this);
+        editText = (EditText) findViewById(R.id.et_search);
     }
 
     @Override
     public void onClick(View v) {
         super.onClick(v);
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.tv_sousuo_back:
                 finish();
                 break;
@@ -100,23 +134,23 @@ private TextView tv_back;
                 params2.put("company", editText.getText().toString());
                 setParams(NetUrl.SEARCH_DANWEI, params2, 2);
                 break;
-            case R.id.btn_search03:
-                RequestMap params3 = new RequestMap();
-                params3.put("name", editText.getText().toString());
-                setParams(NetUrl.SEARCH_LABEL, params3, 3);
-                break;
+//            case R.id.btn_search03:
+//                RequestMap params3 = new RequestMap();
+//                params3.put("name", editText.getText().toString());
+//                setParams(NetUrl.SEARCH_LABEL, params3, 3);
+//                break;
         }
     }
 
     @Override
     public void onSuccess(String response, Map<String, String> headers, String url, int actionId) {
         super.onSuccess(response, headers, url, actionId);
-        switch (actionId){
+        switch (actionId) {
             case 1:
                 try {
-                    if (!"200".equals(JSON.parseObject(response).getString("code"))){
+                    if (!"200".equals(JSON.parseObject(response).getString("code"))) {
                         Toast.prompt(this, "抱歉，未搜索到相关帖子!");
-                    }else{
+                    } else {
                         tieziBean = JSON.parseObject(response, QuanBuBean.class);
                         Debugging.debugging("position      =      " + (null == tieziBean));
                         if (isRefreshState) {
@@ -135,24 +169,49 @@ private TextView tv_back;
                 break;
             case 2:
                 try {
-                    if (!"200".equals(JSON.parseObject(response).getString("code"))){
+                    if (!"200".equals(JSON.parseObject(response).getString("code"))) {
                         Toast.prompt(this, "抱歉,公司名称不存在!");
-                    }else {
-                    tieziBean = JSON.parseObject(response, QuanBuBean.class);
-                    Debugging.debugging("position      =      " + (null == tieziBean));
-                    if (isRefreshState) {
-                        yRecycleview.setReFreshComplete();
-                        Debugging.debugging("positionLists      =   " + (tieziBean.getInfor().toString()));
                     } else {
+                        tieziBean = JSON.parseObject(response, QuanBuBean.class);
+                        Debugging.debugging("position      =      " + (null == tieziBean));
+                        if (isRefreshState) {
+                            yRecycleview.setReFreshComplete();
+                            Debugging.debugging("positionLists      =   " + (tieziBean.getInfor().toString()));
+                        } else {
 //                        morequanbuInfor = quanbuBean.getInfor();
 //                        quanbuInfor.addAll(morequanbuInfor);
-                    }}
+                        }
+                    }
                     setAdapter();
                 } catch (Exception e) {
                     Toast.prompt(this, "数据异常");
                 }
                 break;
             case 3:
+                try {
+//                    if (!"200".equals(JSON.parseObject(response).getString("code"))){
+//                        Toast.prompt(this, "抱歉，未搜索到相关帖子!");
+//                    }else {
+//                        tieziBean = JSON.parseObject(response, QuanBuBean.class);
+//                        Debugging.debugging("position      =      " + (null == tieziBean));
+//                        if (isRefreshState) {
+//                            yRecycleview.setReFreshComplete();
+//                            Debugging.debugging("positionLists      =   " + (tieziBean.getInfor().toString()));
+//                        } else {
+////                        morequanbuInfor = quanbuBean.getInfor();
+////                        quanbuInfor.addAll(morequanbuInfor);
+//                        }
+//                    }
+//                        setAdapter();
+                    labelBean = JSON.parseObject(response, LabelBean.class);
+                    labelList = labelBean.getInfor();
+                    setLabelAdapter();
+                    break;
+                } catch (Exception e) {
+                    Toast.prompt(this, "数据异常");
+                }
+                break;
+            case 4:
                 try {
                     if (!"200".equals(JSON.parseObject(response).getString("code"))){
                         Toast.prompt(this, "抱歉，未搜索到相关帖子!");
@@ -168,6 +227,7 @@ private TextView tv_back;
                         }
                     }
                         setAdapter();
+                    break;
                 } catch (Exception e) {
                     Toast.prompt(this, "数据异常");
                 }
@@ -179,7 +239,7 @@ private TextView tv_back;
     public void onRefresh() {
         isRefreshState = true;
         yRecycleview.setReFreshComplete();
-       // initData();
+        // initData();
     }
 
     @Override

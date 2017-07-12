@@ -16,6 +16,25 @@ public class TieZiDetailInfor {
     private int prise_num;
     private int comment_num;
     private List<TieZiComment_info> comment_info;
+    private int is_collection;
+    private int is_praise;
+
+    public int getIs_collection() {
+        return is_collection;
+    }
+
+    public void setIs_collection(int is_collection) {
+        this.is_collection = is_collection;
+    }
+
+    public int getIs_praise() {
+        return is_praise;
+    }
+
+    public void setIs_praise(int is_praise) {
+        this.is_praise = is_praise;
+    }
+
     public void setForum_info(TieZiForum_info forum_info) {
          this.forum_info = forum_info;
      }
